@@ -1,0 +1,38 @@
+{
+   "name": "be-have_client",
+   "version": "0.0.1",
+   "private": true,
+   "license": "ISC",
+   "proxy": "http://localhost:3001",
+   "scripts": {
+      "start": "react-scripts start",
+      "build": "REACT_APP_IP=www.be-have.herokuapp.com react-scripts build",
+      "lint": "eslint . --ext .jsx,.js"
+   },
+   "dependencies": {
+      "apollo-cache-inmemory": "^1.1.12",
+      "apollo-client": "^2.2.8",
+      "apollo-link": "^1.2.2",
+      "apollo-link-error": "^1.0.9",
+      "apollo-link-http": "^1.5.4",
+      "babel-polyfill": "^6.26.0",
+      "graphql": "^0.13.2",
+      "graphql-tag": "^2.9.1",
+      "moment": "^2.22.1",
+      "prop-types": "^15.6.1",
+      "react": "^16.3.2",
+      "react-apollo": "^2.1.3",
+      "react-dom": "^16.3.2",
+      "react-router-dom": "^4.2.2",
+      "semantic-ui-css": "2.2.11",
+      "semantic-ui-react": "^0.79.1",
+      "styled-components": "^3.2.6"
+   },
+   "devDependencies": {
+      "eslint": "^4.19.1",
+      "react-scripts": "^1.1.4"
+   },
+   "eslintConfig": {
+      "extends": "./config/eslint.js"
+   }
+}
