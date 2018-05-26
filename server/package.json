@@ -1,0 +1,43 @@
+{
+    "name": "behive",
+    "version": "0.0.1",
+    "description": "",
+    "main": "service.js",
+    "scripts": {
+        "start": "nodemon ./lib/service.js --exec babel-node",
+        "test": "mocha -w",
+        "cover": "istanbul cover --config test/istanbul.yml _mocha -- --opts test/cover.opts",
+        "lint": "eslint .",
+        "build": "babel -d ./build ./lib --ignore '**/*.spec.js'",
+        "debug": "node --inspect build/service.js"
+    },
+    "eslintConfig": {
+        "extends": "./config/eslint.js"
+    },
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^0.18.0",
+        "body-parser": "^1.18.2",
+        "dotenv": "^5.0.1",
+        "express": "^4.16.3",
+        "google-finance": "^0.1.11",
+        "graphql": "^0.13.2",
+        "graphql-server-express": "^1.3.2",
+        "graphql-subscriptions": "^0.5.8",
+        "graphql-tools": "^2.23.1",
+        "moment": "^2.21.0",
+        "subscriptions-transport-ws": "^0.9.6",
+        "yahoo-finance": "^0.3.5"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-core": "^6.26.0",
+        "babel-eslint": "^8.2.2",
+        "babel-preset-es2015": "^6.24.1",
+        "chai": "^4.1.2",
+        "eslint": "^4.18.2",
+        "istanbul": "^1.0.0-alpha.2",
+        "mocha": "^5.0.4",
+        "nodemon": "^1.17.1"
+    }
+}

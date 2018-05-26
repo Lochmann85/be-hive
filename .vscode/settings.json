@@ -1,0 +1,10 @@
+// Project dependent visual studio code settings.
+{
+   "window.zoomLevel": 0,
+   "vsicons.projectDetection.autoReload": true,
+   "editor.tabSize": 3,
+   "editor.detectIndentation": false,
+   "editor.formatOnSave": true,
+   "vsicons.presets.angular": false,
+   "workbench.iconTheme": "vscode-icons"
+}
