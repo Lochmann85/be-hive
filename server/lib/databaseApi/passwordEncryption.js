@@ -11,7 +11,7 @@ const SALT_ROUNDS = 10;
  * @returns {Promise} of hash action
  */
 const continueWithHashedPassword = (next, user) => {
-   return bcrypt.hash(user.password, SALT_ROUNDS)
+   bcrypt.hash(user.password, SALT_ROUNDS)
       .then(hashedPassword => {
          user.password = hashedPassword;
          next();

@@ -1,4 +1,5 @@
 import findAllUsersTemplate from './findAllUsers';
+import createUserTemplate from './createUser';
 
 const types = `
 type User {
@@ -8,6 +9,11 @@ type User {
    createdAt: String!
    updatedAt: String!
 }
+input UserData {
+   email: String
+   name: String
+   password: String
+}
 `;
 
 const queries = `
@@ -16,6 +22,14 @@ const queries = `
 
 const queriesResolver = (userDbService) => ({
    findAllUsers: findAllUsersTemplate(userDbService)
+});
+
+const mutations = `
+   createUser(userData: UserData): User!
+`;
+
+const mutationsResolver = (userDbService) => ({
+   createUser: createUserTemplate(userDbService)
 });
 
 /**
@@ -37,7 +51,9 @@ const create = (
    return Object.freeze({
       types,
       queries,
-      queriesResolver: queriesResolver(userDbService)
+      queriesResolver: queriesResolver(userDbService),
+      mutations,
+      mutationsResolver: mutationsResolver(userDbService),
    });
 };
 

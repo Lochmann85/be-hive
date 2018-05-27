@@ -1,4 +1,4 @@
-// import createUserTemplate from './createUser';
+import createUserTemplate from './createUser';
 import findAllUsersTemplate from './findAllUsers';
 
 /**
@@ -13,7 +13,7 @@ const create = (
 ) => {
    const userDbServices = Object.freeze({
       findAllUsers: findAllUsersTemplate(models.user),
-      // createUser: createUserTemplate(models.user)
+      createUser: createUserTemplate(models.user)
    });
 
    return Object.freeze({
