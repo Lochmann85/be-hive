@@ -9,8 +9,7 @@ import Info from './Info';
 const StyledDropdownHeader = styled(Dropdown.Header) `
    margin: 0!important;
    padding:1rem 1.14285714rem!important;
-   background-color: ${"TODO"};
-   color:${standardColors.white}!important
+   background-color: ${standardColors.be_hive_yellow};
 `;
 
 const StyledDropdownMenu = styled(Dropdown.Menu) `

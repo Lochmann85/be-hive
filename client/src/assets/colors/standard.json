@@ -1,3 +1,6 @@
 {
-   "white": "#FFFFFF"
+   "white": "#FFFFFF",
+   "black": "rgba(0,0,0,.87)",
+   "be_hive_yellow": "#F1EC83",
+   "be_hive_contrary_turquoise": "#7BF9C6"
 }
