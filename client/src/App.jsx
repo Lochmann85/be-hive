@@ -20,7 +20,7 @@ const App = () => (
          </Grid.Row>
       </Grid>
       <Switch>
-         <Route path={ErrorPage.path} render={() => <ErrorPage />} />
+         <Route path={ErrorPage.path} render={(props) => <ErrorPage {...props} />} />
          <Route path={PrivateRoutes.path} component={() => <PrivateRoutes />} />
       </Switch>
    </React.Fragment>

@@ -1,17 +1,18 @@
 import React from 'react';
 
-import { Switch } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
-// import UserRoutes from './user/Routes';
+import UserRoutes from './user/Routes';
 
 const PrivateRoutes = () => (
    <Switch>
+      <Route path={UserRoutes.menuGroup.path} component={UserRoutes} />
    </Switch>
 );
 
 PrivateRoutes.path = "/";
 PrivateRoutes.navigation = [
-   // UserRoutes.menuGroup
+   UserRoutes.menuGroup
 ];
 
 export default PrivateRoutes;
