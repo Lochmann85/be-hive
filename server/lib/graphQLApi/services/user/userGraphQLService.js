@@ -3,8 +3,8 @@ import findAllUsersTemplate from './findAllUsers';
 const types = `
 type User {
    id: ID!
-   firstname: String!
-   lastname: String!
+   email: String!
+   name: String!
    createdAt: String!
    updatedAt: String!
 }

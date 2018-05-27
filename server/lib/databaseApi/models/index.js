@@ -1,5 +1,5 @@
-// import * as userModelFactory from './user/userModel';
+import * as userModelFactory from './user/userModel';
 
 export {
-   // userModelFactory,
+   userModelFactory,
 };
