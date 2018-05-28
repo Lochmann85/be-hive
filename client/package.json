@@ -1,12 +1,12 @@
 {
-   "name": "be-have_client",
+   "name": "be-hive-client",
    "version": "0.0.1",
    "private": true,
    "license": "ISC",
    "proxy": "http://localhost:3001",
    "scripts": {
       "start": "react-scripts start",
-      "build": "REACT_APP_IP=www.be-have.herokuapp.com react-scripts build",
+      "build": "REACT_APP_IP=be-hive.herokuapp.com react-scripts build",
       "lint": "eslint . --ext .jsx,.js"
    },
    "dependencies": {
