@@ -6,6 +6,9 @@
  * @returns {Promise} of new user
  */
 const createUser = (userDbService) => (_, { userData }) => {
+   if (userData.email) {
+      userData.email = userData.email.toLowerCase();
+   }
    return userDbService.createUser(userData);
 };
 

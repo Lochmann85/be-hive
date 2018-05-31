@@ -7,9 +7,6 @@
  * @returns {Promise} of new user in database
  */
 const createUser = (UserModel) => (userData) => {
-   if (userData.email) {
-      userData.email = userData.email.toLowerCase();
-   }
    const user = new UserModel(userData);
 
    return user.validate()

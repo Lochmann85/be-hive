@@ -1,5 +1,7 @@
 import findAllUsersTemplate from './findAllUsers';
+import findUserTemplate from './findUser';
 import createUserTemplate from './createUser';
+import updateUserTemplate from './updateUser';
 
 const types = `
 type User {
@@ -18,18 +20,22 @@ input UserData {
 
 const queries = `
    findAllUsers: [User!]
+   findUser(userId: ID): User!
 `;
 
 const queriesResolver = (userDbService) => ({
-   findAllUsers: findAllUsersTemplate(userDbService)
+   findAllUsers: findAllUsersTemplate(userDbService),
+   findUser: findUserTemplate(userDbService),
 });
 
 const mutations = `
    createUser(userData: UserData): User!
+   updateUser(userId: ID!, userData:  UserData): User!
 `;
 
 const mutationsResolver = (userDbService) => ({
-   createUser: createUserTemplate(userDbService)
+   createUser: createUserTemplate(userDbService),
+   updateUser: updateUserTemplate(userDbService),
 });
 
 /**

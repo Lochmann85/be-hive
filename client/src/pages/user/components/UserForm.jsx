@@ -57,11 +57,9 @@ class UserForm extends React.Component {
       const emailHasError = checkForErrorInInput("email", errors);
       const nameHasError = checkForErrorInInput("name", errors);
       const passwordHasError = checkForErrorInInput("password", errors);
-      const confirmationHasError = checkForErrorInInput("confirm", errors);
 
       let email = "",
          passwordInput = null,
-         confirmInput = null,
          changePasswordButton = null,
          changePasswordModal = null;
 
@@ -74,15 +72,6 @@ class UserForm extends React.Component {
                type="password"
                onChange={this._handleChange}
                error={passwordHasError} />
-         );
-         confirmInput = (
-            <Form.Input
-               required
-               label="Confirm"
-               name="confirm"
-               type="password"
-               onChange={this._handleChange}
-               error={confirmationHasError} />
          );
       }
       else {
@@ -122,7 +111,6 @@ class UserForm extends React.Component {
                defaultValue={this.state.name}
                error={nameHasError} />
             {passwordInput}
-            {confirmInput}
             <Message error visible hidden={errors.length === 0}>
                <Message.List items={errors.map(error => error.message)} />
             </Message>
@@ -151,7 +139,6 @@ class UserForm extends React.Component {
 
       if (!this.props.user) {
          userData.password = this.state.password;
-         userData.confirm = this.state.confirm;
       }
 
       this.props.onSubmit(userData);
