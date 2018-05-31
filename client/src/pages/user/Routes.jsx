@@ -2,7 +2,8 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import UserOverview from './UserOverview';
-import { defaultNumberOfVisibleTableEntries } from './../../components/table/numberOfTableEntries';
+import CreateUser from './CreateUser';
+import { defaultNumberOfVisibleTableEntries } from '../../components/table/numberOfTableEntries';
 
 const routesPath = "/user";
 
@@ -12,7 +13,8 @@ class UserRoutes extends React.Component {
       label: "User",
       path: routesPath,
       menuItems: [
-         UserOverview.menuItem,
+         UserOverview.menuItem(routesPath),
+         CreateUser.menuItem(routesPath),
       ],
    };
 
@@ -35,9 +37,14 @@ class UserRoutes extends React.Component {
          sidebarIsShown,
       } = this.state;
 
+      const relatedPaths = {
+         userOverview: UserOverview.path(routesPath),
+         createUser: CreateUser.path(routesPath),
+      };
+
       return (
          <Switch>
-            <Route exact path={routesPath + UserOverview.menuItem.path} render={(routerProps) => (
+            <Route exact path={UserOverview.path(routesPath)} render={() => (
                <UserOverview
                   search={selectedFilterData}
                   selectedNumberOfTableEntries={selectedNumberOfTableEntries}
@@ -45,7 +52,11 @@ class UserRoutes extends React.Component {
                   onFilterChange={this._handleFilterChange}
                   onTableChange={this._handleTableChange}
                   sidebarIsShown={sidebarIsShown}
-                  onToggleSidebar={this._handleToggleSidebar} />
+                  onToggleSidebar={this._handleToggleSidebar}
+                  relatedPaths={relatedPaths} />
+            )} />
+            <Route exact path={CreateUser.path(routesPath)} render={() => (
+               <CreateUser relatedPaths={relatedPaths} />
             )} />
          </Switch>
       );

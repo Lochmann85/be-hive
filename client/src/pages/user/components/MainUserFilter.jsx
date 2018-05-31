@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import MainFilterBase from './../../../components/filter/MainFilterBase';
+import MainFilterBase from '../../../components/filter/MainFilterBase';
 
 class MainUserFilter extends React.Component {
 

@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { BeHiveIcon } from './../../assets/styles/UI';
-import { FlexWrapper } from './../../assets/styles/Wrapper';
+import { BeHiveIcon } from '../../assets/styles/UI';
+import { FlexWrapper } from '../../assets/styles/Wrapper';
 
 const RemainingSpace = styled.div`
    flex: 1 1 auto;

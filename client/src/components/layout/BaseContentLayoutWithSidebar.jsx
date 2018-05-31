@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import BaseContentLayout from './BaseContentLayout';
-import { FlexWrapper } from './../../assets/styles/Wrapper';
+import { FlexWrapper } from '../../assets/styles/Wrapper';
 
 const TopAlignedFlexWrapper = styled(FlexWrapper) `
    align-items: stretch;

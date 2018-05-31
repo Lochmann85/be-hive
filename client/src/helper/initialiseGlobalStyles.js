@@ -1,5 +1,5 @@
 import 'semantic-ui-css/semantic.min.css';
-import './../assets/styles/fontello.css';
+import '../assets/styles/fontello.css';
 
 import { injectGlobal } from 'styled-components';
 

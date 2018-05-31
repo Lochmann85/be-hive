@@ -10,6 +10,7 @@ const StyledDropdownHeader = styled(Dropdown.Header) `
    margin: 0!important;
    padding:1rem 1.14285714rem!important;
    background-color: ${standardColors.be_hive_yellow};
+   opacity: 0.7!important;
 `;
 
 const StyledDropdownMenu = styled(Dropdown.Menu) `

@@ -11,7 +11,7 @@ const NavigationMenuGroup = ({ menuGroup }) => {
       menuGroupItems = menuGroup.menuItems.map((menuItem, index) =>
          <Dropdown.Item
             as={Link}
-            to={menuGroup.path + menuItem.path}
+            to={menuItem.path}
             content={menuItem.label}
             key={index} />
       );

@@ -2,10 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Dropdown, Icon, Button } from 'semantic-ui-react';
+import { Dropdown, Icon } from 'semantic-ui-react';
 
-import { FilterHeader } from './../../assets/styles/UI';
-import { FlexWrapper } from './../../assets/styles/Wrapper';
+import {
+   FilterHeader,
+   BeHiveButton,
+} from '../../assets/styles/UI';
+import { FlexWrapper } from '../../assets/styles/Wrapper';
 
 const FilterSelectionWrapper = styled.div`
    & > div {
@@ -31,11 +34,11 @@ const SearchTypeSelection = styled(Dropdown) `
    flex: 1 1 auto;
 `;
 
-const StyledAddButton = styled(Button) `
+const StyledAddButton = styled(BeHiveButton) `
    margin-left: 0.5rem!important;
 `;
 
-const FilterButton = styled(Button) `
+const FilterButton = styled(BeHiveButton) `
    margin-right: 0!important;
    margin-left: 1rem!important;
    margin-bottom: 1rem!important;

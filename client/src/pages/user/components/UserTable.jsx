@@ -7,7 +7,7 @@ import { Table } from 'semantic-ui-react';
 
 import BasePagedTable from '../../../components/table/BasePagedTable';
 import UserTableRow from './UserTableRow';
-import findAllUsersQuery from './../graphql/queries/findAllUsers';
+import findAllUsersQuery from '../graphql/queries/findAllUsers';
 
 const UserTable = (props) => {
 
@@ -66,13 +66,6 @@ const UserTable = (props) => {
    );
 };
 
-UserTable.propTypes = {
-   search: PropTypes.array,
-   selectedNumberOfTableEntries: PropTypes.number.isRequired,
-   firstVisibleTableEntryIndex: PropTypes.number.isRequired,
-   onTableChange: PropTypes.func.isRequired,
-};
-
 const userFragment = {
    name: "UserTable",
    document: gql`
@@ -80,6 +73,17 @@ const userFragment = {
       ...${UserTableRow.fragments.user.name}
    }
    ${UserTableRow.fragments.user.document}`
+};
+
+UserTable.propTypes = {
+   search: PropTypes.array,
+   selectedNumberOfTableEntries: PropTypes.number.isRequired,
+   firstVisibleTableEntryIndex: PropTypes.number.isRequired,
+   onTableChange: PropTypes.func.isRequired,
+};
+
+UserTable.fragments = {
+   user: userFragment
 };
 
 const queryDefinition = findAllUsersQuery(userFragment);

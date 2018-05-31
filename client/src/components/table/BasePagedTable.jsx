@@ -4,9 +4,9 @@ import styled from 'styled-components';
 
 import { Table, Button, Dropdown, Icon, Message } from 'semantic-ui-react';
 
-import QueryLoader from './../../components/layout/QueryLoader';
+import QueryLoader from '../../components/layout/QueryLoader';
 import { numberOfVisibleTableEntries } from './numberOfTableEntries';
-import { FlexWrapper } from './../../assets/styles/Wrapper';
+import { FlexWrapper } from '../../assets/styles/Wrapper';
 
 const RightAlignedContent = styled(FlexWrapper) `
    flex: 1 1 auto;
