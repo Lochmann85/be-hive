@@ -8,6 +8,7 @@ import browserHistory from '../../storeHandler/routerHistory';
 import createUserMutationTemplate from './graphql/mutations/createUser';
 import UserForm from './components/UserForm';
 import UserTable from './components/UserTable';
+import { convertOnlyValidationError } from '../../components/errorHandling/convertValidationError';
 
 class CreateUser extends React.Component {
 
@@ -49,11 +50,13 @@ class CreateUser extends React.Component {
          relatedPaths,
       } = this.props;
 
-      createUser(userData).then(response => {
-         if (response.data.createUser) {
-            browserHistory.push(relatedPaths.userOverview);
-         }
-      }).catch(error => { console.log(error); });
+      createUser(userData)
+         .then(response => {
+            if (response.data.createUser) {
+               browserHistory.push(relatedPaths.userOverview);
+            }
+         })
+         .catch(error => convertOnlyValidationError(error, this._onShowError));
    };
 
    _onShowError = (errors) => this.setState({ errors });

@@ -6,26 +6,12 @@ import ErrorPage from '../pages/error/ErrorPage';
 
 const redirectToErrorPage = (errors) => browserHistory.push(ErrorPage.path, { errors });
 
-const redirectToLoginPage = () => browserHistory.push("/login");
-
 const errorLink = onError(({ operation, networkError, graphQLErrors }) => {
    try {
       const operationDefinition = getOperationDefinitionOrDie(operation.query);
 
       if (graphQLErrors && operationDefinition.operation !== "mutation") {
-         let hasUnauthorized = false;
-         graphQLErrors.forEach(error => {
-            if (error.name === "Unauthorized") {
-               hasUnauthorized = true;
-            }
-         });
-
-         if (hasUnauthorized) {
-            redirectToLoginPage();
-         }
-         else {
-            redirectToErrorPage(graphQLErrors);
-         }
+         redirectToErrorPage(graphQLErrors);
       }
       else if (networkError) {
          redirectToErrorPage({
@@ -44,5 +30,4 @@ const errorLink = onError(({ operation, networkError, graphQLErrors }) => {
 export {
    errorLink,
    redirectToErrorPage,
-   redirectToLoginPage
 };

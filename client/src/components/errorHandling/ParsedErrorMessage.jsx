@@ -12,18 +12,12 @@ const ParsedErrorMessage = ({ graphQLError }) => {
       const parsedErrorResponse = JSON.parse(graphQLError.message);
 
       parsedError.status = parsedErrorResponse.status;
-
-      if (Array.isArray(parsedErrorResponse.message)) {
-         parsedError.errorList = parsedErrorResponse.message;
-      }
-      else {
-         parsedError.errorList.push(parsedErrorResponse.message);
-      }
+      parsedError.errorList.push(parsedErrorResponse.message);
    }
    catch (jsonParseError) {
       parsedError.errorList.push({
          message: graphQLError.message,
-         key: graphQLError.key,
+         path: graphQLError.path,
       });
    }
 

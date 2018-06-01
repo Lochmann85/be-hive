@@ -10,6 +10,7 @@ import browserHistory from './../../storeHandler/routerHistory';
 import updateUserMutationTemplate from './graphql/mutations/updateUser';
 import findUserQueryTemplate from './graphql/queries/findUser';
 import UserTable from './components/UserTable';
+import { convertOnlyValidationError } from '../../components/errorHandling/convertValidationError';
 
 class UpdateUser extends React.Component {
 
@@ -72,7 +73,7 @@ class UpdateUser extends React.Component {
                browserHistory.push(relatedPaths.userOverview);
             }
          })
-         .catch(error => console.log(error));
+         .catch(error => convertOnlyValidationError(error, this._onShowError));
    };
 
    _onShowError = (errors) => this.setState({ errors });

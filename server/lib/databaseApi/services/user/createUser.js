@@ -1,3 +1,5 @@
+import { convertOnlyValidationError } from '../../validations/convertValidationError';
+
 /**
  * @public
  * @function createUser
@@ -12,7 +14,8 @@ const createUser = (UserModel) => (userData) => {
    return user.validate()
       .then(() => {
          return user.saveWithHashedPassword();
-      });
+      })
+      .catch(convertOnlyValidationError);
 };
 
 export default createUser;

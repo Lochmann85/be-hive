@@ -1,3 +1,5 @@
+import { convertOnlyValidationError } from '../../validations/convertValidationError';
+
 /**
  * @public
  * @function updateUser
@@ -7,7 +9,8 @@
  * @returns {Promise} of updated user in database
  */
 const updateUser = (UserModel) => (updateUser) => {
-   return UserModel.findByIdAndUpdate(updateUser.id, updateUser);
+   return UserModel.findByIdAndUpdate(updateUser.id, updateUser)
+      .catch(convertOnlyValidationError);
 };
 
 export default updateUser;
