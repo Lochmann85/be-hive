@@ -76,7 +76,14 @@ const create = (
             continueWithHashedPassword(next, update["$set"]);
          }
          else {
-            next({ errors: { new: { message: passwordValidation.message } } });
+            next({
+               errors: {
+                  new: {
+                     message: passwordValidation.message,
+                     path: "new",
+                  }
+               }
+            });
          }
       }
       else {

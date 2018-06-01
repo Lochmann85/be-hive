@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import { propType } from 'graphql-anywhere';
 import styled from 'styled-components';
 import gql from 'graphql-tag';
+import { graphql } from 'react-apollo';
 
 import { Form, Modal, Button, Message } from 'semantic-ui-react';
 
 import { BeHiveButton } from '../../../assets/styles/UI';
 
-// import changeUserPasswordMutation from '../graphql/mutations/changeUserPassword';
+import changeUserPasswordMutation from '../graphql/mutations/changeUserPassword';
 import checkForErrorInInput from '../../../helper/validation';
+import { convertOnlyValidationError } from '../../../components/errorHandling/convertValidationError';
 
 const StyledDescription = styled(Modal.Description) `
    margin-bottom: 1rem!important;
@@ -126,14 +128,14 @@ class PasswordChanger extends React.Component {
          new: this.state.new,
          confirm: this.state.confirm,
       };
-      changeUserPassword(passwordChangeData, user.id)
+      changeUserPassword(user.id, passwordChangeData)
          .then(response => {
             this.setState({
                showSuccessBox: true,
                errors: []
             });
          })
-         .catch(error => console.log(error));
+         .catch(error => convertOnlyValidationError(error, this._onShowError));
    };
 
    _onShowError = (errors) => this.setState({ errors });
@@ -146,4 +148,8 @@ class PasswordChanger extends React.Component {
    };
 };
 
-export default PasswordChanger;
+const changeUserPassword = changeUserPasswordMutation();
+
+export default graphql(
+   changeUserPassword.document, changeUserPassword.config
+)(PasswordChanger);

@@ -2,6 +2,7 @@ import findAllUsersTemplate from './findAllUsers';
 import findUserTemplate from './findUser';
 import createUserTemplate from './createUser';
 import updateUserTemplate from './updateUser';
+import changeUserPasswordTemplate from './changeUserPassword';
 
 const types = `
 type User {
@@ -15,6 +16,11 @@ input UserData {
    email: String
    name: String
    password: String
+}
+input PasswordChangeData {
+   password: String
+   new: String
+   confirm: String
 }
 `;
 
@@ -31,11 +37,13 @@ const queriesResolver = (userDbService) => ({
 const mutations = `
    createUser(userData: UserData): User!
    updateUser(userId: ID, userData:  UserData): User!
+   changeUserPassword(userId: ID, passwordChangeData: PasswordChangeData): Boolean!
 `;
 
 const mutationsResolver = (userDbService) => ({
    createUser: createUserTemplate(userDbService),
    updateUser: updateUserTemplate(userDbService),
+   changeUserPassword: changeUserPasswordTemplate(userDbService),
 });
 
 /**

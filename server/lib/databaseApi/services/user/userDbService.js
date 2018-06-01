@@ -1,5 +1,6 @@
 import createUserTemplate from './createUser';
 import updateUserTemplate from './updateUser';
+import changeUserPasswordTemplate from './changeUserPassword';
 import findAllUsersTemplate from './findAllUsers';
 import findUserTemplate from './findUser';
 
@@ -13,11 +14,14 @@ import findUserTemplate from './findUser';
 const create = (
    models,
 ) => {
+   const findUser = findUserTemplate(models.user);
+
    const userDbServices = Object.freeze({
       findAllUsers: findAllUsersTemplate(models.user),
-      findUser: findUserTemplate(models.user),
+      findUser,
       createUser: createUserTemplate(models.user),
       updateUser: updateUserTemplate(models.user),
+      changeUserPassword: changeUserPasswordTemplate(models.user, findUser),
    });
 
    return Object.freeze({

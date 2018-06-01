@@ -88,7 +88,7 @@ class UserForm extends React.Component {
             <PasswordChanger
                user={this.props.user}
                header="Change password"
-               description={`Change your password.`}
+               description={`Change the password.`}
                onCloseClick={this._onCloseClick}
                open={this.state.openPasswordChangeModal} />
          );
