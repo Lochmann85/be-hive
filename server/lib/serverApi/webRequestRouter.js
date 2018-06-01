@@ -7,6 +7,8 @@ import {
 import defaultBodyParser from 'body-parser';
 import path from 'path';
 
+import * as defaultArduinoRoutesFactory from './arduinoRoutes';
+
 const reactAppDirectory = path.join(__dirname, "..", "..", "..", "client", "build");
 
 /**
@@ -23,6 +25,7 @@ const reactAppDirectory = path.join(__dirname, "..", "..", "..", "client", "buil
 const setupWithRoutes = (
    executableSchema,
    config,
+   arduinoRoutesFactory = defaultArduinoRoutesFactory,
    routerDriver = express,
    graphQLRouterDriver = graphqlExpress,
    bodyParser = defaultBodyParser,
@@ -42,6 +45,8 @@ const setupWithRoutes = (
          schema: executableSchema
       })),
    );
+
+   arduinoRoutesFactory.create(webRequestRouter);
 
    // request router only serves static assets in production
    if (config.isInProductionMode) {
