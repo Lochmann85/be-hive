@@ -30,7 +30,7 @@ const queriesResolver = (userDbService) => ({
 
 const mutations = `
    createUser(userData: UserData): User!
-   updateUser(userId: ID!, userData:  UserData): User!
+   updateUser(userId: ID, userData:  UserData): User!
 `;
 
 const mutationsResolver = (userDbService) => ({

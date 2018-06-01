@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import UserOverview from './UserOverview';
 import CreateUser from './CreateUser';
+import UpdateUser from './UpdateUser';
 import { defaultNumberOfVisibleTableEntries } from '../../components/table/numberOfTableEntries';
 
 const routesPath = "/user";
@@ -40,6 +41,7 @@ class UserRoutes extends React.Component {
       const relatedPaths = {
          userOverview: UserOverview.path(routesPath),
          createUser: CreateUser.path(routesPath),
+         updateUser: UpdateUser.path(routesPath),
       };
 
       return (
@@ -57,6 +59,9 @@ class UserRoutes extends React.Component {
             )} />
             <Route exact path={CreateUser.path(routesPath)} render={() => (
                <CreateUser relatedPaths={relatedPaths} />
+            )} />
+            <Route exact path={UpdateUser.path(routesPath) + UpdateUser.wildcard} render={(routerProps) => (
+               <UpdateUser relatedPaths={relatedPaths} {...routerProps} />
             )} />
          </Switch>
       );

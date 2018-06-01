@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { propType } from 'graphql-anywhere';
 import moment from 'moment';
@@ -7,18 +8,18 @@ import { Table } from 'semantic-ui-react';
 
 import DescriptionWithEditAndDelete from '../../../components/table/DescriptionWithEditAndDelete';
 import InteractionTableRow from '../../../components/table/InteractionTableRow';
-import UserRoutes from '../Routes';
 
 const UserTableRow = (props) => {
    const {
       user,
+      relatedPaths,
    } = props;
 
    const createdAt = new Date(user.createdAt);
    const UserInteractionCell = ({ isSelected }) => (
       <Table.Cell>
          <DescriptionWithEditAndDelete
-            routePrefix={UserRoutes.menuGroup.path}
+            relatedPath={relatedPaths.updateUser}
             id={user.id}
             isSelected={isSelected}
             description={moment(createdAt).format("DD.MM.YYYY - HH:mm")} />
@@ -53,7 +54,10 @@ const userFragment = {
 };
 
 UserTableRow.propTypes = {
-   user: propType(userFragment.document).isRequired
+   user: propType(userFragment.document).isRequired,
+   relatedPaths: PropTypes.shape({
+      updateUser: PropTypes.string.isRequired,
+   }).isRequired,
 };
 
 UserTableRow.fragments = {

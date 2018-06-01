@@ -23,7 +23,7 @@ const DescriptionWithEditAndDelete = (props) => {
       deleteIcon = props.onDeleteClick ?
          <BeHiveIcon clasNname="ficon-cancel" color="red" onClick={_onDeleteClick} link /> : null;
 
-      editIcon = <Link to={`${props.routePrefix}/update/${props.id}`} >
+      editIcon = <Link to={`${props.relatedPath}/${props.id}`} >
          <BeHiveIcon name="edit" color="blue" />
       </Link>;
    }
@@ -39,7 +39,7 @@ const DescriptionWithEditAndDelete = (props) => {
 
 DescriptionWithEditAndDelete.propTypes = {
    id: PropTypes.string.isRequired,
-   routePrefix: PropTypes.string.isRequired,
+   relatedPath: PropTypes.string.isRequired,
    isSelected: PropTypes.bool.isRequired,
    onDeleteClick: PropTypes.func,
    description: PropTypes.oneOfType([

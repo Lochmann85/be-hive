@@ -39,7 +39,8 @@ const UserOverview = (props) => {
             search={search}
             selectedNumberOfTableEntries={selectedNumberOfTableEntries}
             firstVisibleTableEntryIndex={firstVisibleTableEntryIndex}
-            onTableChange={onTableChange} />
+            onTableChange={onTableChange}
+            relatedPaths={relatedPaths} />
       </BaseContentLayoutWithSidebar>
    );
 };
@@ -53,8 +54,9 @@ UserOverview.propTypes = {
    sidebarIsShown: PropTypes.bool.isRequired,
    onToggleSidebar: PropTypes.func.isRequired,
    relatedPaths: PropTypes.shape({
-      createUser: PropTypes.string.isRequired
-   }).isRequired
+      createUser: PropTypes.string.isRequired,
+      updateUser: PropTypes.string.isRequired,
+   }).isRequired,
 };
 
 UserOverview.path = (routePath) => `${routePath}/view`;

@@ -10,12 +10,20 @@ import UserTableRow from './UserTableRow';
 import findAllUsersQuery from '../graphql/queries/findAllUsers';
 
 const UserTable = (props) => {
+   const {
+      findAllUsersQuery,
+      selectedNumberOfTableEntries,
+      firstVisibleTableEntryIndex,
+      onTableChange,
+      relatedPaths,
+   } = props;
 
    const _createTableBody = (visibleUsers) => {
       const visibleTableRows = visibleUsers.map((user, index) =>
          <UserTableRow
             key={index}
-            user={user} />
+            user={user}
+            relatedPaths={relatedPaths} />
       );
 
       return (
@@ -38,13 +46,6 @@ const UserTable = (props) => {
          </Table.Header>
       );
    };
-
-   const {
-      findAllUsersQuery,
-      selectedNumberOfTableEntries,
-      firstVisibleTableEntryIndex,
-      onTableChange
-   } = props;
 
    let users = [];
    if (findAllUsersQuery && findAllUsersQuery.findAllUsers) {
@@ -80,6 +81,9 @@ UserTable.propTypes = {
    selectedNumberOfTableEntries: PropTypes.number.isRequired,
    firstVisibleTableEntryIndex: PropTypes.number.isRequired,
    onTableChange: PropTypes.func.isRequired,
+   relatedPaths: PropTypes.shape({
+      updateUser: PropTypes.string.isRequired,
+   }).isRequired,
 };
 
 UserTable.fragments = {

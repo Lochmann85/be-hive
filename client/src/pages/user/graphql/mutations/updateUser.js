@@ -2,17 +2,17 @@ import gql from 'graphql-tag';
 
 export default (userFragment) => ({
    document: gql`
-   mutation createUser($userData: UserData) {
-      createUser(userData: $userData) {
+   mutation updateUser($userId: ID, $userData: UserData) {
+      updateUser(userId: $userId, userData: $userData) {
          ...${userFragment.name}
       }
    }
    ${userFragment.document}`,
    config: {
       props: ({ mutate }) => ({
-         createUser: (userData) => {
+         updateUser: (userId, userData) => {
             return mutate({
-               variables: { userData },
+               variables: { userId, userData },
             });
          },
       }),
