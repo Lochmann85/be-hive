@@ -9,6 +9,7 @@ type User {
    id: ID!
    email: String!
    name: String!
+   isDeletable: Boolean!
    createdAt: String!
    updatedAt: String!
 }

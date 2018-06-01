@@ -49,6 +49,7 @@ const userFragment = {
       id
       email
       name
+      isDeletable
       createdAt
    }`
 };

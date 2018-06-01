@@ -34,6 +34,11 @@ const create = (
          required: true,
          validate: passwordValidation,
       },
+      isDeletable: {
+         type: Boolean,
+         isRequired: true,
+         default: true,
+      }
    }, { timestamps: true });
 
    const duplicateErrorMessage = "There already exists a user with the given {PATH}.";
