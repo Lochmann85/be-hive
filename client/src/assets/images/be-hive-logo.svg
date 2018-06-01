@@ -16,7 +16,7 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    viewBox="0 0 50 50"
-   sodipodi:docname="get-in-line-logo.svg"
+   sodipodi:docname="be-hive-logo.svg"
    inkscape:export-filename="/home/georg/Dokumente/shout-out-loud-logo48.png"
    inkscape:export-xdpi="86.400002"
    inkscape:export-ydpi="86.400002">
@@ -26,24 +26,23 @@
        inkscape:collect="always"
        id="colorshift">
       <stop
-         style="stop-color:#a6a6a6;stop-opacity:1"
+         style="stop-color:#f1ec83;stop-opacity:1;"
          offset="0"
-         id="stop4141" />
+         id="stop4162" />
       <stop
-         style="stop-color:#f5f5f5;stop-opacity:1"
+         style="stop-color:#f1ec83;stop-opacity:0;"
          offset="1"
-         id="stop4143" />
+         id="stop4164" />
     </linearGradient>
     <linearGradient
        inkscape:collect="always"
        xlink:href="#colorshift"
-       id="linearGradient4145"
-       x1="0"
-       y1="23"
-       x2="50"
-       y2="23"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(-48,2)" />
+       id="linearGradient4166"
+       x1="-48"
+       y1="25"
+       x2="47"
+       y2="25"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -52,9 +51,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="7"
-     inkscape:cx="-33.142857"
-     inkscape:cy="28.857143"
+     inkscape:zoom="14"
+     inkscape:cx="13.063908"
+     inkscape:cy="31.573811"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:grid-bbox="true"
@@ -68,7 +67,9 @@
      inkscape:snap-others="false"
      inkscape:snap-object-midpoints="true"
      inkscape:snap-nodes="false"
-     showguides="false">
+     showguides="false"
+     inkscape:snap-bbox="false"
+     inkscape:bbox-nodes="false">
     <inkscape:grid
        type="xygrid"
        id="grid5972" />
@@ -91,7 +92,7 @@
      inkscape:groupmode="layer"
      transform="translate(0,2)">
     <rect
-       style="fill:url(#linearGradient4145);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:url(#linearGradient4166);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="rect5958"
        width="50"
        height="50"
@@ -101,9 +102,19 @@
        inkscape:label="#background"
        transform="matrix(0,-1,1,0,0,0)" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#5f5f5f;stroke-width:5;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 10,38.142857 c 0,0 0,0 9.714286,-20.142857 L 29.571429,27.857143 39.857143,8"
-       id="path4145"
-       inkscape:connector-curvature="0" />
+       sodipodi:type="star"
+       style="opacity:1;fill:#f1ec83;fill-opacity:1;fill-rule:evenodd;stroke:#5f5f5f;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4172"
+       sodipodi:sides="6"
+       sodipodi:cx="25"
+       sodipodi:cy="22.928572"
+       sodipodi:r1="15.48205"
+       sodipodi:r2="13.407849"
+       sodipodi:arg1="3.1415927"
+       sodipodi:arg2="3.6651914"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 9.5179501,22.928571 7.7410259,-13.4078482 15.48205,7e-7 7.741024,13.4078485 -7.741026,13.407849 -15.48205,-1e-6 z" />
   </g>
 </svg>
