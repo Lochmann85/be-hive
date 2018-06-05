@@ -13,6 +13,7 @@ const UserTableRow = (props) => {
    const {
       user,
       relatedPaths,
+      onDeleteClick,
    } = props;
 
    const createdAt = new Date(user.createdAt);
@@ -22,6 +23,7 @@ const UserTableRow = (props) => {
             relatedPath={relatedPaths.updateUser}
             id={user.id}
             isSelected={isSelected}
+            onDeleteClick={onDeleteClick}
             description={moment(createdAt).format("DD.MM.YYYY - HH:mm")} />
       </Table.Cell>
    );
@@ -55,6 +57,7 @@ const userFragment = {
 };
 
 UserTableRow.propTypes = {
+   onDeleteClick: PropTypes.func.isRequired,
    user: propType(userFragment.document).isRequired,
    relatedPaths: PropTypes.shape({
       updateUser: PropTypes.string.isRequired,

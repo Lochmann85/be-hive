@@ -6,6 +6,10 @@ import styled from 'styled-components';
 import { BeHiveIcon } from '../../assets/styles/UI';
 import { FlexWrapper } from '../../assets/styles/Wrapper';
 
+const VerticalAlignedFlexWrapper = styled(FlexWrapper) `
+   align-items: center;
+`;
+
 const RemainingSpace = styled.div`
    flex: 1 1 auto;
 `;
@@ -21,19 +25,19 @@ const DescriptionWithEditAndDelete = (props) => {
 
    if (props.isSelected) {
       deleteIcon = props.onDeleteClick ?
-         <BeHiveIcon clasNname="ficon-cancel" color="red" onClick={_onDeleteClick} link /> : null;
+         <BeHiveIcon className="ficon-cancel" color="red" onClick={_onDeleteClick} link /> : null;
 
       editIcon = <Link to={`${props.relatedPath}/${props.id}`} >
-         <BeHiveIcon name="edit" color="blue" />
+         <BeHiveIcon className="ficon-edit" color="blue" />
       </Link>;
    }
 
    return (
-      <FlexWrapper>
+      <VerticalAlignedFlexWrapper>
          <RemainingSpace>{props.description}</RemainingSpace>
          {editIcon}
          {deleteIcon}
-      </FlexWrapper>
+      </VerticalAlignedFlexWrapper>
    );
 };
 

@@ -118,7 +118,7 @@ class MainFilterBase extends React.Component {
       return (
          <React.Fragment>
             <FlexWrapper>
-               <HideIcon onClick={this.props.onHideFilter} name="angle double left" size="large" />
+               <HideIcon onClick={this.props.onHideFilter} className="ficon-angle-double-left" size="large" />
                <StyledFilterHeader onClick={this.props.onHideFilter}>Filter</StyledFilterHeader>
             </FlexWrapper>
             <FlexWrapper>

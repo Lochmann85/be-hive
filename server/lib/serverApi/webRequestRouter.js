@@ -17,6 +17,7 @@ const reactAppDirectory = path.join(__dirname, "..", "..", "..", "client", "buil
  * @description sets up the different routes for the web server
  * @param {object} executableSchema - graphQL executable schema
  * @param {object} config - the app config
+ * @param {object} arduinoRoutesFactory - the routes for the arduino
  * @param {object} routerDriver - router driver default express
  * @param {object} graphQLRouterDriver - router driver for the graphQL request handling
  * @param {object} bodyParser - request body parser
