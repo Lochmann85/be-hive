@@ -1,5 +1,6 @@
 import createUserTemplate from './createUser';
 import updateUserTemplate from './updateUser';
+import deleteUserTemplate from './deleteUser';
 import changeUserPasswordTemplate from './changeUserPassword';
 import findAllUsersTemplate from './findAllUsers';
 import findUserTemplate from './findUser';
@@ -21,6 +22,7 @@ const create = (
       findUser,
       createUser: createUserTemplate(models.user),
       updateUser: updateUserTemplate(models.user),
+      deleteUser: deleteUserTemplate(models.user),
       changeUserPassword: changeUserPasswordTemplate(models.user, findUser),
    });
 
