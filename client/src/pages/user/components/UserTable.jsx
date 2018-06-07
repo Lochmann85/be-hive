@@ -8,6 +8,7 @@ import { Table } from 'semantic-ui-react';
 import BasePagedTable from '../../../components/table/BasePagedTable';
 import UserTableRow from './UserTableRow';
 import findAllUsersQuery from '../graphql/queries/findAllUsers';
+import deleteUserMutationTemplate from '../graphql/mutations/deleteUser';
 import DeleteConfirmation from '../../../components/modal/DeleteConfirmation';
 import { convertOnlyValidationError } from '../../../components/errorHandling/convertValidationError';
 
@@ -145,7 +146,9 @@ class UserTable extends React.Component {
 };
 
 const queryDefinition = findAllUsersQuery(userFragment);
+const deleteUserMutation = deleteUserMutationTemplate(userFragment);
 
 export default compose(
    graphql(queryDefinition.document, queryDefinition.config),
+   graphql(deleteUserMutation.document, deleteUserMutation.config),
 )(UserTable);
