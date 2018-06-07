@@ -2,6 +2,7 @@ import findAllUsersTemplate from './findAllUsers';
 import findUserTemplate from './findUser';
 import createUserTemplate from './createUser';
 import updateUserTemplate from './updateUser';
+import deleteUserTemplate from './deleteUser';
 import changeUserPasswordTemplate from './changeUserPassword';
 
 const types = `
@@ -38,12 +39,14 @@ const queriesResolver = (userDbService) => ({
 const mutations = `
    createUser(userData: UserData): User!
    updateUser(userId: ID, userData:  UserData): User!
+   deleteUser(userId: ID): User!
    changeUserPassword(userId: ID, passwordChangeData: PasswordChangeData): Boolean!
 `;
 
 const mutationsResolver = (userDbService) => ({
    createUser: createUserTemplate(userDbService),
    updateUser: updateUserTemplate(userDbService),
+   deleteUser: deleteUserTemplate(userDbService),
    changeUserPassword: changeUserPasswordTemplate(userDbService),
 });
 
