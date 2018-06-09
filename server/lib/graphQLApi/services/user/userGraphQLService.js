@@ -75,6 +75,9 @@ const create = (
    });
 };
 
+const noAuthRequest = [];
+
 export {
    create,
+   noAuthRequest
 };

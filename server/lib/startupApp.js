@@ -1,6 +1,7 @@
 import * as defaultDatabaseInitialiser from './databaseApi/databaseInitialiser';
 import * as defaultGraphQLBuilder from './graphQLApi/graphQLBuilder';
 import * as defaultAppServer from './serverApi/appServer';
+import * as authenticationService from './authenticationApi/authenticationService';
 
 /**
  * @public
@@ -18,10 +19,15 @@ const startup = (
 ) => {
    return databaseInitialiser.initialiseDatabase()
       .then(database => {
-         return graphQLBuilder.buildGraphQL(database);
-      })
-      .then(graphQLWrapper => {
-         return appServer.startupAppServer(graphQLWrapper.executableSchema);
+         return graphQLBuilder.buildGraphQL(database)
+            .then(graphQLWrapper => {
+               const authenticationMiddlewares = authenticationService.initialise(database);
+
+               return appServer.startupAppServer(
+                  graphQLWrapper.executableSchema,
+                  authenticationMiddlewares
+               );
+            });
       });
 };
 

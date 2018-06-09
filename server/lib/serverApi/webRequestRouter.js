@@ -7,7 +7,8 @@ import {
 import defaultBodyParser from 'body-parser';
 import path from 'path';
 
-import * as defaultArduinoRoutesFactory from './arduinoRoutes';
+import respondWithError from './respondWithError';
+import * as defaultArduinoRoutes from '../arduinoApi/arduinoRoutes';
 
 const reactAppDirectory = path.join(__dirname, "..", "..", "..", "client", "build");
 
@@ -17,7 +18,8 @@ const reactAppDirectory = path.join(__dirname, "..", "..", "..", "client", "buil
  * @description sets up the different routes for the web server
  * @param {object} executableSchema - graphQL executable schema
  * @param {object} config - the app config
- * @param {object} arduinoRoutesFactory - the routes for the arduino
+ * @param {object} authenticationMiddlewares - authentication middlewares
+ * @param {object} arduinoRoutes - the routes for the arduino
  * @param {object} routerDriver - router driver default express
  * @param {object} graphQLRouterDriver - router driver for the graphQL request handling
  * @param {object} bodyParser - request body parser
@@ -26,11 +28,14 @@ const reactAppDirectory = path.join(__dirname, "..", "..", "..", "client", "buil
 const setupWithRoutes = (
    executableSchema,
    config,
-   arduinoRoutesFactory = defaultArduinoRoutesFactory,
+   authenticationMiddlewares,
+   arduinoRoutes = defaultArduinoRoutes,
    routerDriver = express,
    graphQLRouterDriver = graphqlExpress,
    bodyParser = defaultBodyParser,
 ) => {
+
+   const { graphQLAuthenticationMiddleware } = authenticationMiddlewares;
 
    const webRequestRouter = routerDriver();
 
@@ -42,12 +47,21 @@ const setupWithRoutes = (
       bodyParser.urlencoded({
          extended: false
       }),
+      graphQLAuthenticationMiddleware,
       graphQLRouterDriver(request => ({
          schema: executableSchema
       })),
+      (error, request, response, next) => {
+         if (error) {
+            respondWithError(error, response, next);
+         }
+         else {
+            next();
+         }
+      }
    );
 
-   arduinoRoutesFactory.create(webRequestRouter);
+   arduinoRoutes.useIn(webRequestRouter, authenticationMiddlewares);
 
    // request router only serves static assets in production
    if (config.isInProductionMode) {
@@ -63,7 +77,8 @@ const setupWithRoutes = (
                break;
          }
       });
-   } else {
+   }
+   else {
       webRequestRouter.use(
          "/graphql_dev",
          bodyParser.json(),
