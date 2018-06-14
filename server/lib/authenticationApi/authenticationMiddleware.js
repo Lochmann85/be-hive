@@ -23,7 +23,7 @@ export default (tokenHandler, allowedRequests, database) => {
    const _checkForAllowedRequests = (request) => new Promise((resolve, reject) => {
       try {
          if (allowedRequests(request)) {
-            Object.assign(request.header, { tokenHandler });
+            Object.assign(request.headers, { tokenHandler });
             resolve();
          }
          else {

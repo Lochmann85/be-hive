@@ -15,15 +15,18 @@ Object.keys(services).forEach(serviceKey => {
  * @returns {boolean} of allowed request
  */
 const graphQLNoAuthRequests = (request) => {
-   if (request.body && request.body.operationName && request.body.query) {
-      const { body: { operationName, query } } = request;
+   let requestAllowed = false;
+
+   if (request.body && request.body.query) {
+      const { body: { query } } = request;
       notAuthenticatedRequests.forEach(allowedRequest => {
-         if (operationName === allowedRequest.operationName && query.includes(allowedRequest.searchString)) {
-            return true;
+         if (query.includes("mutation") && query.includes(allowedRequest)) {
+            requestAllowed = true;
          }
       });
    }
-   return false;
+
+   return requestAllowed;
 };
 
 export default graphQLNoAuthRequests;

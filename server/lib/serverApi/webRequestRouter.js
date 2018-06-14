@@ -49,7 +49,10 @@ const setupWithRoutes = (
       }),
       graphQLAuthenticationMiddleware,
       graphQLRouterDriver(request => ({
-         schema: executableSchema
+         schema: executableSchema,
+         context: {
+            tokenHandler: request.headers.tokenHandler,
+         },
       })),
       (error, request, response, next) => {
          if (error) {
@@ -79,11 +82,17 @@ const setupWithRoutes = (
       });
    }
    else {
+      const mockedTokenHandler = {
+         validate() { return Promise.resolve(true); },
+         encrypt() { return Promise.resolve(1); }
+      };
+
       webRequestRouter.use(
          "/graphql_dev",
          bodyParser.json(),
-         graphQLRouterDriver(request => ({
-            schema: executableSchema
+         graphQLRouterDriver(() => ({
+            schema: executableSchema,
+            context: { tokenHandler: mockedTokenHandler },
          }))
       );
 
