@@ -4,6 +4,7 @@ import createUserTemplate from './createUser';
 import updateUserTemplate from './updateUser';
 import deleteUserTemplate from './deleteUser';
 import changeUserPasswordTemplate from './changeUserPassword';
+import loginTemplate from './login';
 
 const types = `
 type User {
@@ -24,6 +25,10 @@ input PasswordChangeData {
    new: String
    confirm: String
 }
+input Credentials {
+   email: String
+   password: String
+}
 `;
 
 const queries = `
@@ -41,6 +46,7 @@ const mutations = `
    updateUser(userId: ID, userData:  UserData): User!
    deleteUser(userId: ID): User!
    changeUserPassword(userId: ID, passwordChangeData: PasswordChangeData): Boolean!
+   login(credentials: Credentials): String!
 `;
 
 const mutationsResolver = (userDbService) => ({
@@ -48,6 +54,7 @@ const mutationsResolver = (userDbService) => ({
    updateUser: updateUserTemplate(userDbService),
    deleteUser: deleteUserTemplate(userDbService),
    changeUserPassword: changeUserPasswordTemplate(userDbService),
+   login: loginTemplate(userDbService),
 });
 
 /**
@@ -75,7 +82,9 @@ const create = (
    });
 };
 
-const noAuthRequest = [];
+const noAuthRequest = [
+   "login",
+];
 
 export {
    create,
