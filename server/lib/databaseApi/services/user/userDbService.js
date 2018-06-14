@@ -4,6 +4,7 @@ import deleteUserTemplate from './deleteUser';
 import changeUserPasswordTemplate from './changeUserPassword';
 import findAllUsersTemplate from './findAllUsers';
 import findUserTemplate from './findUser';
+import authenticateUserTemplate from './authenticateUser';
 
 /**
  * @public
@@ -24,6 +25,7 @@ const create = (
       updateUser: updateUserTemplate(models.user),
       deleteUser: deleteUserTemplate(models.user),
       changeUserPassword: changeUserPasswordTemplate(models.user, findUser),
+      authenticateUser: authenticateUserTemplate(models.user),
    });
 
    return Object.freeze({
