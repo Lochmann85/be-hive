@@ -71,6 +71,10 @@ class Navigation extends React.Component {
       } = this.props;
       const viewer = checkViewerQuery.checkViewer;
 
+      if (viewer) {
+         localStorage.setItem("jwtToken", viewer.token);
+      }
+
       const navigationMenuGroups = PrivateRoutes.navigation.map((menuGroup, index) =>
          <NavigationMenuGroup menuGroup={menuGroup} key={index} />
       );

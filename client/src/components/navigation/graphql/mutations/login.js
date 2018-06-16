@@ -1,5 +1,19 @@
 import gql from 'graphql-tag';
 
+import checkViewerTemplate from '../queries/checkViewer';
+
+const _updateViewer = (clientStore, viewer, viewerFragment) => {
+   const checkViewerDocument = checkViewerTemplate(viewerFragment).document;
+
+   const checkViewerQuery = {
+      checkViewer: viewer
+   };
+
+   clientStore.writeQuery({
+      query: checkViewerDocument, data: checkViewerQuery
+   });
+};
+
 export default (viewerFragment) => ({
    document: gql`
    mutation login($credentials: Credentials) {
@@ -13,6 +27,9 @@ export default (viewerFragment) => ({
          login: (credentials) => {
             return mutate({
                variables: { credentials },
+               update: (clientStore, { data: { login } }) => {
+                  _updateViewer(clientStore, login, viewerFragment);
+               },
             });
          },
       }),
