@@ -1,5 +1,6 @@
 import React from 'react';
-import { withApollo } from 'react-apollo';
+import { withApollo, compose, graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -8,11 +9,17 @@ import { Menu, Image } from 'semantic-ui-react';
 import logo from '../../assets/images/be-hive-logo.svg';
 import standardColors from '../../assets/colors/standard.json';
 
-import ControlCenterMenu from '../controlCenter/ControlCenterMenu';
+import ControlCenterMenu from './controlCenter/ControlCenterMenu';
 import NavigationMenuGroup from './NavigationMenuGroup';
 import PrivateRoutes from '../../pages/PrivateRoutes';
 
+import loginMutationTemplate from './graphql/mutations/login';
 import browserHistory from '../../storeHandler/routerHistory';
+
+const StyledMenu = styled(Menu)`
+   margin-left:-0.25rem!important;
+   margin-right:-0.25rem!important;
+`;
 
 const HeaderText = styled.span`
    margin-left:0.7rem;
@@ -44,13 +51,25 @@ const LogoImage = styled(Image)`
 
 class Navigation extends React.Component {
 
+   static fragments = {
+      viewer: {
+         name: "LoginViewer",
+         document: gql`
+         fragment LoginViewer on Viewer {
+            id
+            name
+            token
+         }`
+      }
+   }
+
    render() {
       const navigationMenuGroups = PrivateRoutes.navigation.map((menuGroup, index) =>
          <NavigationMenuGroup menuGroup={menuGroup} key={index} />
       );
 
       return (
-         <Menu>
+         <StyledMenu>
             <Menu.Item header>
                <Link to="/">
                   <LogoImage src={logo} />
@@ -63,15 +82,22 @@ class Navigation extends React.Component {
             </Menu.Menu>
             <Menu.Menu position="right">
                <ControlCenterMenu
-                  onLoginSuccess={this._handleLoginSuccess}
+                  onLoginSubmit={this._handleLoginSubmit}
                   onLogout={this._handleLogout} />
             </Menu.Menu>
-         </Menu>
+         </StyledMenu>
       );
    }
 
-   _handleLoginSuccess = (token) => {
-      localStorage.setItem("jwtToken", token);
+   _handleLoginSubmit = (credentials) => {
+      return this.props.login(credentials)
+         .then(response => {
+            if (response.data.login) {
+               const viewer = response.data.login;
+               localStorage.setItem("jwtToken", viewer.token);
+               return Promise.resolve();
+            }
+         });
    }
 
    _handleLogout = () => {
@@ -83,4 +109,9 @@ class Navigation extends React.Component {
    }
 };
 
-export default withApollo(Navigation);
+const loginMutation = loginMutationTemplate(Navigation.fragments.viewer);
+
+export default compose(
+   withApollo,
+   graphql(loginMutation.document, loginMutation.config),
+)(Navigation);

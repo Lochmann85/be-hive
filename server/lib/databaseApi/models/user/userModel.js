@@ -111,7 +111,10 @@ const create = (
                return this;
             }
             else {
-               return Promise.reject(new Error("Please provide the correct password."));
+               return Promise.reject(new Error(JSON.stringify({
+                  message: "Please provide the correct password.",
+                  path: "password"
+               })));
             }
          });
    };

@@ -7,13 +7,14 @@ import { Modal, Message, Form } from 'semantic-ui-react';
 import {
    BeHiveButton,
    BeHiveIcon,
-} from '../../assets/styles/UI';
-import { FlexWrapper } from '../../assets/styles/Wrapper';
+} from '../../../assets/styles/UI';
+import { FlexWrapper } from '../../../assets/styles/Wrapper';
 
-import checkForErrorInInput from '../../helper/validation';
+import checkForErrorInInput from '../../../helper/validation';
+import { convertOnlyValidationError } from '../../errorHandling/convertValidationError';
 
 const CloseIcon = styled(BeHiveIcon)`
-   font-size: 1.2em!important;
+   font-size: 0.9em!important;
    cursor: pointer;
    margin-top: -0.5rem!important;
    margin-right: -1.25rem!important;
@@ -27,7 +28,7 @@ class LoginModal extends React.Component {
 
    static propTypes = {
       onCloseClick: PropTypes.func.isRequired,
-      onLoginSuccess: PropTypes.func.isRequired,
+      onLoginSubmit: PropTypes.func.isRequired,
       open: PropTypes.bool.isRequired,
    }
 
@@ -37,7 +38,7 @@ class LoginModal extends React.Component {
       this.state = {
          email: "",
          password: "",
-         errors: [],
+         loginErrors: [],
       };
    }
 
@@ -45,11 +46,12 @@ class LoginModal extends React.Component {
       const {
          open,
       } = this.props;
+      const {
+         loginErrors
+      } = this.state;
 
-      const errors = this.state.errors;
-
-      const emailHasError = checkForErrorInInput("email", errors);
-      const passwordHasError = checkForErrorInInput("password", errors);
+      const emailHasError = checkForErrorInInput("email", loginErrors);
+      const passwordHasError = checkForErrorInInput("password", loginErrors);
 
       return (
          <Modal
@@ -74,8 +76,8 @@ class LoginModal extends React.Component {
                      type="password"
                      onChange={this._handleChange}
                      error={passwordHasError} />
-                  <Message error visible hidden={errors.length === 0}>
-                     <Message.List items={errors.map(error => error.message)} />
+                  <Message error visible hidden={loginErrors.length === 0}>
+                     <Message.List items={loginErrors.map(error => error.message)} />
                   </Message>
                   <Form.Field control={BeHiveButton} primary fluid type="submit" content="Log In" />
                </Form>
@@ -87,15 +89,25 @@ class LoginModal extends React.Component {
    _handleCloseClick = () => this.setState({
       email: "",
       password: "",
+      loginErrors: [],
    }, this.props.onCloseClick)
 
    _handleChange = (event, { name, value }) => this.setState({ [name]: value });
 
    _handleLoginSubmit = (event) => {
       event.preventDefault();
+
+      const credentials = {
+         email: this.state.email,
+         password: this.state.password,
+      };
+
+      this.props.onLoginSubmit(credentials)
+         .then(() => this._handleCloseClick())
+         .catch(error => convertOnlyValidationError(error, this._onShowError));
    }
 
-   _onShowError = (errors) => this.setState({ errors });
+   _onShowError = (errors) => this.setState({ loginErrors: errors })
 };
 
 export default LoginModal;

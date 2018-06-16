@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { Dropdown } from 'semantic-ui-react';
 
-import standardColors from '../../assets/colors/standard.json';
+import standardColors from '../../../assets/colors/standard.json';
 import Info from './Info';
 import LoginModal from './LoginModal';
 
@@ -23,7 +23,7 @@ class ControlCenterMenu extends React.Component {
 
    static propTypes = {
       onLogout: PropTypes.func.isRequired,
-      onLoginSuccess: PropTypes.func.isRequired,
+      onLoginSubmit: PropTypes.func.isRequired,
    }
 
    constructor(props) {
@@ -36,9 +36,14 @@ class ControlCenterMenu extends React.Component {
    }
 
    render() {
+      const {
+         onLogout,
+         onLoginSubmit,
+      } = this.props;
+
       let actionButton;
-      if (true) {
-         actionButton = <Dropdown.Item onClick={this.props.onLogout} content="Logout" />;
+      if (false) {
+         actionButton = <Dropdown.Item onClick={onLogout} content="Logout" />;
       }
       else {
          actionButton = <Dropdown.Item onClick={this._onOpenLogin} content="Login" />;
@@ -57,13 +62,11 @@ class ControlCenterMenu extends React.Component {
                <LoginModal
                   open={this.state.openLogin}
                   onCloseClick={this._onCloseLogin}
-                  onLoginSuccess={this._handleLoginSuccess} />
+                  onLoginSubmit={onLoginSubmit} />
             </StyledDropdownMenu>
          </Dropdown>
       );
    }
-
-   _handleLoginSuccess = (token) => this.setState({ openLogin: false }, this.props.onLoginSuccess(token))
 
    _onCloseInfo = () => this.setState({ openInfo: false })
 
