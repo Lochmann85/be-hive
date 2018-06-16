@@ -52,6 +52,7 @@ const setupWithRoutes = (
          schema: executableSchema,
          context: {
             tokenHandler: request.headers.tokenHandler,
+            viewer: request.headers.viewer,
          },
       })),
       (error, request, response, next) => {
@@ -92,7 +93,9 @@ const setupWithRoutes = (
          bodyParser.json(),
          graphQLRouterDriver(() => ({
             schema: executableSchema,
-            context: { tokenHandler: mockedTokenHandler },
+            context: {
+               tokenHandler: mockedTokenHandler,
+            },
          }))
       );
 

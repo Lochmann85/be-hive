@@ -23,7 +23,9 @@ export default (tokenHandler, allowedRequests, database) => {
    const _checkForAllowedRequests = (request) => new Promise((resolve, reject) => {
       try {
          if (allowedRequests(request)) {
-            Object.assign(request.headers, { tokenHandler });
+            Object.assign(request.headers, {
+               tokenHandler,
+            });
             resolve();
          }
          else {
@@ -61,7 +63,7 @@ export default (tokenHandler, allowedRequests, database) => {
          tokenHandler.validate(encryptedToken).then(tokenData => {
             userDbService.findUser(tokenData.userId)
                .then(knownViewer => {
-                  Object.assign(request.header, {
+                  Object.assign(request.headers, {
                      viewer: knownViewer,
                      tokenHandler
                   });

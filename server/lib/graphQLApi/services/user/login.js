@@ -10,11 +10,8 @@ const login = (userDbService) => (_, { credentials }, { tokenHandler }) => {
       .then(user => {
          return tokenHandler.encrypt(user)
             .then(token => {
-               return {
-                  id: user.id,
-                  name: user.name,
-                  token,
-               };
+               user.token = token;
+               return user;
             });
       });
 };

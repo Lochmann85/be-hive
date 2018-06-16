@@ -5,6 +5,7 @@ import updateUserTemplate from './updateUser';
 import deleteUserTemplate from './deleteUser';
 import changeUserPasswordTemplate from './changeUserPassword';
 import loginTemplate from './login';
+import checkViewerTemplate from './checkViewer';
 
 const types = `
 type User {
@@ -37,11 +38,13 @@ input Credentials {
 `;
 
 const queries = `
+   checkViewer: Viewer
    findAllUsers: [User!]
    findUser(userId: ID): User!
 `;
 
 const queriesResolver = (userDbService) => ({
+   checkViewer: checkViewerTemplate(userDbService),
    findAllUsers: findAllUsersTemplate(userDbService),
    findUser: findUserTemplate(userDbService),
 });
@@ -89,6 +92,7 @@ const create = (
 
 const noAuthRequest = [
    "login",
+   "checkViewer",
 ];
 
 export {
