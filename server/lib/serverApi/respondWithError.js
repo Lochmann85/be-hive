@@ -12,7 +12,7 @@ const respondWithError = (error, response, next) => {
       response.statusCode = error.statusCode || error.status || 500;
       response.send(JSON.stringify({
          data: null,
-         errors: [{ error }]
+         errors: [{ message: error.message }]
       }));
    }
    if (typeof next === "function") {
