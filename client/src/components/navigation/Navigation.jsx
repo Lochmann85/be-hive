@@ -9,7 +9,7 @@ import { Menu, Image } from 'semantic-ui-react';
 import logo from '../../assets/images/be-hive-logo.svg';
 import standardColors from '../../assets/colors/standard.json';
 
-import ControlCenterMenu from './controlCenter/ControlCenterMenu';
+import ControlCenterMenu from './components/ControlCenterMenu';
 import NavigationMenuGroup from './NavigationMenuGroup';
 import PrivateRoutes from '../../pages/PrivateRoutes';
 
@@ -71,13 +71,14 @@ class Navigation extends React.Component {
       } = this.props;
       const viewer = checkViewerQuery.checkViewer;
 
+      let navigationMenuGroups;
       if (viewer) {
          localStorage.setItem("jwtToken", viewer.token);
-      }
 
-      const navigationMenuGroups = PrivateRoutes.navigation.map((menuGroup, index) =>
-         <NavigationMenuGroup menuGroup={menuGroup} key={index} />
-      );
+         navigationMenuGroups = PrivateRoutes.navigation.map((menuGroup, index) =>
+            <NavigationMenuGroup menuGroup={menuGroup} key={index} />
+         );
+      }
 
       return (
          <StyledMenu>
