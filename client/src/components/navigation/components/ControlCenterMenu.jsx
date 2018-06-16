@@ -9,6 +9,7 @@ import { Dropdown } from 'semantic-ui-react';
 import standardColors from '../../../assets/colors/standard.json';
 import Info from './Info';
 import LoginModal from './LoginModal';
+import ViewerInfo from './ViewerInfo';
 
 const StyledDropdownHeader = styled(Dropdown.Header)`
    margin: 0!important;
@@ -25,8 +26,9 @@ const viewerFragment = {
    name: "ControlCenterViewer",
    document: gql`
    fragment ControlCenterViewer on Viewer {
-      name
-   }`
+      ...${ViewerInfo.fragments.viewer.name}
+   }
+   ${ViewerInfo.fragments.viewer.document}`
 };
 
 class ControlCenterMenu extends React.Component {
@@ -68,6 +70,7 @@ class ControlCenterMenu extends React.Component {
       return (
          <Dropdown item icon="content">
             <StyledDropdownMenu>
+               <ViewerInfo viewer={viewer} />
                <StyledDropdownHeader content={"Version"} />
                <Dropdown.Item onClick={this._onOpenInfo}>Info</Dropdown.Item>
                <Info

@@ -19,6 +19,12 @@ class UserRoutes extends React.Component {
       ],
    };
 
+   static relatedPaths = {
+      userOverview: UserOverview.path(routesPath),
+      createUser: CreateUser.path(routesPath),
+      updateUser: UpdateUser.path(routesPath),
+   };
+
    constructor(props) {
       super(props);
 
@@ -38,12 +44,6 @@ class UserRoutes extends React.Component {
          sidebarIsShown,
       } = this.state;
 
-      const relatedPaths = {
-         userOverview: UserOverview.path(routesPath),
-         createUser: CreateUser.path(routesPath),
-         updateUser: UpdateUser.path(routesPath),
-      };
-
       return (
          <Switch>
             <Route exact path={UserOverview.path(routesPath)} render={() => (
@@ -55,13 +55,13 @@ class UserRoutes extends React.Component {
                   onTableChange={this._handleTableChange}
                   sidebarIsShown={sidebarIsShown}
                   onToggleSidebar={this._handleToggleSidebar}
-                  relatedPaths={relatedPaths} />
+                  relatedPaths={UserRoutes.relatedPaths} />
             )} />
             <Route exact path={CreateUser.path(routesPath)} render={() => (
-               <CreateUser relatedPaths={relatedPaths} />
+               <CreateUser relatedPaths={UserRoutes.relatedPaths} />
             )} />
             <Route exact path={UpdateUser.path(routesPath) + UpdateUser.wildcard} render={(routerProps) => (
-               <UpdateUser relatedPaths={relatedPaths} {...routerProps} />
+               <UpdateUser relatedPaths={UserRoutes.relatedPaths} {...routerProps} />
             )} />
          </Switch>
       );
