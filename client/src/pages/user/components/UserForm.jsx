@@ -12,7 +12,7 @@ import checkForErrorInInput from '../../../helper/validation';
 import PasswordChanger from './PasswordChanger';
 import ButtonGroup from '../../../components/layout/ButtonGroup';
 
-const StyledNewPasswordButton = styled(Button) `
+const StyledNewPasswordButton = styled(Button)`
    margin-right: 2.5rem!important;
 `;
 
@@ -26,7 +26,6 @@ const userFragment = {
       ...${PasswordChanger.fragments.user.name}
    }
    ${PasswordChanger.fragments.user.document}`
-
 };
 
 class UserForm extends React.Component {
