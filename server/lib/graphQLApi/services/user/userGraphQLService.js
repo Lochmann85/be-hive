@@ -15,6 +15,11 @@ type User {
    createdAt: String!
    updatedAt: String!
 }
+type Viewer {
+   id: ID!
+   name: String!
+   token: String!
+}
 input UserData {
    email: String
    name: String
@@ -46,7 +51,7 @@ const mutations = `
    updateUser(userId: ID, userData:  UserData): User!
    deleteUser(userId: ID): User!
    changeUserPassword(userId: ID, passwordChangeData: PasswordChangeData): Boolean!
-   login(credentials: Credentials): String!
+   login(credentials: Credentials): Viewer!
 `;
 
 const mutationsResolver = (userDbService) => ({
