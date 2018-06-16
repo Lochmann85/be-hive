@@ -1,14 +1,18 @@
 import React from 'react';
+import { withApollo } from 'react-apollo';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Menu, Image } from 'semantic-ui-react';
 
+import logo from '../../assets/images/be-hive-logo.svg';
+import standardColors from '../../assets/colors/standard.json';
+
 import ControlCenterMenu from '../controlCenter/ControlCenterMenu';
 import NavigationMenuGroup from './NavigationMenuGroup';
 import PrivateRoutes from '../../pages/PrivateRoutes';
-import logo from '../../assets/images/be-hive-logo.svg';
-import standardColors from '../../assets/colors/standard.json';
+
+import browserHistory from '../../storeHandler/routerHistory';
 
 const HeaderText = styled.span`
    margin-left:0.7rem;
@@ -30,7 +34,7 @@ const MobileHeaderText = styled.span`
    };
 `;
 
-const LogoImage = styled(Image) `
+const LogoImage = styled(Image)`
    @media only screen and (max-width: 767px) {
       height:32px;
       width:32px;
@@ -38,28 +42,45 @@ const LogoImage = styled(Image) `
    display:inline-block!important;
 `;
 
-const Navigation = () => {
-   const navigationMenuGroups = PrivateRoutes.navigation.map((menuGroup, index) =>
-      <NavigationMenuGroup menuGroup={menuGroup} key={index} />
-   );
+class Navigation extends React.Component {
 
-   return (
-      <Menu>
-         <Menu.Item header>
-            <Link to="/">
-               <LogoImage src={logo} />
-               <HeaderText>Be-Hive</HeaderText>
-               <MobileHeaderText>B-H</MobileHeaderText>
-            </Link>
-         </Menu.Item>
-         <Menu.Menu>
-            {navigationMenuGroups}
-         </Menu.Menu>
-         <Menu.Menu position="right">
-            <ControlCenterMenu />
-         </Menu.Menu>
-      </Menu>
-   );
+   render() {
+      const navigationMenuGroups = PrivateRoutes.navigation.map((menuGroup, index) =>
+         <NavigationMenuGroup menuGroup={menuGroup} key={index} />
+      );
+
+      return (
+         <Menu>
+            <Menu.Item header>
+               <Link to="/">
+                  <LogoImage src={logo} />
+                  <HeaderText>Be-Hive</HeaderText>
+                  <MobileHeaderText>B-H</MobileHeaderText>
+               </Link>
+            </Menu.Item>
+            <Menu.Menu>
+               {navigationMenuGroups}
+            </Menu.Menu>
+            <Menu.Menu position="right">
+               <ControlCenterMenu
+                  onLoginSuccess={this._handleLoginSuccess}
+                  onLogout={this._handleLogout} />
+            </Menu.Menu>
+         </Menu>
+      );
+   }
+
+   _handleLoginSuccess = (token) => {
+      localStorage.setItem("jwtToken", token);
+   }
+
+   _handleLogout = () => {
+      localStorage.removeItem("jwtToken");
+      this.props.client.cache.reset()
+         .then(() => {
+            browserHistory.push("/");
+         });
+   }
 };
 
-export default Navigation;
+export default withApollo(Navigation);

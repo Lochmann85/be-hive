@@ -4,9 +4,9 @@ import { graphql, compose } from 'react-apollo';
 
 import { Message } from 'semantic-ui-react';
 
-import BaseContentLayout from './../../components/layout/BaseContentLayout';
+import BaseContentLayout from '../../components/layout/BaseContentLayout';
 import UserForm from './components/UserForm';
-import browserHistory from './../../storeHandler/routerHistory';
+import browserHistory from '../../storeHandler/routerHistory';
 import updateUserMutationTemplate from './graphql/mutations/updateUser';
 import findUserQueryTemplate from './graphql/queries/findUser';
 import UserTable from './components/UserTable';

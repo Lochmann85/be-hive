@@ -2,8 +2,8 @@ import authenticationMiddleware from './authenticationMiddleware';
 import { config } from '../config';
 import * as jwtTokenHandlerFactory from '../jwtApi/jwtTokenHandler';
 
-import graphQLNoAuthRequests from './../graphQLApi/graphQLNoAuthRequests';
-import arduinoNoAuthRequests from './../arduinoApi/arduinoNoAuthRequests';
+import graphQLNoAuthRequests from '../graphQLApi/graphQLNoAuthRequests';
+import arduinoNoAuthRequests from '../arduinoApi/arduinoNoAuthRequests';
 
 /**
  * @public
