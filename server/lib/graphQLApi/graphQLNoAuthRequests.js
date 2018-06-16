@@ -20,7 +20,7 @@ const graphQLNoAuthRequests = (request) => {
    if (request.body && request.body.query) {
       const { body: { query } } = request;
       notAuthenticatedRequests.forEach(allowedRequest => {
-         if (query.includes("mutation") && query.includes(allowedRequest)) {
+         if (query.includes(allowedRequest)) {
             requestAllowed = true;
          }
       });

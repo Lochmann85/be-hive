@@ -1,4 +1,6 @@
 import React from 'react';
+import gql from 'graphql-tag';
+import { propType } from 'graphql-anywhere';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -19,11 +21,24 @@ const StyledDropdownMenu = styled(Dropdown.Menu)`
    min-width: 150px!important;
 `;
 
+const viewerFragment = {
+   name: "ControlCenterViewer",
+   document: gql`
+   fragment ControlCenterViewer on Viewer {
+      name
+   }`
+};
+
 class ControlCenterMenu extends React.Component {
+
+   static fragments = {
+      viewer: viewerFragment
+   };
 
    static propTypes = {
       onLogout: PropTypes.func.isRequired,
       onLoginSubmit: PropTypes.func.isRequired,
+      viewer: propType(viewerFragment.document),
    }
 
    constructor(props) {
@@ -39,10 +54,11 @@ class ControlCenterMenu extends React.Component {
       const {
          onLogout,
          onLoginSubmit,
+         viewer
       } = this.props;
 
       let actionButton;
-      if (false) {
+      if (viewer) {
          actionButton = <Dropdown.Item onClick={onLogout} content="Logout" />;
       }
       else {
