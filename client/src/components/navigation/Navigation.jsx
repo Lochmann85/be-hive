@@ -18,8 +18,7 @@ import checkViewerQueryTemplate from './graphql/queries/checkViewer';
 import browserHistory from '../../storeHandler/routerHistory';
 
 const StyledMenu = styled(Menu)`
-   margin-left:-0.25rem!important;
-   margin-right:-0.25rem!important;
+   border-radius: 0!important;
 `;
 
 const HeaderText = styled.span`
@@ -83,7 +82,7 @@ class Navigation extends React.Component {
       return (
          <StyledMenu>
             <Menu.Item header>
-               <Link to="/">
+               <Link to={PrivateRoutes.path}>
                   <LogoImage src={logo} />
                   <HeaderText>Be-Hive</HeaderText>
                   <MobileHeaderText>B-H</MobileHeaderText>
@@ -117,7 +116,7 @@ class Navigation extends React.Component {
       localStorage.removeItem("jwtToken");
       this.props.client.cache.reset()
          .then(() => {
-            browserHistory.push("/");
+            browserHistory.push(PrivateRoutes.path);
          });
    }
 };

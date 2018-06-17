@@ -4,12 +4,17 @@ import styled from 'styled-components';
 
 import { Grid, Header } from 'semantic-ui-react';
 
+import { NoSideMarginGrid } from '../../assets/styles/UI';
+
 const ContentColumn = styled.div`
 	margin: 0px 10px;
 `;
-const PaddedRow = styled(Grid.Row) `
-   padding-left: 2rem!important;
-   padding-right: 2rem!important;
+
+const PaddedRow = styled(Grid.Row)`
+   @media only screen and (min-width: 768px) {
+      padding-left: 2rem!important;
+      padding-right: 2rem!important;
+   };
 `;
 
 const BaseContentLayout = ({ title, children }) => {
@@ -25,7 +30,7 @@ const BaseContentLayout = ({ title, children }) => {
    }
 
    return (
-      <Grid>
+      <NoSideMarginGrid>
          {titleRow}
          <PaddedRow>
             <Grid.Column>
@@ -34,7 +39,7 @@ const BaseContentLayout = ({ title, children }) => {
                </ContentColumn>
             </Grid.Column>
          </PaddedRow>
-      </Grid>
+      </NoSideMarginGrid>
    );
 };
 

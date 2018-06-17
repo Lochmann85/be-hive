@@ -6,6 +6,8 @@ import { propType } from 'graphql-anywhere';
 
 import { Grid, Icon, Button, Header } from 'semantic-ui-react';
 
+import { NoSideMarginGrid } from '../../../assets/styles/UI';
+
 import UserRoutes from '../../../pages/user/Routes';
 
 const ViewerInfoWrapper = styled.div`
@@ -45,12 +47,12 @@ const ViewerInfo = ({ viewer }) => {
 
    return (
       <ViewerInfoWrapper>
-         <Grid>
+         <NoSideMarginGrid>
             <Grid.Row>
-               <Grid.Column width={6} verticalAlign="middle">
+               <Grid.Column width={7} verticalAlign="middle">
                   <ViewerIcon className="ficon-user-circle-o" />
                </Grid.Column>
-               <Grid.Column width={10}>
+               <Grid.Column width={9}>
                   <ViewerInfoGrid>
                      <Grid.Row>
                         <Grid.Column>
@@ -65,7 +67,7 @@ const ViewerInfo = ({ viewer }) => {
                   </ViewerInfoGrid>
                </Grid.Column>
             </Grid.Row>
-         </Grid>
+         </NoSideMarginGrid>
       </ViewerInfoWrapper>
    );
 };

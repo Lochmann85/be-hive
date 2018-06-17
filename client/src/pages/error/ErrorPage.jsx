@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Grid, Button } from 'semantic-ui-react';
 
 import ParsedErrorMessage from '../../components/errorHandling/ParsedErrorMessage';
+import PrivateRoutes from '../PrivateRoutes';
 
 const ErrorPage = ({ location: { state } }) => {
 
@@ -30,7 +31,7 @@ const ErrorPage = ({ location: { state } }) => {
             <Grid.Column mobile={1} tablet={1} computer={3} largeScreen={4} widescreen={4} />
             <Grid.Column mobile={14} tablet={14} computer={8} largeScreen={7} widescreen={6}>
                {errorMessage}
-               <Button as={Link} to="/" content="Home" />
+               <Button as={Link} to={PrivateRoutes.path} content="Home" />
             </Grid.Column>
          </Grid.Row>
       </Grid>
