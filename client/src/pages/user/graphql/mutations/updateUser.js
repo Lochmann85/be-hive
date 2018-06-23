@@ -13,6 +13,9 @@ export default (userFragment) => ({
          updateUser: (userId, userData) => {
             return mutate({
                variables: { userId, userData },
+               update: (clientStore, { data: { updateUser } }) => {
+                  // _updateViewer(clientStore, updateUser, viewerId);
+               },
             });
          },
       }),

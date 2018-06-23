@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-import checkViewerTemplate from '../queries/checkViewer';
+import checkViewerTemplate from '../../../../checkViewer';
 
 const _updateViewer = (clientStore, viewer, viewerFragment) => {
    const checkViewerDocument = checkViewerTemplate(viewerFragment).document;

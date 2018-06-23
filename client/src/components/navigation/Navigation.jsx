@@ -14,7 +14,6 @@ import NavigationMenuGroup from './NavigationMenuGroup';
 import PrivateRoutes from '../../pages/PrivateRoutes';
 
 import loginMutationTemplate from './graphql/mutations/login';
-import checkViewerQueryTemplate from './graphql/queries/checkViewer';
 import browserHistory from '../../storeHandler/routerHistory';
 
 const StyledMenu = styled(Menu)`
@@ -53,9 +52,9 @@ class Navigation extends React.Component {
 
    static fragments = {
       viewer: {
-         name: "LoginViewer",
+         name: "NavigationViewer",
          document: gql`
-         fragment LoginViewer on Viewer {
+         fragment NavigationViewer on Viewer {
             id
             token
             ...${ControlCenterMenu.fragments.viewer.name}
@@ -66,9 +65,8 @@ class Navigation extends React.Component {
 
    render() {
       const {
-         checkViewerQuery
+         viewer
       } = this.props;
-      const viewer = checkViewerQuery.checkViewer;
 
       let navigationMenuGroups;
       if (viewer) {
@@ -122,10 +120,8 @@ class Navigation extends React.Component {
 };
 
 const loginMutation = loginMutationTemplate(Navigation.fragments.viewer);
-const checkViewerQuery = checkViewerQueryTemplate(Navigation.fragments.viewer);
 
 export default compose(
    withApollo,
-   graphql(checkViewerQuery.document, checkViewerQuery.config),
    graphql(loginMutation.document, loginMutation.config),
 )(Navigation);
