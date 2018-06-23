@@ -1,5 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { propType } from 'graphql-anywhere';
+import gql from 'graphql-tag';
 
 import UserOverview from './UserOverview';
 import CreateUser from './CreateUser';
@@ -7,6 +9,15 @@ import UpdateUser from './UpdateUser';
 import { defaultNumberOfVisibleTableEntries } from '../../components/table/numberOfTableEntries';
 
 const routesPath = "/user";
+
+const viewerFragment = {
+   name: "UserRoutesViewer",
+   document: gql`
+      fragment UserRoutesViewer on Viewer {
+         ...${UpdateUser.fragments.viewer.name}
+      }
+      ${UpdateUser.fragments.viewer.document}`
+};
 
 class UserRoutes extends React.Component {
 
@@ -24,6 +35,14 @@ class UserRoutes extends React.Component {
       createUser: CreateUser.path(routesPath),
       updateUser: UpdateUser.path(routesPath),
    };
+
+   static fragments = {
+      viewer: viewerFragment,
+   }
+
+   static propTypes = {
+      viewer: propType(viewerFragment.document)
+   }
 
    constructor(props) {
       super(props);
@@ -61,7 +80,7 @@ class UserRoutes extends React.Component {
                <CreateUser relatedPaths={UserRoutes.relatedPaths} />
             )} />
             <Route exact path={UpdateUser.path(routesPath) + UpdateUser.wildcard} render={(routerProps) => (
-               <UpdateUser relatedPaths={UserRoutes.relatedPaths} {...routerProps} />
+               <UpdateUser relatedPaths={UserRoutes.relatedPaths} {...routerProps} viewer={this.props.viewer} />
             )} />
          </Switch>
       );

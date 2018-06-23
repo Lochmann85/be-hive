@@ -39,7 +39,7 @@ const App = (props) => {
          </NoSideMarginGrid>
          <Switch>
             <Route path={ErrorPage.path} render={(props) => <ErrorPage {...props} />} />
-            <Route path={PrivateRoutes.path} component={() => <PrivateRoutes />} />
+            <Route path={PrivateRoutes.path} component={() => <PrivateRoutes viewer={viewer} />} />
          </Switch>
       </React.Fragment>
    );
@@ -51,8 +51,10 @@ App.fragments = {
       document: gql`
       fragment AppViewer on Viewer {
          ...${Navigation.fragments.viewer.name}
+         ...${PrivateRoutes.fragments.viewer.name}
       }
-      ${Navigation.fragments.viewer.document}`
+      ${Navigation.fragments.viewer.document}
+      ${PrivateRoutes.fragments.viewer.document}`
    }
 };
 

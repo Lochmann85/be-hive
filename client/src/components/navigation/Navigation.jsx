@@ -3,6 +3,7 @@ import { withApollo, compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { propType } from 'graphql-anywhere';
 
 import { Menu, Image } from 'semantic-ui-react';
 
@@ -48,19 +49,25 @@ const LogoImage = styled(Image)`
    display:inline-block!important;
 `;
 
+const viewerFragment = {
+   name: "NavigationViewer",
+   document: gql`
+   fragment NavigationViewer on Viewer {
+      id
+      token
+      ...${ControlCenterMenu.fragments.viewer.name}
+   }
+   ${ControlCenterMenu.fragments.viewer.document}`
+};
+
 class Navigation extends React.Component {
 
    static fragments = {
-      viewer: {
-         name: "NavigationViewer",
-         document: gql`
-         fragment NavigationViewer on Viewer {
-            id
-            token
-            ...${ControlCenterMenu.fragments.viewer.name}
-         }
-         ${ControlCenterMenu.fragments.viewer.document}`
-      }
+      viewer: viewerFragment,
+   }
+
+   static propTypes = {
+      viewer: propType(viewerFragment.document)
    }
 
    render() {

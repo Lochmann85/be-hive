@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql, compose } from 'react-apollo';
+import { propType } from 'graphql-anywhere';
+import gql from 'graphql-tag';
 
 import { Message } from 'semantic-ui-react';
 
@@ -12,15 +14,29 @@ import findUserQueryTemplate from './graphql/queries/findUser';
 import UserTable from './components/UserTable';
 import { convertOnlyValidationError } from '../../components/errorHandling/convertValidationError';
 
+const viewerFragment = {
+   name: "UpdateUserViewer",
+   document: gql`
+   fragment UpdateUserViewer on Viewer {
+      id
+      name
+   }`
+};
+
 class UpdateUser extends React.Component {
 
    static path = (routePath) => `${routePath}/update`;
    static wildcard = "/:userId";
 
+   static fragments = {
+      viewer: viewerFragment
+   }
+
    static propTypes = {
       relatedPaths: PropTypes.shape({
          userOverview: PropTypes.string.isRequired
-      }).isRequired
+      }).isRequired,
+      viewer: propType(viewerFragment.document),
    }
 
    constructor(props) {
@@ -80,7 +96,7 @@ class UpdateUser extends React.Component {
 };
 
 const findUserQuery = findUserQueryTemplate(UserForm.fragments.user);
-const updateUserMutation = updateUserMutationTemplate(UserTable.fragments.user);
+const updateUserMutation = updateUserMutationTemplate(UserTable.fragments.user, UpdateUser.fragments.viewer);
 
 export default compose(
    graphql(findUserQuery.document, findUserQuery.config),
