@@ -24,6 +24,7 @@ class InteractionTableRow extends React.Component {
 
             if (child.type.hasSelectionState) {
                props.isSelected = this.state.mouseIsOver;
+               props.onLoosesFocus = this._handleLostFocus;
             }
 
             return React.cloneElement(child, props);
@@ -31,24 +32,29 @@ class InteractionTableRow extends React.Component {
       }
       else {
          const props = {};
+
          if (this.props.children.type.hasSelectionState) {
             props.isSelected = this.state.mouseIsOver;
+            props.onLoosesFocus = this._handleLostFocus;
          }
+
          ChildElements = React.cloneElement(this.props.children, props);
       }
 
       return (
          <Table.Row
-            onMouseEnter={this._onMouseEnter}
-            onMouseLeave={this._onMouseLeave}>
+            onMouseEnter={this._handleMouseEnter}
+            onMouseLeave={this._handleMouseLeave}>
             {ChildElements}
          </Table.Row>
       );
    };
 
-   _onMouseEnter = (event) => this.setState({ mouseIsOver: true });
+   _handleMouseEnter = () => this.setState({ mouseIsOver: true });
 
-   _onMouseLeave = (event) => this.setState({ mouseIsOver: false });
+   _handleMouseLeave = () => this.setState({ mouseIsOver: false });
+
+   _handleLostFocus = () => new Promise((resolve) => this.setState({ mouseIsOver: false }, resolve));
 };
 
 InteractionTableRow.propTypes = {

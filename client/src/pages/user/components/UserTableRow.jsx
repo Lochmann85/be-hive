@@ -17,16 +17,24 @@ const UserTableRow = (props) => {
    } = props;
 
    const createdAt = new Date(user.createdAt);
-   const UserInteractionCell = ({ isSelected }) => (
-      <Table.Cell>
-         <DescriptionWithEditAndDelete
-            relatedPath={relatedPaths.updateUser}
-            id={user.id}
-            isSelected={isSelected}
-            onDeleteClick={onDeleteClick}
-            description={moment(createdAt).format("DD.MM.YYYY - HH:mm")} />
-      </Table.Cell>
-   );
+   const UserInteractionCell = ({ isSelected, onLoosesFocus }) => {
+      const handleDeleteClick = (userId) => {
+         onLoosesFocus().then(() => {
+            onDeleteClick(userId);
+         });
+      };
+
+      return (
+         <Table.Cell>
+            <DescriptionWithEditAndDelete
+               relatedPath={relatedPaths.updateUser}
+               id={user.id}
+               isSelected={isSelected}
+               onDeleteClick={handleDeleteClick}
+               description={moment(createdAt).format("DD.MM.YYYY - HH:mm")} />
+         </Table.Cell>
+      );
+   };
    UserInteractionCell.hasSelectionState = true;
 
    return (
