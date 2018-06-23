@@ -7,13 +7,49 @@ import styled from 'styled-components';
 import { Message, Form, Button } from 'semantic-ui-react';
 
 import { BeHiveButton } from '../../../assets/styles/UI';
+import {
+   FlexWrapper,
+   ButtonGroupWrapper
+} from '../../../assets/styles/Wrapper';
+
 import browserHistory from '../../../storeHandler/routerHistory';
 import checkForErrorInInput from '../../../helper/validation';
 import PasswordChanger from './PasswordChanger';
-import ButtonGroup from '../../../components/layout/ButtonGroup';
 
-const StyledNewPasswordButton = styled(Button)`
-   margin-right: 2.5rem!important;
+const ButtonWithOffset = styled(Button)`
+   margin-left: 0.75rem!important;
+   @media only screen and (max-width:460px) { 
+      margin-left: 0!important;
+      margin-right: 0!important;
+      flex: 1 1 auto!important;
+   };
+`;
+
+const ButtonWrapperPc = styled(ButtonGroupWrapper)`
+   @media only screen and (max-width:460px) { 
+      display: none!important;
+   }
+`;
+
+const ButtonWrapperMobile = styled(FlexWrapper)`
+   @media only screen and (min-width:461px) { 
+      display: none!important;
+   };
+   flex-direction: column;
+   align-items: flex-start;
+`;
+
+const NewPasswordButton = styled(ButtonWithOffset)`
+   margin-right: 2rem!important;
+   @media only screen and (max-width:460px) {
+      margin-bottom: 2rem!important;
+   };
+`;
+
+const CancelButton = styled(ButtonWithOffset)`
+   @media only screen and (max-width:460px) {
+      margin-right: 1rem!important;
+   };
 `;
 
 const userFragment = {
@@ -77,7 +113,7 @@ class UserForm extends React.Component {
          email = this.props.user.email;
 
          changePasswordButton = (
-            <StyledNewPasswordButton
+            <NewPasswordButton
                content="New password"
                as={"a"}
                onClick={this._onPasswordChangeClick} />
@@ -92,6 +128,9 @@ class UserForm extends React.Component {
                open={this.state.openPasswordChangeModal} />
          );
       }
+
+      const submitButton = <BeHiveButton type="submit" content={this.props.submitButtonTitle} />,
+         cancelButton = <CancelButton as={"a"} onClick={browserHistory.goBack} content="Cancel" />;
 
       return (
          <Form>
@@ -113,14 +152,18 @@ class UserForm extends React.Component {
             <Message error visible hidden={errors.length === 0}>
                <Message.List items={errors.map(error => error.message)} />
             </Message>
-            <ButtonGroup>
+            <ButtonWrapperPc>
                {changePasswordButton}
-               <Button as={"a"} onClick={browserHistory.goBack} content="Cancel" />
-               <BeHiveButton
-                  type="submit"
-                  content={this.props.submitButtonTitle}
-                  onClick={this._onSubmit} />
-            </ButtonGroup>
+               {cancelButton}
+               {submitButton}
+            </ButtonWrapperPc>
+            <ButtonWrapperMobile>
+               {changePasswordButton}
+               <FlexWrapper>
+                  {cancelButton}
+                  {submitButton}
+               </FlexWrapper>
+            </ButtonWrapperMobile>
             {changePasswordModal}
          </Form>
       );
