@@ -15,7 +15,8 @@ const updateUser = (userDbService) => (_, { userId, userData }) => {
    if (userData.email) {
       updateUserData.$set.email = userData.email.toLowerCase();
    }
-   return userDbService.updateUser(userData);
+
+   return userDbService.updateUser(updateUserData);
 };
 
 export default updateUser;

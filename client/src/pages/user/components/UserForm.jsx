@@ -129,8 +129,14 @@ class UserForm extends React.Component {
          );
       }
 
-      const submitButton = <BeHiveButton type="submit" content={this.props.submitButtonTitle} />,
-         cancelButton = <CancelButton as={"a"} onClick={browserHistory.goBack} content="Cancel" />;
+      const submitButton = <BeHiveButton
+         type="submit"
+         content={this.props.submitButtonTitle}
+         onClick={this._onSubmit} />;
+      const cancelButton = <CancelButton
+         as={"a"}
+         content="Cancel"
+         onClick={browserHistory.goBack} />;
 
       return (
          <Form>
@@ -174,12 +180,21 @@ class UserForm extends React.Component {
    _onSubmit = (event) => {
       event.preventDefault();
 
+      const {
+         email,
+      } = this.state;
+
       const userData = {
-         email: this.state.email,
          name: this.state.name,
       };
 
-      if (!this.props.user) {
+      if (this.props.user) {
+         if (this.props.user.email !== email) {
+            userData.email = email;
+         }
+      }
+      else {
+         userData.email = email;
          userData.password = this.state.password;
       }
 
