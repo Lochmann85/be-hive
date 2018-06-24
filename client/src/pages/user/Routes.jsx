@@ -15,7 +15,9 @@ const viewerFragment = {
    document: gql`
       fragment UserRoutesViewer on Viewer {
          ...${UpdateUser.fragments.viewer.name}
+         ...${UserOverview.fragments.viewer.name}
       }
+      ${UserOverview.fragments.viewer.document}
       ${UpdateUser.fragments.viewer.document}`
 };
 
@@ -62,6 +64,10 @@ class UserRoutes extends React.Component {
          firstVisibleTableEntryIndex,
          sidebarIsShown,
       } = this.state;
+      const {
+         viewer,
+      } = this.props;
+
 
       return (
          <Switch>
@@ -74,13 +80,14 @@ class UserRoutes extends React.Component {
                   onTableChange={this._handleTableChange}
                   sidebarIsShown={sidebarIsShown}
                   onToggleSidebar={this._handleToggleSidebar}
-                  relatedPaths={UserRoutes.relatedPaths} />
+                  relatedPaths={UserRoutes.relatedPaths}
+                  viewer={viewer} />
             )} />
             <Route exact path={CreateUser.path(routesPath)} render={() => (
                <CreateUser relatedPaths={UserRoutes.relatedPaths} />
             )} />
             <Route exact path={UpdateUser.path(routesPath) + UpdateUser.wildcard} render={(routerProps) => (
-               <UpdateUser relatedPaths={UserRoutes.relatedPaths} {...routerProps} viewer={this.props.viewer} />
+               <UpdateUser relatedPaths={UserRoutes.relatedPaths} {...routerProps} viewer={viewer} />
             )} />
          </Switch>
       );

@@ -14,15 +14,19 @@ const UserTableRow = (props) => {
       user,
       relatedPaths,
       onDeleteClick,
+      viewer,
    } = props;
 
    const createdAt = new Date(user.createdAt);
    const UserInteractionCell = ({ isSelected, onLoosesFocus }) => {
-      const handleDeleteClick = (userId) => {
-         onLoosesFocus().then(() => {
-            onDeleteClick(userId);
-         });
-      };
+      let handleDeleteClick;
+      if (user.isDeletable && user.id !== viewer.id) {
+         handleDeleteClick = (userId) => {
+            onLoosesFocus().then(() => {
+               onDeleteClick(userId);
+            });
+         };
+      }
 
       return (
          <Table.Cell>
@@ -64,16 +68,27 @@ const userFragment = {
    }`
 };
 
+const viewerFragment = {
+   name: "UserTableRowViewer",
+   document: gql`
+   fragment UserTableRowViewer on Viewer {
+      id
+   }`
+};
+
+
 UserTableRow.propTypes = {
    onDeleteClick: PropTypes.func.isRequired,
    user: propType(userFragment.document).isRequired,
+   viewer: propType(viewerFragment.document),
    relatedPaths: PropTypes.shape({
       updateUser: PropTypes.string.isRequired,
    }).isRequired,
 };
 
 UserTableRow.fragments = {
-   user: userFragment
+   user: userFragment,
+   viewer: viewerFragment,
 };
 
 export default UserTableRow;

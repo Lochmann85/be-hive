@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { compose, graphql } from 'react-apollo';
+import { propType } from 'graphql-anywhere';
 
 import { Table } from 'semantic-ui-react';
 
@@ -23,6 +24,15 @@ const userFragment = {
    ${UserTableRow.fragments.user.document}`
 };
 
+const viewerFragment = {
+   name: "UserTableViewer",
+   document: gql`
+   fragment UserTableViewer on Viewer {
+      ...${UserTableRow.fragments.viewer.name}
+   }
+   ${UserTableRow.fragments.viewer.document}`
+};
+
 class UserTable extends React.Component {
 
    static propTypes = {
@@ -33,10 +43,12 @@ class UserTable extends React.Component {
       relatedPaths: PropTypes.shape({
          updateUser: PropTypes.string.isRequired,
       }).isRequired,
+      viewer: propType(viewerFragment.document),
    };
 
    static fragments = {
-      user: userFragment
+      user: userFragment,
+      viewer: viewerFragment,
    };
 
    constructor(props) {
@@ -97,7 +109,8 @@ class UserTable extends React.Component {
             key={index}
             user={user}
             relatedPaths={this.props.relatedPaths}
-            onDeleteClick={this._onDeleteClick} />
+            onDeleteClick={this._onDeleteClick}
+            viewer={this.props.viewer} />
       );
 
       return (
