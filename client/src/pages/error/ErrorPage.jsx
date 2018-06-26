@@ -10,14 +10,17 @@ const ErrorPage = ({ location: { state } }) => {
 
    let errorMessage = null;
 
-   const _createErrorMessages = (graphQLError) => {
-      return graphQLError.map((error, index) =>
-         <ParsedErrorMessage graphQLError={error} key={index} />
+   const _createErrorMessages = (errors) => {
+      return errors.map((error, index) =>
+         <ParsedErrorMessage error={error} key={index} />
       );
    };
 
-   if (state && Array.isArray(state.errors)) {
+   if (state && state.errors && Array.isArray(state.errors)) {
       errorMessage = _createErrorMessages(state.errors);
+   }
+   else if (state) {
+      errorMessage = <ParsedErrorMessage error={state} />;
    }
    else {
       errorMessage = _createErrorMessages([{

@@ -13,6 +13,15 @@ import * as defaultArduinoRoutes from '../arduinoApi/arduinoRoutes';
 const reactAppDirectory = path.join(__dirname, "..", "..", "..", "client", "build");
 
 /**
+ * @private
+ * @function _formatError
+ * @description formats the graphQL error to contain message and status
+ * @param {object} error - the error
+ * @returns {object} graphQL error response
+ */
+const _formatError = (error) => ({ message: error.message, status: error.status || 500 });
+
+/**
  * @public
  * @function setupWithRoutes
  * @description sets up the different routes for the web server
@@ -54,6 +63,7 @@ const setupWithRoutes = (
             tokenHandler: request.headers.tokenHandler,
             viewer: request.headers.viewer,
          },
+         formatError: _formatError,
       })),
       (error, request, response, next) => {
          if (error) {
