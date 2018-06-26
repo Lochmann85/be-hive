@@ -9,17 +9,9 @@ import path from 'path';
 
 import respondWithError from './respondWithError';
 import * as defaultArduinoRoutes from '../arduinoApi/arduinoRoutes';
+import formatError from '../errorApi/formatError';
 
 const reactAppDirectory = path.join(__dirname, "..", "..", "..", "client", "build");
-
-/**
- * @private
- * @function _formatError
- * @description formats the graphQL error to contain message and status
- * @param {object} error - the error
- * @returns {object} graphQL error response
- */
-const _formatError = (error) => ({ message: error.message, status: error.status || 500 });
 
 /**
  * @public
@@ -63,7 +55,7 @@ const setupWithRoutes = (
             tokenHandler: request.headers.tokenHandler,
             viewer: request.headers.viewer,
          },
-         formatError: _formatError,
+         formatError,
       })),
       (error, request, response, next) => {
          if (error) {
