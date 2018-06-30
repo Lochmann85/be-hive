@@ -1,3 +1,8 @@
+import {
+   forbiddenError,
+   authenticationError
+} from '../errorApi';
+
 /**
  * @public
  * @function authenticationMiddleware
@@ -29,10 +34,10 @@ export default (tokenHandler, allowedRequests, database) => {
             resolve();
          }
          else {
-            reject(new Error("unauthorized"));
+            reject(authenticationError);
          }
       } catch (error) {
-         reject(new Error("forbidden"));
+         reject(forbiddenError);
       }
    });
 

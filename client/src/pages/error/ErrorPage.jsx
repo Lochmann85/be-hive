@@ -5,6 +5,8 @@ import { Grid, Button } from 'semantic-ui-react';
 
 import ParsedErrorMessage from '../../components/errorHandling/ParsedErrorMessage';
 import PrivateRoutes from '../PrivateRoutes';
+import BaseContentLayout from '../../components/layout/BaseContentLayout';
+import { ButtonGroupWrapper } from '../../assets/styles/Wrapper';
 
 const ErrorPage = ({ location: { state } }) => {
 
@@ -29,15 +31,19 @@ const ErrorPage = ({ location: { state } }) => {
    }
 
    return (
-      <Grid padded>
-         <Grid.Row>
-            <Grid.Column mobile={1} tablet={1} computer={3} largeScreen={4} widescreen={4} />
-            <Grid.Column mobile={14} tablet={14} computer={8} largeScreen={7} widescreen={6}>
-               {errorMessage}
-               <Button as={Link} to={PrivateRoutes.path} content="Home" />
-            </Grid.Column>
-         </Grid.Row>
-      </Grid>
+      <BaseContentLayout>
+         <Grid>
+            <Grid.Row>
+               <Grid.Column only="tablet" tablet={1} computer={2} largeScreen={4} widescreen={4} />
+               <Grid.Column mobile={16} tablet={14} computer={12} largeScreen={8} widescreen={8} >
+                  {errorMessage}
+               </Grid.Column>
+            </Grid.Row>
+         </Grid>
+         <ButtonGroupWrapper>
+            <Button as={Link} to={PrivateRoutes.path} content="Home" />
+         </ButtonGroupWrapper>
+      </BaseContentLayout >
    );
 };
 
