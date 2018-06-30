@@ -2,10 +2,6 @@ import browserHistory from '../../storeHandler/routerHistory';
 
 import ErrorPage from '../../pages/error/ErrorPage';
 
-const handleNetworkErrors = (networkError) => {
-   browserHistory.push(ErrorPage.path, { errors: networkError });
-};
-
 const convertGraphQLErrors = (graphQLErrors, onShowError) => {
    try {
       let shownErrors = [];
@@ -29,15 +25,14 @@ const convertGraphQLErrors = (graphQLErrors, onShowError) => {
 };
 
 const convertOnlyValidationError = (mutationError, onShowError) => {
-   if (mutationError.networkError) {
-      handleNetworkErrors(mutationError.networkError);
-   }
-   else if (mutationError.graphQLErrors) {
+   if (mutationError.graphQLErrors &&
+      Array.isArray(mutationError.graphQLErrors) &&
+      mutationError.graphQLErrors.length > 0
+   ) {
       convertGraphQLErrors(mutationError.graphQLErrors, onShowError);
    }
 };
 
 export {
-   handleNetworkErrors,
    convertOnlyValidationError,
 };

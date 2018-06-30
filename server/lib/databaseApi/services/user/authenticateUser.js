@@ -24,7 +24,10 @@ const authenticateUser = (userModel) => (credentials) => {
             }
          })
          .then(knownUser => {
-            return knownUser.comparePassword(credentials.password);
+            return knownUser.comparePassword(credentials.password)
+               .catch(error => {
+                  return Promise.reject(createValidationError(error));
+               });
          });
    }
    else {

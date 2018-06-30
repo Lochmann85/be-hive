@@ -9,8 +9,10 @@ const redirectToErrorPage = (errors) => browserHistory.push(ErrorPage.path, { er
 const errorLink = onError(({ operation, networkError, graphQLErrors }) => {
    try {
       const operationDefinition = getOperationDefinitionOrDie(operation.query);
-
       if (graphQLErrors && operationDefinition.operation !== "mutation") {
+         redirectToErrorPage(graphQLErrors);
+      }
+      else if (networkError && graphQLErrors) {
          redirectToErrorPage(graphQLErrors);
       }
       else if (networkError) {
