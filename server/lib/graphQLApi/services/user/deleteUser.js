@@ -1,3 +1,5 @@
+import { createValidationError } from '../../../errorApi';
+
 /**
  * @public
  * @function deleteUser
@@ -13,16 +15,16 @@ const deleteUser = (userDbService) => (_, { userId }, { viewer }) => {
                return userDbService.deleteUser(userId);
             }
             else {
-               return Promise.reject(new Error(JSON.stringify({
+               return Promise.reject(createValidationError({
                   message: "This user cannot be deleted.",
-               })));
+               }));
             }
          });
    }
    else {
-      return Promise.reject(new Error(JSON.stringify({
+      return Promise.reject(createValidationError({
          message: "You cannot delete yourself.",
-      })));
+      }));
    }
 };
 

@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import uniqueValidator from 'mongoose-unique-validator';
+
 import {
    emailValidation,
    passwordValidation
 } from '../../validations';
-
 import { continueWithHashedPassword } from '../../passwordEncryption';
 
 /**
@@ -111,10 +111,10 @@ const create = (
                return this;
             }
             else {
-               return Promise.reject(new Error(JSON.stringify({
+               return Promise.reject({
                   message: "Please provide the correct password.",
                   path: "password"
-               })));
+               });
             }
          });
    };

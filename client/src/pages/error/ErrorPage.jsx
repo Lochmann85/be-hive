@@ -21,6 +21,9 @@ const ErrorPage = ({ location: { state } }) => {
    if (state && state.errors && Array.isArray(state.errors)) {
       errorMessage = _createErrorMessages(state.errors);
    }
+   else if (state && Array.isArray(state)) {
+      errorMessage = _createErrorMessages(state);
+   }
    else if (state) {
       errorMessage = <ParsedErrorMessage error={state} />;
    }

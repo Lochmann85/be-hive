@@ -1,5 +1,7 @@
 import { isEmail } from 'validator';
 
+import { createValidationError } from '../../../errorApi';
+
 /**
  * @public
  * @function authenticateUser
@@ -15,10 +17,10 @@ const authenticateUser = (userModel) => (credentials) => {
                return foundUser;
             }
             else {
-               return Promise.reject(new Error(JSON.stringify({
+               return Promise.reject(createValidationError({
                   message: "User could not be found.",
                   path: "email"
-               })));
+               }));
             }
          })
          .then(knownUser => {
@@ -26,10 +28,10 @@ const authenticateUser = (userModel) => (credentials) => {
          });
    }
    else {
-      return Promise.reject(new Error(JSON.stringify({
+      return Promise.reject(createValidationError({
          message: "Please provide a correct E-Mail.",
          path: "email"
-      })));
+      }));
    }
 };
 

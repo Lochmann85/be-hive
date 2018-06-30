@@ -1,3 +1,4 @@
+import { createValidationErrorFromErrors } from '../../errorApi';
 
 /**
  * @public
@@ -7,18 +8,8 @@
  * @returns {Promise} rejected error with json validation message
  */
 const convertOnlyValidationError = (error) => {
-   if (error.name === "ValidationError") {
-      const validationErrors = error.errors;
-
-      let convertedErrors = [];
-      Object.keys(validationErrors).forEach(key => {
-         convertedErrors.push({
-            path: validationErrors[key].path,
-            message: validationErrors[key].message,
-         });
-      });
-
-      return Promise.reject(new Error(JSON.stringify(convertedErrors)));
+   if (error.name === "ValidationError" && error.errors) {
+      return Promise.reject(createValidationErrorFromErrors(error.errors));
    }
    else {
       return Promise.reject(error);
