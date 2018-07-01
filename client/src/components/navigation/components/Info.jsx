@@ -8,7 +8,7 @@ const Info = ({ onCloseClick, ...others }) => (
       <Modal.Header>Alfredo's Bee Hive App</Modal.Header>
       <Modal.Content>
          <Modal.Description>
-            <Header>be-hive - 0.2.0</Header>
+            <Header>be-hive - 0.2.1</Header>
             <p>Tool for setting the timing on the water station.</p>
             <p>The weather data is saved.</p>
             <p>Copyright © 2018 Locco</p>
