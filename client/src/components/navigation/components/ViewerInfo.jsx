@@ -4,70 +4,64 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { propType } from 'graphql-anywhere';
 
-import { Grid, Icon, Button, Header } from 'semantic-ui-react';
+import { Icon, Button } from 'semantic-ui-react';
 
-import { NoSideMarginGrid } from '../../../assets/styles/UI';
+import {
+   TextEllipsisWrapper,
+   FlexWrapper
+} from '../../../assets/styles/Wrapper';
 
 import UserRoutes from '../../../pages/user/Routes';
 
-const ViewerInfoWrapper = styled.div`
+const ViewerInfoWrapper = styled(FlexWrapper)`
    width: 250px;
-   margin: 15px 5px;
+   margin: 15px 0;
+   align-items: stretch;
 `;
-const ViewerInfoGrid = styled(Grid)`
-   & > .row {
-      padding-top:0.75rem!important;
-      padding-bottom:0.75rem!important;
-   }
+const ViewerInfoDataWrapper = styled(FlexWrapper)`
+   flex-direction: column;
+   width: 60%;
+   justify-content: space-between;
+   align-items: flex-start;
+   padding-left: 1.14285714rem;
 `;
 const ViewerIcon = styled(Icon)`
    line-height: 1;
-   vertical-align: middle;
-   font-size: 6em!important;
+   align-self: center;
+   font-size: 5em!important;
+   padding-left: 1.14285714rem;
+`;
+const UserNameHeader = styled(TextEllipsisWrapper)`
+   width:100%;
+   font-weight: 600;
+   line-height: 1.15em;
+   font-size: 1.15em;
 `;
 
 const ViewerInfo = ({ viewer }) => {
 
-   let header,
+   let headerText,
       profileButton = null;
 
    if (viewer) {
-      header = <Header>
-         {viewer.name}
-      </Header>;
+      headerText = viewer.name;
       profileButton = <Button basic as={Link} to={
          `${UserRoutes.relatedPaths.updateUser}/${viewer.id}`
       }>Profile</Button>;
    }
    else {
-      header = <Header>
-         {"Guest"}
-      </Header>;
+      headerText = "Guest";
    }
 
    return (
       <ViewerInfoWrapper>
-         <NoSideMarginGrid>
-            <Grid.Row>
-               <Grid.Column width={7} verticalAlign="middle">
-                  <ViewerIcon className="ficon-user-circle-o" />
-               </Grid.Column>
-               <Grid.Column width={9}>
-                  <ViewerInfoGrid>
-                     <Grid.Row>
-                        <Grid.Column>
-                           {header}
-                        </Grid.Column>
-                     </Grid.Row>
-                     <Grid.Row>
-                        <Grid.Column>
-                           {profileButton}
-                        </Grid.Column>
-                     </Grid.Row>
-                  </ViewerInfoGrid>
-               </Grid.Column>
-            </Grid.Row>
-         </NoSideMarginGrid>
+         <ViewerIcon className="ficon-user-circle-o" />
+         <ViewerInfoDataWrapper>
+            <UserNameHeader>
+               {headerText}
+            </UserNameHeader>
+            {profileButton}
+         </ViewerInfoDataWrapper>
       </ViewerInfoWrapper>
    );
 };
