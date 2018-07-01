@@ -7,6 +7,7 @@ import { propType } from 'graphql-anywhere';
 import { Table } from 'semantic-ui-react';
 
 import BasePagedTable from '../../../components/table/BasePagedTable';
+import BaseLayoutLoader from '../../../components/layout/BaseLayoutLoader';
 import UserTableRow from './UserTableRow';
 import findAllUsersQuery from '../graphql/queries/findAllUsers';
 import deleteUserMutationTemplate from '../graphql/mutations/deleteUser';
@@ -67,6 +68,7 @@ class UserTable extends React.Component {
          selectedNumberOfTableEntries,
          firstVisibleTableEntryIndex,
          onTableChange,
+         viewer,
       } = this.props;
 
       let users = [],
@@ -78,6 +80,10 @@ class UserTable extends React.Component {
          if (selectedUser) {
             deleteMessage = `The user with name "${selectedUser.name}" will be deleted.`;
          }
+      }
+
+      if (!viewer) {
+         return <BaseLayoutLoader />;
       }
 
       return (
