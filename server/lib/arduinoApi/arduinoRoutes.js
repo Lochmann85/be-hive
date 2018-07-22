@@ -1,4 +1,8 @@
 
+const arduinoRoutesEnum = {
+   serverTime: "/serverTime"
+};
+
 /**
  * @public
  * @function useIn
@@ -16,7 +20,7 @@ const useIn = (
       minute: "numeric"
    };
 
-   webRequestRouter.get("/serverTime",
+   webRequestRouter.get(arduinoRoutesEnum.serverTime,
       (request, response) => {
          response.send(new Date().toLocaleDateString("de-DE", serverTimeOptions));
       });
@@ -24,4 +28,5 @@ const useIn = (
 
 export {
    useIn,
+   arduinoRoutesEnum
 };
