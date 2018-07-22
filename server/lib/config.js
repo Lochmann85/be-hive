@@ -16,7 +16,6 @@ const loadConfig = (
    config.PORT = config.PORT || 3001;
    config.MONGODB_URI = config.MONGODB_URI || "mongodb://be-hive:storage@127.0.0.1:27017/behiveDb";
    config.GRAPHQL_JWT_SECRET = config.GRAPHQL_JWT_SECRET || "graphQL_test_secret";
-   config.ARDUINO_JWT_SECRET = config.ARDUINO_JWT_SECRET || "arduino_test_secret";
 
    return Object.freeze(config);
 };
