@@ -1,5 +1,4 @@
 import express from 'express';
-import herokuSslRedirect from 'heroku-ssl-redirect';
 import {
    graphqlExpress,
    graphiqlExpress
@@ -7,6 +6,7 @@ import {
 import defaultBodyParser from 'body-parser';
 import path from 'path';
 
+import { redirectToHttps } from './redirectToHttps';
 import respondWithError from './respondWithError';
 import * as defaultArduinoRoutes from '../arduinoApi/arduinoRoutes';
 import formatError from '../errorApi/formatError';
@@ -41,7 +41,7 @@ const setupWithRoutes = (
    const webRequestRouter = routerDriver();
 
    // redirect to https for heroku platform
-   webRequestRouter.use(herokuSslRedirect());
+   webRequestRouter.use(redirectToHttps({}));
 
    webRequestRouter.use("/graphql",
       bodyParser.json(),
