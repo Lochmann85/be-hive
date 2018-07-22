@@ -67,7 +67,7 @@ const setupWithRoutes = (
       }
    );
 
-   arduinoRoutes.useIn(webRequestRouter, authenticationMiddlewares);
+   arduinoRoutes.useIn(webRequestRouter);
 
    // request router only serves static assets in production
    if (config.isInProductionMode) {
