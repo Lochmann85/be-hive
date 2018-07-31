@@ -1,3 +1,4 @@
+const timezone = require("timezonecomplete");
 
 const arduinoRoutesEnum = {
    serverTime: "/serverTime"
@@ -12,18 +13,12 @@ const arduinoRoutesEnum = {
 const useIn = (
    webRequestRouter,
 ) => {
-   const serverTimeOptions = {
-      year: "numeric",
-      month: "numeric",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric"
-   };
+   const serverTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
    webRequestRouter.get(arduinoRoutesEnum.serverTime,
       (request, response) => {
-         response.send(new Date().toLocaleDateString("de-DE", serverTimeOptions));
+         const currentTimeInRome = timezone.now(timezone.zone("Europe/Rome"));
+         response.send(currentTimeInRome.format(serverTimeFormat));
       });
 };
 
