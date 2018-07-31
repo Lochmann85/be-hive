@@ -17,7 +17,8 @@ const useIn = (
       month: "numeric",
       day: "numeric",
       hour: "numeric",
-      minute: "numeric"
+      minute: "numeric",
+      second: "numeric"
    };
 
    webRequestRouter.get(arduinoRoutesEnum.serverTime,
