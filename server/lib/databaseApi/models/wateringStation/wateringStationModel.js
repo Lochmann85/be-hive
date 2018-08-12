@@ -29,7 +29,7 @@ const create = (
       },
       wateringTimes: [{
          time: {
-            type: Number,
+            type: String,
          },
          duration: {
             type: Number,
