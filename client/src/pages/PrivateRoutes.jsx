@@ -4,6 +4,7 @@ import { propType } from 'graphql-anywhere';
 import gql from 'graphql-tag';
 
 import UserRoutes from './user/Routes';
+import WateringStationRoutes from './wateringStation/Routes';
 
 const viewerFragment = {
    name: "PrivateRoutesViewer",
@@ -17,12 +18,14 @@ const viewerFragment = {
 const PrivateRoutes = ({ viewer }) => (
    <Switch>
       <Route path={UserRoutes.menuGroup.path} render={() => <UserRoutes viewer={viewer} />} />
+      <Route path={WateringStationRoutes.menuGroup.path} component={WateringStationRoutes} />
    </Switch>
 );
 
 PrivateRoutes.path = "/";
 PrivateRoutes.navigation = [
-   UserRoutes.menuGroup
+   UserRoutes.menuGroup,
+   WateringStationRoutes.menuGroup
 ];
 
 PrivateRoutes.fragments = {
