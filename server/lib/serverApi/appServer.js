@@ -7,6 +7,7 @@ import * as defaultWebServerStartupProcess from './webServerStartupProcess';
  * @function startupAppServer
  * @description starts up the webserver with graph and other routes
  * @param {object} executableSchema - graphQL executable schema
+ * @param {object} database - app database
  * @param {object} authenticationMiddlewares - authentication middlewares
  * @param {object} webRequestRouterFactory - adds the web request routes
  * @param {object} webServerStartupProcess - initialises and startsup the webserver
@@ -14,11 +15,12 @@ import * as defaultWebServerStartupProcess from './webServerStartupProcess';
  */
 const startupAppServer = (
    executableSchema,
+   database,
    authenticationMiddlewares,
    webRequestRouterFactory = defaultWebRequestRouterFactory,
    webServerStartupProcess = defaultWebServerStartupProcess,
 ) => {
-   return webRequestRouterFactory.setupWithRoutes(executableSchema, config, authenticationMiddlewares)
+   return webRequestRouterFactory.setupWithRoutes(executableSchema, config, database, authenticationMiddlewares)
       .then(webRequestRouter => {
          return webServerStartupProcess.initialiseServer(webRequestRouter);
       })
