@@ -19,6 +19,7 @@ const reactAppDirectory = path.join(__dirname, "..", "..", "..", "client", "buil
  * @description sets up the different routes for the web server
  * @param {object} executableSchema - graphQL executable schema
  * @param {object} config - the app config
+ * @param {object} database - app database
  * @param {object} authenticationMiddlewares - authentication middlewares
  * @param {object} arduinoRoutes - the routes for the arduino
  * @param {object} routerDriver - router driver default express
@@ -29,6 +30,7 @@ const reactAppDirectory = path.join(__dirname, "..", "..", "..", "client", "buil
 const setupWithRoutes = (
    executableSchema,
    config,
+   database,
    authenticationMiddlewares,
    arduinoRoutes = defaultArduinoRoutes,
    routerDriver = express,
@@ -67,7 +69,10 @@ const setupWithRoutes = (
       }
    );
 
-   arduinoRoutes.useIn(webRequestRouter);
+   arduinoRoutes.useIn({
+      webRequestRouter,
+      database,
+   });
 
    // request router only serves static assets in production
    if (config.isInProductionMode) {

@@ -25,6 +25,7 @@ const startup = (
 
                return appServer.startupAppServer(
                   graphQLWrapper.executableSchema,
+                  database,
                   authenticationMiddlewares
                );
             });
