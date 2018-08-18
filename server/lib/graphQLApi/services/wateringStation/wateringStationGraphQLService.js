@@ -9,6 +9,7 @@ type WateringStation {
    wateringTimes: [WateringTime!]
 }
 type WateringTime {
+   id: ID!
    time: String
    duration: Int
 }
