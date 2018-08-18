@@ -2,10 +2,11 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
-import { Grid, Message } from 'semantic-ui-react';
+import { Card, Message } from 'semantic-ui-react';
 
 import BaseContentLayout from '../../components/layout/BaseContentLayout';
 import QueryLoader from '../../components/layout/QueryLoader';
+import WateringStationPreview from './components/WateringStationPreview';
 
 import findAllWateringStationsQuery from './graphql/queries/findAllWateringStations';
 
@@ -14,9 +15,14 @@ const WateringStationOverview = (props) => {
 
    let content;
    if (findAllWateringStationsQuery && findAllWateringStationsQuery.findAllWateringStations) {
+      const wateringStations = findAllWateringStationsQuery.findAllWateringStations.map((wateringStation, index) =>
+         <WateringStationPreview wateringStation={wateringStation} key={index} />
+      );
+
       content = (
-         <Grid doubling columns={3}>
-         </Grid>
+         <Card.Group doubling stackable itemsPerRow={4}>
+            {wateringStations}
+         </Card.Group>
       );
    }
    else {
@@ -37,14 +43,9 @@ const wateringStationsFragment = {
    document: gql`
    fragment WateringStationsOverview on WateringStation {
       id
-      name
-      description
-      isActive
-      wateringTimes {
-         duration
-         time
-      }
-   }`
+      ...${WateringStationPreview.fragments.wateringStation.name}
+   }
+   ${WateringStationPreview.fragments.wateringStation.document}`
 };
 
 WateringStationOverview.path = (routePath) => `${routePath}/view`;
