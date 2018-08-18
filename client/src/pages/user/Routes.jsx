@@ -25,6 +25,7 @@ class UserRoutes extends React.Component {
 
    static menuGroup = {
       label: "User",
+      mobileIcon: "ficon-users",
       path: routesPath,
       menuItems: [
          UserOverview.menuItem(routesPath),

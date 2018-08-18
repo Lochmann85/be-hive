@@ -21,6 +21,7 @@ WateringStationRoutes.relatedPaths = {
 
 WateringStationRoutes.menuGroup = {
    label: "Watering Station",
+   mobileIcon: "ficon-water",
    path: routesPath,
    menuItems: [
       WateringStationOverview.menuItem(routesPath),
