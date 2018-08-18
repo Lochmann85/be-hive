@@ -1,11 +1,11 @@
 @font-face {
    font-family: 'fontello';
-   src: url('../fonts/fontello.eot?10252080');
-   src: url('../fonts/fontello.eot?10252080#iefix') format('embedded-opentype'),
-        url('../fonts/fontello.woff2?10252080') format('woff2'),
-        url('../fonts/fontello.woff?10252080') format('woff'),
-        url('../fonts/fontello.ttf?10252080') format('truetype'),
-        url('../fonts/fontello.svg?10252080#fontello') format('svg');
+   src: url('../fonts/fontello.eot?50080235');
+   src: url('../fonts/fontello.eot?50080235#iefix') format('embedded-opentype'),
+        url('../fonts/fontello.woff2?50080235') format('woff2'),
+        url('../fonts/fontello.woff?50080235') format('woff'),
+        url('../fonts/fontello.ttf?50080235') format('truetype'),
+        url('../fonts/fontello.svg?50080235#fontello') format('svg');
    font-weight: normal;
    font-style: normal;
  }
@@ -35,6 +35,10 @@
 .ficon-home:before { content: '\e807'; } /* '' */
 .ficon-right-dir:before { content: '\e808'; } /* '' */
 .ficon-download:before { content: '\e809'; } /* '' */
+.ficon-users:before { content: '\e80a'; } /* '' */
+.ficon-water:before { content: '\e80b'; } /* '' */
+.ficon-clock:before { content: '\e80c'; } /* '' */
+.ficon-back-in-time:before { content: '\e80d'; } /* '' */
 .ficon-angle-double-left:before { content: '\f100'; } /* '' */
 .ficon-angle-double-right:before { content: '\f101'; } /* '' */
 .ficon-angle-left:before { content: '\f104'; } /* '' */
