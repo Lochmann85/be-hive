@@ -1,4 +1,5 @@
 import findAllWateringStationsTemplate from './findAllWateringStations';
+import findWateringStationTemplate from './findWateringStation';
 
 const types = `
 type WateringStation {
@@ -17,10 +18,12 @@ type WateringTime {
 
 const queries = `
    findAllWateringStations: [WateringStation!]
+   findWateringStation(wateringStationId: ID): WateringStation!
 `;
 
 const queriesResolver = (wateringStationDbService) => ({
    findAllWateringStations: findAllWateringStationsTemplate(wateringStationDbService),
+   findWateringStation: findWateringStationTemplate(wateringStationDbService),
 });
 
 /**

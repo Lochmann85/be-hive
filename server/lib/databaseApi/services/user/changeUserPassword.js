@@ -4,13 +4,13 @@ import { convertOnlyValidationError } from '../../validations/convertValidationE
  * @public
  * @function updateUser
  * @description update user db interaction
- * @param {object} UserModel - the user database model
+ * @param {object} userModel - the user database model
  * @param {function} findUser - the find user db function
  * @param {id} userId - the user id
  * @param {object} passwordChangeData - the password change data
  * @returns {Promise} of updated user in database
  */
-const updateUser = (UserModel, findUser) => (userId, passwordChangeData) => {
+const updateUser = (userModel, findUser) => (userId, passwordChangeData) => {
    const errors = {};
    return findUser(userId)
       .then(user => {
@@ -39,7 +39,7 @@ const updateUser = (UserModel, findUser) => (userId, passwordChangeData) => {
       })
       .then(() => {
          if (Object.keys(errors).length === 0) {
-            return UserModel.findByIdAndUpdate(userId, {
+            return userModel.findByIdAndUpdate(userId, {
                $set: { password: passwordChangeData.new }
             })
                .catch(error => Promise.reject(error.errors));

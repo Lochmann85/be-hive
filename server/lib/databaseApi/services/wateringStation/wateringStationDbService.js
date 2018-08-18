@@ -1,4 +1,5 @@
 import findAllWateringStationsTemplate from './findAllWateringStations';
+import findWateringStationTemplate from './findWateringStation';
 
 /**
  * @public
@@ -12,6 +13,7 @@ const create = (
 ) => {
    const wateringStationDbServices = Object.freeze({
       findAllWateringStations: findAllWateringStationsTemplate(models.wateringStation),
+      findWateringStation: findWateringStationTemplate(models.wateringStation),
    });
 
    return Object.freeze({
