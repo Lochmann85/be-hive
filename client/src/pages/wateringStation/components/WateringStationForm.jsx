@@ -7,7 +7,7 @@ import { Message, Form, Button } from 'semantic-ui-react';
 
 import { BeHiveButton } from '../../../assets/styles/UI';
 import { ButtonGroupWrapper } from '../../../assets/styles/Wrapper';
-
+import WateringTimeSelection from './WateringTimeSelection';
 import browserHistory from '../../../storeHandler/routerHistory';
 import checkForErrorInInput from '../../../helper/validation';
 
@@ -19,12 +19,9 @@ const wateringStationFragment = {
       name
       description
       isActive
-      wateringTimes {
-         id
-         duration
-         time
-      }
-   }`
+      ...${WateringTimeSelection.fragments.wateringStation.name}
+   }
+   ${WateringTimeSelection.fragments.wateringStation.document}`
 };
 
 class WateringStationForm extends React.Component {
@@ -84,6 +81,10 @@ class WateringStationForm extends React.Component {
                name="isActive"
                onChange={this._handleCheckboxChange}
                checked={this.state.isActive} />
+            <WateringTimeSelection
+               wateringStation={this.state}
+               onChange={this._handleChange}
+               errors={errors} />
             <Message error visible hidden={errors.length === 0}>
                <Message.List items={errors.map(error => error.message)} />
             </Message>

@@ -67,14 +67,9 @@ const wateringStationFragment = {
    fragment WateringStationUpdate on WateringStation {
       id
       name
-      description
-      isActive
-      wateringTimes {
-         id
-         duration
-         time
-      }
-   }`
+      ...${WateringStationForm.fragments.wateringStation.name}
+   }
+   ${WateringStationForm.fragments.wateringStation.document}`
 };
 
 const findWateringStationQuery = findWateringStationQueryTemplate(wateringStationFragment);
