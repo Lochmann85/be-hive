@@ -6,6 +6,7 @@ import gql from 'graphql-tag';
 import { Message } from 'semantic-ui-react';
 
 import BaseContentLayout from '../../components/layout/BaseContentLayout';
+import WateringStationForm from './components/WateringStationForm';
 import findWateringStationQueryTemplate from './graphql/queries/findWateringStation';
 
 class UpdateWateringStation extends React.Component {
@@ -35,12 +36,11 @@ class UpdateWateringStation extends React.Component {
 
       if (findWateringStation) {
          title = `Update watering station: ${findWateringStation.name}`;
-         updateWateringStationContent = (
-            <div>
-               {findWateringStation.description}
-               {findWateringStation.isActive}
-            </div>
-         );
+         updateWateringStationContent = <WateringStationForm
+            wateringStation={findWateringStation}
+            onSubmit={this._onSubmit}
+            errors={this.state.errors}
+            submitButtonTitle="Update" />;
       }
       else {
          title = "";
@@ -53,6 +53,12 @@ class UpdateWateringStation extends React.Component {
          </BaseContentLayout>
       );
    }
+
+   _onSubmit = (wateringStationData) => {
+      console.log(wateringStationData)
+   };
+
+   _onShowError = (errors) => this.setState({ errors });
 };
 
 const wateringStationFragment = {
