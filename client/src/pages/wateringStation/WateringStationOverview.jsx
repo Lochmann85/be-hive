@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
@@ -11,12 +12,18 @@ import WateringStationPreview from './components/WateringStationPreview';
 import findAllWateringStationsQuery from './graphql/queries/findAllWateringStations';
 
 const WateringStationOverview = (props) => {
-   const { findAllWateringStationsQuery } = props;
+   const {
+      findAllWateringStationsQuery,
+      relatedPaths
+   } = props;
 
    let content;
    if (findAllWateringStationsQuery && findAllWateringStationsQuery.findAllWateringStations) {
       const wateringStations = findAllWateringStationsQuery.findAllWateringStations.map((wateringStation, index) =>
-         <WateringStationPreview wateringStation={wateringStation} key={index} />
+         <WateringStationPreview
+            key={index}
+            wateringStation={wateringStation}
+            relatedUpdatePath={relatedPaths.updateWateringStation} />
       );
 
       content = (
@@ -36,6 +43,12 @@ const WateringStationOverview = (props) => {
          </QueryLoader>
       </BaseContentLayout>
    );
+};
+
+WateringStationOverview.propTypes = {
+   relatedPaths: PropTypes.shape({
+      updateWateringStation: PropTypes.string.isRequired,
+   }).isRequired,
 };
 
 const wateringStationsFragment = {

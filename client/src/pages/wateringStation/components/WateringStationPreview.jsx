@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { propType } from 'graphql-anywhere';
 import styled, { css } from 'styled-components';
@@ -6,6 +7,8 @@ import styled, { css } from 'styled-components';
 import standardColors from '../../../assets/colors/standard.json';
 
 import { Card, Table, Icon, Message } from 'semantic-ui-react';
+
+import browserHistory from '../../../storeHandler/routerHistory';
 
 const StyledCard = styled(Card)`
    ${(props) => {
@@ -44,7 +47,11 @@ const StyledTable = styled(Table)`
    }
 `;
 
-const WateringStationPreview = ({ wateringStation }) => {
+const WateringStationPreview = ({ wateringStation, relatedUpdatePath }) => {
+
+   const _browseToUpdate = () => {
+      browserHistory.push(`${relatedUpdatePath}/${wateringStation.id}`);
+   };
 
    let cardContent;
    if (Array.isArray(wateringStation.wateringTimes) && wateringStation.wateringTimes.length > 0) {
@@ -74,7 +81,7 @@ const WateringStationPreview = ({ wateringStation }) => {
    }
 
    return (
-      <StyledCard link active={wateringStation.isActive ? 1 : 0}>
+      <StyledCard link active={wateringStation.isActive ? 1 : 0} onClick={_browseToUpdate}>
          <StyledCardHeaderContent>
             <Card.Header content={wateringStation.name} />
             <StyledCardDescription content={wateringStation.description} />
@@ -105,7 +112,8 @@ const wateringStationFragment = {
 };
 
 WateringStationPreview.propTypes = {
-   wateringStation: propType(wateringStationFragment.document)
+   wateringStation: propType(wateringStationFragment.document),
+   relatedUpdatePath: PropTypes.string.isRequired,
 };
 
 WateringStationPreview.fragments = {
