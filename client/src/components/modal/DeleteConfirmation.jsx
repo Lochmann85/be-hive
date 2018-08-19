@@ -9,7 +9,8 @@ const DeleteConfirmation = (props) => {
       onDeleteConfirmation,
       onCloseClick,
       errors,
-      open } = props;
+      open
+   } = props;
 
    const _onDeleteClick = (event) => {
       event.preventDefault();
@@ -30,8 +31,7 @@ const DeleteConfirmation = (props) => {
             </Modal.Description>
          </Modal.Content>
          <Modal.Actions>
-            <Button content="Close"
-               onClick={onCloseClick} />
+            <Button content="Close" onClick={onCloseClick} />
             <Button
                negative
                content="Delete"
@@ -45,6 +45,7 @@ DeleteConfirmation.propTypes = {
    description: PropTypes.string.isRequired,
    onDeleteConfirmation: PropTypes.func.isRequired,
    onCloseClick: PropTypes.func.isRequired,
+   open: PropTypes.bool.isRequired,
    errors: PropTypes.array,
 };
 
