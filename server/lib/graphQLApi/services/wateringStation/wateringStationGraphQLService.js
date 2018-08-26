@@ -1,5 +1,6 @@
 import findAllWateringStationsTemplate from './findAllWateringStations';
 import findWateringStationTemplate from './findWateringStation';
+import updateWateringStationTemplate from './updateWateringStation';
 
 const types = `
 type WateringStation {
@@ -14,6 +15,16 @@ type WateringTime {
    time: String
    duration: Int
 }
+input WateringTimeData {
+   time: String
+   duration: Int
+}
+input WateringStationData {
+   name: String
+   description: String
+   isActive: Boolean
+   wateringTimes: [WateringTimeData]
+}
 `;
 
 const queries = `
@@ -24,6 +35,14 @@ const queries = `
 const queriesResolver = (wateringStationDbService) => ({
    findAllWateringStations: findAllWateringStationsTemplate(wateringStationDbService),
    findWateringStation: findWateringStationTemplate(wateringStationDbService),
+});
+
+const mutations = `
+   updateWateringStation(wateringStationId: ID, wateringStationData:  WateringStationData): WateringStation!
+`;
+
+const mutationsResolver = (wateringStationDbService) => ({
+   updateWateringStation: updateWateringStationTemplate(wateringStationDbService),
 });
 
 /**
@@ -46,6 +65,8 @@ const create = (
       types,
       queries,
       queriesResolver: queriesResolver(wateringStationDbService),
+      mutations,
+      mutationsResolver: mutationsResolver(wateringStationDbService),
    });
 };
 
