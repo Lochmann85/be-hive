@@ -1,39 +1,62 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TimePicker from 'react-times';
-import 'react-times/css/material/default.css';
+import TimePicker from 'rc-time-picker';
+import moment from 'moment';
+import styled from 'styled-components';
 
-import { Modal, Button } from 'semantic-ui-react';
+import { Modal, Button, Form } from 'semantic-ui-react';
 
 import { BeHiveButton } from '../../../assets/styles/UI';
 
-const defaultTime = {
-   hour: 12,
-   minute: 0,
-   duration: 15
-};
+const StyledTimePicker = styled(TimePicker)`
+   width:100%;
+   & > input {
+      padding-top: 1.27em!important;
+      padding-bottom: 1.27em!important;
+   }
+`;
 
 class AddWateringTimeModal extends React.Component {
 
    constructor(props) {
       super(props);
 
-      this.state = Object.assign({}, defaultTime);
+      this.defaultState = {
+         time: moment(),
+         duration: 15
+      };
+
+      this.state = Object.assign({}, this.defaultState);
    };
 
    render() {
       const {
-         hour,
-         minute,
+         time,
+         duration
       } = this.state;
 
       return (
          <Modal open={this.props.open} size="small">
             <Modal.Header content="Add watering time" />
             <Modal.Content>
-               <TimePicker
-                  onTimeChange={this._handleTimeChange}
-                  time={`${hour}:${minute}`} />
+               <Form>
+                  <Form.Group widths="equal">
+                     <Form.Field required>
+                        <label>Time</label>
+                        <StyledTimePicker
+                           value={time}
+                           onChange={this._handleTimeChange}
+                           showSecond={false} />
+                     </Form.Field>
+                     <Form.Input
+                        required
+                        label="Duration"
+                        name="duration"
+                        value={duration}
+                        onChange={this._handleChange}
+                     />
+                  </Form.Group>
+               </Form>
             </Modal.Content>
             <Modal.Actions>
                <Button content="Close" onClick={this._handleCloseClick} />
@@ -41,30 +64,24 @@ class AddWateringTimeModal extends React.Component {
                   content="Add"
                   onClick={this._onAddWateringTimeClick} />
             </Modal.Actions>
-         </Modal>
+         </Modal >
       );
    }
 
-   _handleTimeChange = (options) => {
-      const {
-         hour,
-         minute
-      } = options;
+   _handleTimeChange = (time) => this.setState({ time });
 
-      this.setState({ hour, minute });
-   };
+   _handleChange = (event, { name, value }) => this.setState({ [name]: value });
 
-   _handleCloseClick = () => this.setState(defaultTime, this.props.onCloseClick());
+   _handleCloseClick = () => this.setState(this.defaultState, this.props.onCloseClick());
 
    _onAddWateringTimeClick = () => {
       const {
-         hour,
-         minute,
+         time,
          duration
       } = this.state;
 
-      this.setState(defaultTime, () => {
-         this.props.onAddWateringTime({ id: 0, time: `${hour}:${minute}`, duration });
+      this.setState(this.defaultState, () => {
+         this.props.onAddWateringTime({ id: 0, time: time.format("HH:mm"), duration });
       });
    };
 

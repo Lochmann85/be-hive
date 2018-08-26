@@ -20,7 +20,10 @@ const StyledCard = styled(Card)`
       else {
          return `opacity: 0.8;!important`;
       }
-   }}
+   }};
+   @media only screen and (max-width: 767px) {
+      margin-bottom: 2rem!important;
+   };
 `;
 
 const StyledCardHeaderContent = styled(Card.Content)`
