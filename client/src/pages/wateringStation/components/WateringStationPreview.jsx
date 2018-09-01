@@ -14,11 +14,11 @@ const StyledCard = styled(Card)`
    ${(props) => {
       if (props.active) {
          return `box-shadow: 0 0 0 1px ${standardColors.lightgrey},
-                             1px 3px 2px 0 ${standardColors.be_hive_yellow},
+                             2px 4px 2px 0 ${standardColors.be_hive_yellow},
                              0 1px 3px 0 ${standardColors.lightgrey} !important;`;
       }
       else {
-         return `opacity: 0.8;!important`;
+         return `opacity: 0.7;!important`;
       }
    }};
    @media only screen and (max-width: 767px) {

@@ -107,7 +107,10 @@ class WateringStationForm extends React.Component {
          name: this.state.name,
          description: this.state.description,
          isActive: this.state.isActive,
-         wateringTimes: this.state.wateringTimes,
+         wateringTimes: this.state.wateringTimes.map(watering => ({
+            duration: watering.duration,
+            time: watering.time
+         })),
       };
 
       this.props.onSubmit(wateringStationData);

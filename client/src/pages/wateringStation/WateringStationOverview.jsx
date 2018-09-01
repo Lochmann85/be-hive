@@ -61,6 +61,10 @@ const wateringStationsFragment = {
    ${WateringStationPreview.fragments.wateringStation.document}`
 };
 
+WateringStationOverview.fragments = {
+   wateringStations: wateringStationsFragment
+};
+
 WateringStationOverview.path = (routePath) => `${routePath}/view`;
 
 WateringStationOverview.menuItem = (routePath) => ({

@@ -8,6 +8,10 @@ import { Message } from 'semantic-ui-react';
 import BaseContentLayout from '../../components/layout/BaseContentLayout';
 import WateringStationForm from './components/WateringStationForm';
 import findWateringStationQueryTemplate from './graphql/queries/findWateringStation';
+import updateWateringStationMutationTemplate from './graphql/mutations/updateWateringStation';
+import { convertOnlyValidationError } from '../../components/errorHandling/convertValidationError';
+import browserHistory from '../../storeHandler/routerHistory';
+import WateringStationOverview from './WateringStationOverview';
 
 class UpdateWateringStation extends React.Component {
 
@@ -55,7 +59,19 @@ class UpdateWateringStation extends React.Component {
    }
 
    _onSubmit = (wateringStationData) => {
-      console.log(wateringStationData)
+      const {
+         updateWateringStation,
+         findWateringStationQuery,
+         relatedPaths,
+      } = this.props;
+
+      updateWateringStation(findWateringStationQuery.findWateringStation.id, wateringStationData)
+         .then(response => {
+            if (response.data.updateWateringStation) {
+               browserHistory.push(relatedPaths.wateringStationOverview);
+            }
+         })
+         .catch(error => convertOnlyValidationError(error, this._onShowError));
    };
 
    _onShowError = (errors) => this.setState({ errors });
@@ -73,7 +89,9 @@ const wateringStationFragment = {
 };
 
 const findWateringStationQuery = findWateringStationQueryTemplate(wateringStationFragment);
+const updateWateringStationMutation = updateWateringStationMutationTemplate(WateringStationOverview.fragments.wateringStations);
 
 export default compose(
    graphql(findWateringStationQuery.document, findWateringStationQuery.config),
+   graphql(updateWateringStationMutation.document, updateWateringStationMutation.config),
 )(UpdateWateringStation);
