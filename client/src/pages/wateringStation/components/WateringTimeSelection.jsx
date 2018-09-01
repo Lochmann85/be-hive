@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { Form, Icon, Table } from 'semantic-ui-react';
 
 import { BeHiveYellowHoverCss, BeHiveButton, BeHiveIcon } from '../../../assets/styles/UI';
+import { FlexWrapper } from '../../../assets/styles/Wrapper';
 import InteractionTableRow from '../../../components/table/InteractionTableRow';
 import AddWateringTimeModal from './AddWateringTimeModal';
 import checkForErrorInInput from '../../../helper/validation';
@@ -15,10 +16,8 @@ const StyledTable = styled(Table)`
    @media only screen and (min-width: 400px) {
       width:350px!important;
    }
-   & th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) {
-      width: 40%;
-   }
-   & th:nth-child(3), td:nth-child(3) {
+   & th:last-child, td:last-child {
+      width: 79px;
       text-align:center!important;
    }
 `;
@@ -59,7 +58,8 @@ class WateringTimeSelection extends React.Component {
       super(props);
 
       this.state = {
-         openAddWatering: false
+         openAddWatering: false,
+         selectedWatering: null,
       };
    }
 
@@ -71,15 +71,26 @@ class WateringTimeSelection extends React.Component {
 
       let content;
       if (Array.isArray(wateringTimes) && wateringTimes.length > 0) {
-         const InteractionCell = ({ isSelected, wateringIndex }) => {
-            let content;
+         const InteractionCell = ({ isSelected, onLoosesFocus, wateringIndex }) => {
+            const handleWateringEdit = () => {
+               onLoosesFocus().then(() => {
+                  this._handleWateringEdit(wateringIndex);
+               });
+            };
+
+            let deleteIcon,
+               editIcon;
             if (isSelected) {
-               content = <BeHiveIcon className="ficon-cancel" color="red" link onClick={() => this._handleWateringDelete(wateringIndex)} />;
+               deleteIcon = <BeHiveIcon className="ficon-cancel" color="red" link onClick={() => this._handleWateringDelete(wateringIndex)} />;
+               editIcon = <BeHiveIcon className="ficon-edit" color="blue" link onClick={handleWateringEdit} />;
             }
 
             return (
                <Table.Cell>
-                  {content}
+                  <FlexWrapper>
+                     {editIcon}
+                     {deleteIcon}
+                  </FlexWrapper>
                </Table.Cell>
             );
          };
@@ -121,8 +132,9 @@ class WateringTimeSelection extends React.Component {
             </ContentOffsetWrapper>
             <AddWateringTimeModal
                open={this.state.openAddWatering}
+               watering={this.state.selectedWatering}
                onCloseClick={this._handleCloseAddWatering}
-               onAddWateringTime={this._handleAddWateringTime} />
+               onWateringTimeChange={this._handleWateringTimeChange} />
          </Form.Field>
       );
    };
@@ -138,19 +150,42 @@ class WateringTimeSelection extends React.Component {
       onChange({}, { name: "wateringTimes", value: wateringTimesCopy });
    };
 
-   _openAddWatering = () => this.setState({ openAddWatering: true });
+   _handleWateringEdit = (indexToEdit) => {
+      const watering = this.props.wateringStation.wateringTimes[indexToEdit];
 
-   _handleCloseAddWatering = () => this.setState({ openAddWatering: false });
+      this.setState({
+         openAddWatering: true,
+         selectedWatering: Object.assign({ index: indexToEdit }, watering)
+      });
+   };
 
-   _handleAddWateringTime = (wateringTime) => {
+   _openAddWatering = () => this.setState({ openAddWatering: true, selectedWatering: null });
+
+   _handleCloseAddWatering = () => this.setState({ openAddWatering: false, selectedWatering: null });
+
+   _handleWateringTimeChange = (wateringTime) => {
       const {
          onChange,
          wateringStation
       } = this.props;
+      const {
+         selectedWatering
+      } = this.state;
 
-      this.setState({ openAddWatering: false }, () => {
-         onChange({}, { name: "wateringTimes", value: [...wateringStation.wateringTimes, wateringTime] });
-      });
+      let changeCallback = () => onChange({}, { name: "wateringTimes", value: [...wateringStation.wateringTimes, wateringTime] });
+
+      if (selectedWatering) {
+         const value = wateringStation.wateringTimes.map((watering, index) => {
+            if (index === selectedWatering.index) {
+               return wateringTime;
+            }
+            return watering;
+         });
+
+         changeCallback = () => onChange({}, { name: "wateringTimes", value });
+      }
+
+      this.setState({ openAddWatering: false, selectedWatering: null }, changeCallback);
    };
 };
 

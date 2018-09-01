@@ -29,6 +29,17 @@ class AddWateringTimeModal extends React.Component {
       this.state = Object.assign({}, this.defaultState);
    };
 
+   componentWillReceiveProps(nextProps) {
+      if (nextProps.watering) {
+         const time = moment(nextProps.watering.time, "HH:mm");
+
+         this.setState({
+            time,
+            duration: nextProps.watering.duration
+         });
+      }
+   };
+
    render() {
       const {
          time,
@@ -61,7 +72,7 @@ class AddWateringTimeModal extends React.Component {
             <Modal.Actions>
                <Button content="Close" onClick={this._handleCloseClick} />
                <BeHiveButton
-                  content="Add"
+                  content={this.props.watering ? "Update" : "Add"}
                   onClick={this._onAddWateringTimeClick} />
             </Modal.Actions>
          </Modal >
@@ -81,14 +92,18 @@ class AddWateringTimeModal extends React.Component {
       } = this.state;
 
       this.setState(this.defaultState, () => {
-         this.props.onAddWateringTime({ id: 0, time: time.format("HH:mm"), duration });
+         this.props.onWateringTimeChange({ id: 0, time: time.format("HH:mm"), duration });
       });
    };
 
 };
 
 AddWateringTimeModal.propTypes = {
-   onAddWateringTime: PropTypes.func.isRequired,
+   watering: PropTypes.shape({
+      time: PropTypes.string.isRequired,
+      duration: PropTypes.number.isRequired
+   }),
+   onWateringTimeChange: PropTypes.func.isRequired,
    onCloseClick: PropTypes.func.isRequired,
    open: PropTypes.bool.isRequired
 };
