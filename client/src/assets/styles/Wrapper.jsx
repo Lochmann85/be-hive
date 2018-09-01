@@ -6,12 +6,12 @@ const FlexWrapper = styled.div`
 `;
 
 const ButtonGroupWrapper = styled(FlexWrapper)`
-   justify-content: flex-end;
+   justify-content: flex-start;
    & > .button {
-      margin-left: 0.75rem!important;
+      margin-right: 1rem!important;
    };
-   & :last-child {
-      margin-right: 0!important;
+   & :firtst-child {
+      margin-left: 0!important;
    };
 `;
 

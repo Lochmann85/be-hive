@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { propType } from 'graphql-anywhere';
 import styled, { css } from 'styled-components';
@@ -7,17 +8,22 @@ import standardColors from '../../../assets/colors/standard.json';
 
 import { Card, Table, Icon, Message } from 'semantic-ui-react';
 
+import browserHistory from '../../../storeHandler/routerHistory';
+
 const StyledCard = styled(Card)`
    ${(props) => {
       if (props.active) {
          return `box-shadow: 0 0 0 1px ${standardColors.lightgrey},
-                             1px 3px 2px 0 ${standardColors.be_hive_yellow},
+                             2px 4px 2px 0 ${standardColors.be_hive_yellow},
                              0 1px 3px 0 ${standardColors.lightgrey} !important;`;
       }
       else {
-         return `opacity: 0.8;!important`;
+         return `opacity: 0.7;!important`;
       }
-   }}
+   }};
+   @media only screen and (max-width: 767px) {
+      margin-bottom: 2rem!important;
+   };
 `;
 
 const StyledCardHeaderContent = styled(Card.Content)`
@@ -44,7 +50,11 @@ const StyledTable = styled(Table)`
    }
 `;
 
-const WateringStationPreview = ({ wateringStation }) => {
+const WateringStationPreview = ({ wateringStation, relatedUpdatePath }) => {
+
+   const _browseToUpdate = () => {
+      browserHistory.push(`${relatedUpdatePath}/${wateringStation.id}`);
+   };
 
    let cardContent;
    if (Array.isArray(wateringStation.wateringTimes) && wateringStation.wateringTimes.length > 0) {
@@ -74,7 +84,7 @@ const WateringStationPreview = ({ wateringStation }) => {
    }
 
    return (
-      <StyledCard link active={wateringStation.isActive ? 1 : 0}>
+      <StyledCard link active={wateringStation.isActive ? 1 : 0} onClick={_browseToUpdate}>
          <StyledCardHeaderContent>
             <Card.Header content={wateringStation.name} />
             <StyledCardDescription content={wateringStation.description} />
@@ -105,7 +115,8 @@ const wateringStationFragment = {
 };
 
 WateringStationPreview.propTypes = {
-   wateringStation: propType(wateringStationFragment.document)
+   wateringStation: propType(wateringStationFragment.document),
+   relatedUpdatePath: PropTypes.string.isRequired,
 };
 
 WateringStationPreview.fragments = {

@@ -17,7 +17,7 @@ import checkForErrorInInput from '../../../helper/validation';
 import PasswordChanger from './PasswordChanger';
 
 const ButtonWithOffset = styled(Button)`
-   margin-left: 0.75rem!important;
+   margin-right: 1rem!important;
    @media only screen and (max-width:460px) { 
       margin-left: 0!important;
       margin-right: 0!important;
@@ -40,7 +40,9 @@ const ButtonWrapperMobile = styled(FlexWrapper)`
 `;
 
 const NewPasswordButton = styled(ButtonWithOffset)`
-   margin-right: 2rem!important;
+   @media only screen and (min-width:461px) {
+      margin-left: 2rem!important;
+   };
    @media only screen and (max-width:460px) {
       margin-bottom: 2rem!important;
    };
@@ -159,9 +161,9 @@ class UserForm extends React.Component {
                <Message.List items={errors.map(error => error.message)} />
             </Message>
             <ButtonWrapperPc>
-               {changePasswordButton}
                {cancelButton}
                {submitButton}
+               {changePasswordButton}
             </ButtonWrapperPc>
             <ButtonWrapperMobile>
                {changePasswordButton}

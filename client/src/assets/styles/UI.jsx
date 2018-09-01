@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { Icon, Button, Grid } from 'semantic-ui-react';
 
@@ -15,13 +15,17 @@ const BeHiveIcon = styled(Icon)`
    font-size: 1.5em!important;
 `;
 
-const BeHiveButton = styled(Button)`
+const BeHiveYellowHoverCss = css`
    background: ${standardColors.be_hive_yellow}!important;
    color: ${standardColors.black}!important;
    opacity: 0.7!important;
    &:hover {
       opacity: 1!important;
    }
+`;
+
+const BeHiveButton = styled(Button)`
+   ${BeHiveYellowHoverCss}
 `;
 
 const NoSideMarginGrid = styled(Grid)`
@@ -34,4 +38,5 @@ export {
    BeHiveIcon,
    BeHiveButton,
    NoSideMarginGrid,
+   BeHiveYellowHoverCss,
 };
