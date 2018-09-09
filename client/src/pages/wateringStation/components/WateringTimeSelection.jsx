@@ -67,7 +67,9 @@ class WateringTimeSelection extends React.Component {
       const wateringTimes = this.props.wateringStation.wateringTimes;
 
       const errors = this.props.errors ? this.props.errors : [];
-      const wateringTimesHasError = checkForErrorInInput("wateringTimes", errors);
+      const durationHasError = checkForErrorInInput("duration", errors);
+      const timeHasError = checkForErrorInInput("time", errors);
+      const wateringTimesHasError = durationHasError || timeHasError;
 
       let content;
       if (Array.isArray(wateringTimes) && wateringTimes.length > 0) {
