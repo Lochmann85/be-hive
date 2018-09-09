@@ -1,10 +1,5 @@
 import mongoose from 'mongoose';
 
-// import {
-//    emailValidation,
-//    passwordValidation
-// } from '../../validations';
-
 /**
  * @public
  * @function create
@@ -33,7 +28,6 @@ const create = (
          },
          duration: {
             type: Number,
-
          }
       }]
    });
