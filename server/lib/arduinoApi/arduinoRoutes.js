@@ -32,7 +32,10 @@ const useIn = ({
                const wateringData = {};
 
                wateringStations.forEach((wateringStation, index) => {
-                  wateringData[`Station${index}`] = wateringStation.wateringTimes;
+                  wateringData[`Station${index}`] = wateringStation.wateringTimes.map(wateringTime => ({
+                     time: wateringTime.time,
+                     duration: wateringTime.duration
+                  }));
                });
 
                response.send(JSON.stringify(wateringData));
