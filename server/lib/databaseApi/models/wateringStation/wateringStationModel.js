@@ -20,7 +20,6 @@ const create = (
       },
       index: {
          type: Number,
-         required: true,
       },
       isActive: {
          type: Boolean,
