@@ -18,6 +18,10 @@ const create = (
       description: {
          type: String,
       },
+      index: {
+         type: Number,
+         required: true,
+      },
       isActive: {
          type: Boolean,
          required: true,
