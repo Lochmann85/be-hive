@@ -6,7 +6,7 @@
  * @returns {Promise} of all watering stations
  */
 const findAllWateringStations = (wateringStationModel) => () => {
-   return wateringStationModel.find();
+   return wateringStationModel.find().sort({ index: 1 });
 };
 
 export default findAllWateringStations;
