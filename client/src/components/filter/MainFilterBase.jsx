@@ -22,30 +22,37 @@ const ResetLink = styled.a`
    cursor: pointer;
 `;
 
-const HideIcon = styled(Icon) `
+const HideIcon = styled(Icon)`
    cursor: pointer;
    margin-bottom: 0.6rem!important;
 `;
-const StyledFilterHeader = styled(FilterHeader) `
+const StyledFilterHeader = styled(FilterHeader)`
    cursor: pointer;
 `;
 
-const SearchTypeSelection = styled(Dropdown) `
+const SearchTypeSelection = styled(Dropdown)`
    flex: 1 1 auto;
 `;
 
-const StyledAddButton = styled(BeHiveButton) `
+const StyledAddButton = styled(BeHiveButton)`
    margin-left: 0.5rem!important;
+   margin-right: 0!important;
 `;
 
-const FilterButton = styled(BeHiveButton) `
+const FilterButton = styled(BeHiveButton)`
    margin-right: 0!important;
    margin-left: 1rem!important;
    margin-bottom: 1rem!important;
 `;
 
-const RightAlignedContent = styled(FlexWrapper) `
+const RightAlignedContent = styled(FlexWrapper)`
    justify-content: flex-end;
+`;
+
+const TabletHiddenWrapper = styled(FlexWrapper)`
+   @media only screen and (max-width: 991px) {
+      display: none;
+   };
 `;
 
 class MainFilterBase extends React.Component {
@@ -117,10 +124,10 @@ class MainFilterBase extends React.Component {
 
       return (
          <React.Fragment>
-            <FlexWrapper>
+            <TabletHiddenWrapper>
                <HideIcon onClick={this.props.onHideFilter} className="ficon-angle-double-left" size="large" />
                <StyledFilterHeader onClick={this.props.onHideFilter}>Filter</StyledFilterHeader>
-            </FlexWrapper>
+            </TabletHiddenWrapper>
             <FlexWrapper>
                <SearchTypeSelection search fluid selection
                   name="selectedSearchTypeId"
