@@ -7,7 +7,7 @@ const FlexWrapper = styled.div`
 
 const ButtonGroupWrapper = styled(FlexWrapper)`
    justify-content: flex-start;
-   & > .button {
+   & > .button, a {
       margin-right: 1rem!important;
    };
    & :firtst-child {
