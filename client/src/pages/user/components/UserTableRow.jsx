@@ -6,11 +6,11 @@ import moment from 'moment';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { Accordion, List, Button } from 'semantic-ui-react';
+import { List, Button } from 'semantic-ui-react';
 
 import { BeHiveButton } from '../../../assets/styles/UI';
-import { ButtonGroupWrapper } from '../../../assets/styles/Wrapper';
 import AccordionItemHeader from '../../../components/table/AccordionItemHeader';
+import AccordionItemContent from '../../../components/table/AccordionItemContent';
 
 const cellPadding = css`
    padding: .78571429em
@@ -44,10 +44,6 @@ const CreatedAtCell = styled.div`
    };
 `;
 
-const StyledAccordionContent = styled(Accordion.Content)`
-   padding-top: 0!important;
-`;
-
 const RemainingValueList = styled(List)`
    margin-left: 2rem!important;
    & > div {
@@ -63,11 +59,6 @@ const StyledAccordionItem = styled.div`
       width: 40px!important;
    };
 `;
-
-const EditButton = styled(BeHiveButton)`
-   margin-left: 1rem!important;
-`;
-
 
 const UserTableRow = (props) => {
    const {
@@ -92,25 +83,29 @@ const UserTableRow = (props) => {
       <StyledAccordionItem>
          <AccordionItemHeader
             index={index}
-            active={index === activeIndex}
+            activeIndex={activeIndex}
             onClick={onRowClick}>
             <EMailCell>{user.email}</EMailCell>
             <NameCell>{user.name}</NameCell>
             <CreatedAtCell>{createdAt}</CreatedAtCell>
          </AccordionItemHeader>
-         <StyledAccordionContent active={index === activeIndex}>
+         <AccordionItemContent
+            index={index}
+            activeIndex={activeIndex}
+            interactionButtons={
+               <React.Fragment>
+                  <Link to={`${relatedPaths.updateUser}/${user.id}`} >
+                     <BeHiveButton content="Edit" />
+                  </Link>
+                  {deleteButton}
+               </React.Fragment>
+            } >
             <RemainingValueList bulleted>
                <List.Item content={`Name: ${user.name}`} />
                <List.Item content={`Created at: ${createdAt}`} />
             </RemainingValueList>
-            <ButtonGroupWrapper>
-               <Link to={`${relatedPaths.updateUser}/${user.id}`} >
-                  <EditButton content="Edit" />
-               </Link>
-               {deleteButton}
-            </ButtonGroupWrapper>
-         </StyledAccordionContent>
-      </StyledAccordionItem>
+         </AccordionItemContent>
+      </StyledAccordionItem >
    );
 };
 

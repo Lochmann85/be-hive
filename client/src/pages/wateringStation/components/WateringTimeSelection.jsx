@@ -4,11 +4,11 @@ import { propType } from 'graphql-anywhere';
 import gql from 'graphql-tag';
 import styled, { css } from 'styled-components';
 
-import { Form, Icon, Table, Accordion, Button } from 'semantic-ui-react';
+import { Form, Icon, Table, Button } from 'semantic-ui-react';
 
 import { BeHiveYellowHoverCss, BeHiveButton, TableAccordion } from '../../../assets/styles/UI';
-import { ButtonGroupWrapper } from '../../../assets/styles/Wrapper';
 import AccordionItemHeader from '../../../components/table/AccordionItemHeader';
+import AccordionItemContent from '../../../components/table/AccordionItemContent';
 import AddWateringTimeModal from './AddWateringTimeModal';
 import checkForErrorInInput from '../../../helper/validation';
 
@@ -51,10 +51,6 @@ const StyledAccordionItem = styled.div`
    i.icon.dropdown {
       ${interactionCellWidth}!important;
    };
-`;
-
-const EditButton = styled(BeHiveButton)`
-   margin-left: 1rem!important;
 `;
 
 const ContentOffsetWrapper = styled.div`
@@ -113,17 +109,21 @@ class WateringTimeSelection extends React.Component {
             <StyledAccordionItem key={index}>
                <AccordionItemHeader
                   index={index}
-                  active={index === activeIndex}
+                  activeIndex={activeIndex}
                   onClick={this._setSelectedWateringTime}>
                   <TimeCell>{watering.time}</TimeCell>
                   <DurationCell>{watering.duration}</DurationCell>
                </AccordionItemHeader>
-               <Accordion.Content active={index === activeIndex}>
-                  <ButtonGroupWrapper>
-                     <EditButton content="Edit" onClick={() => this._handleWateringEdit(index)} />
-                     <Button color="red" content="Delete" onClick={() => this._handleWateringDelete(index)} />
-                  </ButtonGroupWrapper>
-               </Accordion.Content>
+               <AccordionItemContent
+                  index={index}
+                  activeIndex={activeIndex}
+                  interactionButtons={
+                     <React.Fragment>
+                        <BeHiveButton content="Edit" onClick={() => this._handleWateringEdit(index)} />
+                        <Button color="red" content="Delete" onClick={() => this._handleWateringDelete(index)} />
+                     </React.Fragment>
+                  }
+               />
             </StyledAccordionItem>
          );
 
