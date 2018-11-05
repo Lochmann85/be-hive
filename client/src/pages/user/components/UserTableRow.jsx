@@ -3,50 +3,109 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { propType } from 'graphql-anywhere';
 import moment from 'moment';
+import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
 
-import { Table } from 'semantic-ui-react';
+import { List, Button } from 'semantic-ui-react';
 
-import DescriptionWithEditAndDelete from '../../../components/table/DescriptionWithEditAndDelete';
-import InteractionTableRow from '../../../components/table/InteractionTableRow';
+import { BeHiveButton } from '../../../assets/styles/UI';
+import AccordionItemHeader from '../../../components/table/AccordionItemHeader';
+import AccordionItemContent from '../../../components/table/AccordionItemContent';
+
+const cellPadding = css`
+   padding: .78571429em
+`;
+
+const EMailCell = styled.div`
+   ${cellPadding};
+   width: 37.5%;
+   text-align: left;
+   @media only screen and (max-width: 991px) {
+      width: auto;
+      flex: 1 1 auto;
+   };
+`;
+
+const NameCell = styled.div`
+   ${cellPadding};
+   width: 31.25%;
+   text-align: left;
+   @media only screen and (max-width: 991px) {
+      display: none;
+   };
+`;
+
+const CreatedAtCell = styled.div`
+   ${cellPadding};
+   text-align: left;
+   flex: 1 1 auto;
+   @media only screen and (max-width: 991px) {
+      display: none;
+   };
+`;
+
+const RemainingValueList = styled(List)`
+   margin-left: 2rem!important;
+   & > div {
+      padding: 0 .78571429em .78571429em .78571429em!important;
+   };
+   @media only screen and (min-width: 992px) {
+      display: none;
+   };
+`;
+
+const StyledAccordionItem = styled.div`
+   i.icon.dropdown {
+      width: 40px!important;
+   };
+`;
 
 const UserTableRow = (props) => {
    const {
       user,
+      index,
+      activeIndex,
+      onRowClick,
       relatedPaths,
       onDeleteClick,
       viewer,
    } = props;
 
-   const createdAt = new Date(user.createdAt);
-   const UserInteractionCell = ({ isSelected, onLoosesFocus }) => {
-      let handleDeleteClick;
-      if (user.isDeletable && user.id !== viewer.id) {
-         handleDeleteClick = (userId) => {
-            onLoosesFocus().then(() => {
-               onDeleteClick(userId);
-            });
-         };
-      }
+   let createdAt = new Date(user.createdAt);
+   createdAt = moment(createdAt).format("DD.MM.YYYY - HH:mm");
 
-      return (
-         <Table.Cell>
-            <DescriptionWithEditAndDelete
-               relatedPath={relatedPaths.updateUser}
-               id={user.id}
-               isSelected={isSelected}
-               onDeleteClick={handleDeleteClick}
-               description={moment(createdAt).format("DD.MM.YYYY - HH:mm")} />
-         </Table.Cell>
-      );
-   };
-   UserInteractionCell.hasSelectionState = true;
+   let deleteButton;
+   if (user.isDeletable && user.id !== viewer.id) {
+      deleteButton = <Button color="red" content="Delete" onClick={() => onDeleteClick(user.id)} />;
+   }
 
    return (
-      <InteractionTableRow>
-         <Table.Cell content={user.email} />
-         <Table.Cell content={user.name} />
-         <UserInteractionCell />
-      </InteractionTableRow>
+      <StyledAccordionItem>
+         <AccordionItemHeader
+            index={index}
+            activeIndex={activeIndex}
+            onClick={onRowClick}>
+            <EMailCell>{user.email}</EMailCell>
+            <NameCell>{user.name}</NameCell>
+            <CreatedAtCell>{createdAt}</CreatedAtCell>
+         </AccordionItemHeader>
+         <AccordionItemContent
+            index={index}
+            activeIndex={activeIndex}
+            interactionButtons={
+               <React.Fragment>
+                  <Link to={`${relatedPaths.updateUser}/${user.id}`} >
+                     <BeHiveButton content="Edit" />
+                  </Link>
+                  {deleteButton}
+               </React.Fragment>
+            } >
+            <RemainingValueList bulleted>
+               <List.Item content={`Name: ${user.name}`} />
+               <List.Item content={`Created at: ${createdAt}`} />
+            </RemainingValueList>
+         </AccordionItemContent>
+      </StyledAccordionItem >
    );
 };
 
@@ -84,6 +143,9 @@ UserTableRow.propTypes = {
    relatedPaths: PropTypes.shape({
       updateUser: PropTypes.string.isRequired,
    }).isRequired,
+   activeIndex: PropTypes.number.isRequired,
+   index: PropTypes.number.isRequired,
+   onRowClick: PropTypes.func.isRequired,
 };
 
 UserTableRow.fragments = {

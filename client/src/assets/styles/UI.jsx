@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { Icon, Button, Grid } from 'semantic-ui-react';
+import { Icon, Button, Grid, Accordion } from 'semantic-ui-react';
 
 import standardColors from '../colors/standard.json';
 
@@ -33,10 +33,23 @@ const NoSideMarginGrid = styled(Grid)`
    margin-right: 0!important;
 `;
 
+const TableAccordion = styled(Accordion)`
+   & > div > div.title {
+      border-top:1px solid rgba(34,36,38,.1);
+   };
+   & > div:first-child > div.title {
+      border-top: none;
+   };
+   & > div > div.content {
+      padding-bottom: 1rem!important;
+   };
+`;
+
 export {
    FilterHeader,
    BeHiveIcon,
    BeHiveButton,
    NoSideMarginGrid,
    BeHiveYellowHoverCss,
+   TableAccordion,
 };

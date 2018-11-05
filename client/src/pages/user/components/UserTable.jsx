@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { compose, graphql } from 'react-apollo';
 import { propType } from 'graphql-anywhere';
+import styled from 'styled-components';
 
 import { Table } from 'semantic-ui-react';
 
@@ -13,6 +14,17 @@ import findAllUsersQuery from '../graphql/queries/findAllUsers';
 import deleteUserMutationTemplate from '../graphql/mutations/deleteUser';
 import DeleteConfirmation from '../../../components/modal/DeleteConfirmation';
 import { convertOnlyValidationError } from '../../../components/errorHandling/convertValidationError';
+
+const StyledTableHeader = styled(Table.Header)`
+   @media only screen and (max-width: 991px) {   
+      tr th:nth-child(2) {
+         display: none!important;
+      }
+      tr th:nth-child(3) {
+         display: none!important;
+      }
+   }; 
+`;
 
 const userFragment = {
    name: "UserTable",
@@ -59,6 +71,7 @@ class UserTable extends React.Component {
          openDeleteConfirmation: false,
          errors: [],
          selectedUserId: "",
+         activeIndex: -1,
       };
    }
 
@@ -110,20 +123,23 @@ class UserTable extends React.Component {
    }
 
    _createTableBody = (visibleUsers) => {
+      const {
+         activeIndex
+      } = this.state;
+
       const visibleTableRows = visibleUsers.map((user, index) =>
          <UserTableRow
             key={index}
             user={user}
             relatedPaths={this.props.relatedPaths}
             onDeleteClick={this._onDeleteClick}
+            index={index}
+            activeIndex={activeIndex}
+            onRowClick={this._setSelectedRow}
             viewer={this.props.viewer} />
       );
 
-      return (
-         <Table.Body>
-            {visibleTableRows}
-         </Table.Body>
-      );
+      return visibleTableRows;
    }
 
    _createTableHeader = () => {
@@ -132,11 +148,11 @@ class UserTable extends React.Component {
       );
 
       return (
-         <Table.Header>
+         <StyledTableHeader>
             <Table.Row>
                {headerItems}
             </Table.Row>
-         </Table.Header>
+         </StyledTableHeader>
       );
    }
 
@@ -155,13 +171,32 @@ class UserTable extends React.Component {
       this.props.deleteUser(this.state.selectedUserId)
          .then(response => {
             if (response.data.deleteUser) {
-               this._onCloseClick();
+               this._handleAfterDelete();
             }
          })
          .catch(error => convertOnlyValidationError(error, this._onShowError));
    };
 
    _onShowError = (errors) => this.setState({ errors });
+
+   _setSelectedRow = (event, row) => {
+      const { index } = row;
+      const { activeIndex } = this.state;
+
+      if (index === activeIndex) {
+         this.setState({ activeIndex: -1 });
+      }
+      else {
+         this.setState({ activeIndex: index });
+      }
+   };
+
+   _handleAfterDelete = () => this.setState({
+      activeIndex: -1,
+      openDeleteConfirmation: false,
+      errors: [],
+      selectedUserId: "",
+   });
 };
 
 const queryDefinition = findAllUsersQuery(userFragment);

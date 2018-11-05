@@ -5,8 +5,11 @@ import styled from 'styled-components';
 import BaseContentLayout from './BaseContentLayout';
 import { FlexWrapper } from '../../assets/styles/Wrapper';
 
-const TopAlignedFlexWrapper = styled(FlexWrapper) `
+const TopAlignedFlexWrapper = styled(FlexWrapper)`
    align-items: stretch;
+   @media only screen and (max-width: 991px) {
+      flex-direction: column;
+   };
 `;
 
 const RemainingSpace = styled.div`
@@ -20,6 +23,16 @@ const FilterWrapper = styled.div`
    align-self: stretch;
    &.filterFixedSize {
       flex: 0 0 400px;
+   };
+   @media only screen and (max-width: 991px) {
+      display: none;
+   };
+`;
+
+const TabletFilterWrapper = styled.div`
+   align-self: stretch;
+   @media only screen and (min-width: 992px) {
+      display: none;
    };
 `;
 
@@ -39,6 +52,9 @@ const BaseContentLayoutWithSidebar = (props) => {
             <FilterWrapper className={toggleClass}>
                {sidebarContent}
             </FilterWrapper>
+            <TabletFilterWrapper>
+               {props.shownSidebarContent}
+            </TabletFilterWrapper>
             <RemainingSpace>
                {props.children}
             </RemainingSpace>

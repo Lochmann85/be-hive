@@ -2,29 +2,55 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { propType } from 'graphql-anywhere';
 import gql from 'graphql-tag';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { Form, Icon, Table } from 'semantic-ui-react';
+import { Form, Icon, Table, Button } from 'semantic-ui-react';
 
-import { BeHiveYellowHoverCss, BeHiveButton, BeHiveIcon } from '../../../assets/styles/UI';
-import { FlexWrapper } from '../../../assets/styles/Wrapper';
-import InteractionTableRow from '../../../components/table/InteractionTableRow';
+import { BeHiveYellowHoverCss, BeHiveButton, TableAccordion } from '../../../assets/styles/UI';
+import AccordionItemHeader from '../../../components/table/AccordionItemHeader';
+import AccordionItemContent from '../../../components/table/AccordionItemContent';
 import AddWateringTimeModal from './AddWateringTimeModal';
 import checkForErrorInInput from '../../../helper/validation';
+
+const interactionCellWidth = css`width: 79px`;
 
 const StyledTable = styled(Table)`
    @media only screen and (min-width: 400px) {
       width:350px!important;
    }
    & th:last-child, td:last-child {
-      width: 79px;
+      ${interactionCellWidth};
       text-align:center!important;
    }
 `;
 
+const StyledTableCell = styled(Table.Cell)`
+   padding: 0!important;
+`;
+
 const StyledAddHeaderCell = styled(Table.HeaderCell)`
-   pointer: cursor!important;
+   cursor: pointer!important;
    ${BeHiveYellowHoverCss}
+`;
+
+const cellPadding = css`padding: .78571429em`;
+
+const TimeCell = styled.div`
+   ${cellPadding};
+   width: 31.25%;
+   text-align: left;
+`;
+
+const DurationCell = styled.div`
+   ${cellPadding};
+   text-align: left;
+   flex: 1 1 auto;
+`;
+
+const StyledAccordionItem = styled.div`
+   i.icon.dropdown {
+      ${interactionCellWidth}!important;
+   };
 `;
 
 const ContentOffsetWrapper = styled.div`
@@ -60,10 +86,15 @@ class WateringTimeSelection extends React.Component {
       this.state = {
          openAddWatering: false,
          selectedWatering: null,
+         activeIndex: -1,
       };
    }
 
    render() {
+      const {
+         activeIndex
+      } = this.state;
+
       const wateringTimes = this.props.wateringStation.wateringTimes;
 
       const errors = this.props.errors ? this.props.errors : [];
@@ -73,50 +104,46 @@ class WateringTimeSelection extends React.Component {
 
       let content;
       if (Array.isArray(wateringTimes) && wateringTimes.length > 0) {
-         const InteractionCell = ({ isSelected, onLoosesFocus, wateringIndex }) => {
-            const handleWateringEdit = () => {
-               onLoosesFocus().then(() => {
-                  this._handleWateringEdit(wateringIndex);
-               });
-            };
-
-            let deleteIcon,
-               editIcon;
-            if (isSelected) {
-               deleteIcon = <BeHiveIcon className="ficon-cancel" color="red" link onClick={() => this._handleWateringDelete(wateringIndex)} />;
-               editIcon = <BeHiveIcon className="ficon-edit" color="blue" link onClick={handleWateringEdit} />;
-            }
-
-            return (
-               <Table.Cell>
-                  <FlexWrapper>
-                     {editIcon}
-                     {deleteIcon}
-                  </FlexWrapper>
-               </Table.Cell>
-            );
-         };
-         InteractionCell.hasSelectionState = true;
 
          const wateringTimesTableBody = wateringTimes.map((watering, index) =>
-            <InteractionTableRow key={index}>
-               <Table.Cell content={watering.time} />
-               <Table.Cell content={watering.duration} />
-               <InteractionCell wateringIndex={index} />
-            </InteractionTableRow>
+            <StyledAccordionItem key={index}>
+               <AccordionItemHeader
+                  index={index}
+                  activeIndex={activeIndex}
+                  onClick={this._setSelectedWateringTime}>
+                  <TimeCell>{watering.time}</TimeCell>
+                  <DurationCell>{watering.duration}</DurationCell>
+               </AccordionItemHeader>
+               <AccordionItemContent
+                  index={index}
+                  activeIndex={activeIndex}
+                  interactionButtons={
+                     <React.Fragment>
+                        <BeHiveButton content="Edit" onClick={() => this._handleWateringEdit(index)} />
+                        <Button color="red" content="Delete" onClick={() => this._handleWateringDelete(index)} />
+                     </React.Fragment>
+                  }
+               />
+            </StyledAccordionItem>
          );
 
          content = (
-            <StyledTable selectable unstackable>
+            <StyledTable unstackable>
                <Table.Header>
                   <Table.Row>
-                     <Table.HeaderCell content="Time" />
+                     <Table.HeaderCell content="Time" width={5} />
                      <Table.HeaderCell content="Duration" />
                      <StyledAddHeaderCell content={<Icon className="ficon-plus" />} onClick={this._openAddWatering} />
                   </Table.Row>
                </Table.Header>
                <Table.Body>
-                  {wateringTimesTableBody}
+                  <Table.Row>
+                     <StyledTableCell colSpan={3}>
+                        <TableAccordion>
+                           {wateringTimesTableBody}
+                        </TableAccordion>
+                     </StyledTableCell>
+                  </Table.Row>
                </Table.Body>
             </StyledTable>
          );
@@ -141,6 +168,22 @@ class WateringTimeSelection extends React.Component {
       );
    };
 
+   _setSelectedWateringTime = (event, wateringItem) => {
+      const { index } = wateringItem;
+      const { activeIndex } = this.state;
+
+      if (index === activeIndex) {
+         this.setState({ activeIndex: -1 });
+      }
+      else {
+         const watering = this.props.wateringStation.wateringTimes[index];
+
+         if (watering) {
+            this.setState({ activeIndex: index });
+         }
+      }
+   };
+
    _handleWateringDelete = (indexToDelete) => {
       const {
          onChange,
@@ -149,7 +192,9 @@ class WateringTimeSelection extends React.Component {
 
       const wateringTimesCopy = wateringStation.wateringTimes.filter((entry, index) => index !== indexToDelete);
 
-      onChange({}, { name: "wateringTimes", value: wateringTimesCopy });
+      this.setState({ activeIndex: -1 }, () => {
+         onChange({}, { name: "wateringTimes", value: wateringTimesCopy });
+      });
    };
 
    _handleWateringEdit = (indexToEdit) => {
