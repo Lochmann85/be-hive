@@ -108,6 +108,7 @@ class UserForm extends React.Component {
                name="password"
                type="password"
                onChange={this._handleChange}
+               autoComplete="new-password"
                error={passwordHasError} />
          );
       }
@@ -148,6 +149,7 @@ class UserForm extends React.Component {
                name="email"
                onChange={this._handleChange}
                defaultValue={email}
+               autoComplete="username"
                error={emailHasError} />
             <Form.Input
                required

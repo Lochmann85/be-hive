@@ -69,12 +69,14 @@ class LoginModal extends React.Component {
                      label="E-Mail"
                      name="email"
                      onChange={this._handleChange}
+                     autoComplete="username"
                      error={emailHasError} />
                   <Form.Input
                      label="Password"
                      name="password"
                      type="password"
                      onChange={this._handleChange}
+                     autoComplete="current-password"
                      error={passwordHasError} />
                   <Message error visible hidden={loginErrors.length === 0}>
                      <Message.List items={loginErrors.map(error => error.message)} />

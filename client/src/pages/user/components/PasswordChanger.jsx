@@ -13,8 +13,12 @@ import changeUserPasswordMutation from '../graphql/mutations/changeUserPassword'
 import checkForErrorInInput from '../../../helper/validation';
 import { convertOnlyValidationError } from '../../../components/errorHandling/convertValidationError';
 
-const StyledDescription = styled(Modal.Description) `
+const StyledDescription = styled(Modal.Description)`
    margin-bottom: 1rem!important;
+`;
+
+const HiddenUsername = styled(Form.Input)`
+   display: none!important;
 `;
 
 const userFragment = {
@@ -79,23 +83,30 @@ class PasswordChanger extends React.Component {
                   {description}
                </StyledDescription>
                <Form>
+                  <HiddenUsername
+                     label="E-Mail"
+                     name="email"
+                     autoComplete="username" />
                   <Form.Input
                      name="password"
                      label="Old password"
                      type="password"
                      onChange={this._handleChange}
+                     autoComplete="current-password"
                      error={passwordHasError} />
                   <Form.Input
                      name="new"
                      label="New password"
                      type="password"
                      onChange={this._handleChange}
+                     autoComplete="new-password"
                      error={newHasError} />
                   <Form.Input
                      label="Confirm password"
                      name="confirm"
                      type="password"
                      onChange={this._handleChange}
+                     autoComplete="new-password"
                      error={confirmHasError} />
                </Form >
                {successBox}
