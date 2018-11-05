@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Table, Button, Dropdown, Icon, Message, Accordion } from 'semantic-ui-react';
+import { Table, Button, Dropdown, Icon, Message } from 'semantic-ui-react';
 
 import QueryLoader from '../../components/layout/QueryLoader';
 import { numberOfVisibleTableEntries } from './numberOfTableEntries';
 import { FlexWrapper } from '../../assets/styles/Wrapper';
+import { TableAccordion } from '../../assets/styles/UI';
 
 const RightAlignedContent = styled(FlexWrapper)`
    flex: 1 1 auto;
@@ -30,18 +31,6 @@ const AlignedDropdown = styled(Dropdown)`
 
 const StyledTableCell = styled(Table.Cell)`
    padding: 0!important;
-`;
-
-const StyledAccordion = styled(Accordion)`
-   & > div.title {
-      border-top:1px solid rgba(34,36,38,.1);
-   };
-   & > div:first-child {
-      border-top: none;
-   };
-   & > div:last-child {
-      padding-bottom: 1rem!important;
-   };
 `;
 
 const StyledTable = styled(Table)`
@@ -112,9 +101,9 @@ class BasePagedTable extends React.Component {
                <Table.Body>
                   <Table.Row>
                      <StyledTableCell colSpan={numberOfColumns}>
-                        <StyledAccordion>
+                        <TableAccordion>
                            {tableBody}
-                        </StyledAccordion>
+                        </TableAccordion>
                      </StyledTableCell>
                   </Table.Row>
                </Table.Body>

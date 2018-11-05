@@ -6,10 +6,11 @@ import moment from 'moment';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { Accordion, Icon, List, Button } from 'semantic-ui-react';
+import { Accordion, List, Button } from 'semantic-ui-react';
 
 import { BeHiveButton } from '../../../assets/styles/UI';
-import { FlexWrapper, ButtonGroupWrapper } from '../../../assets/styles/Wrapper';
+import { ButtonGroupWrapper } from '../../../assets/styles/Wrapper';
+import AccordionItemHeader from '../../../components/table/AccordionItemHeader';
 
 const cellPadding = css`
    padding: .78571429em
@@ -57,8 +58,10 @@ const RemainingValueList = styled(List)`
    };
 `;
 
-const InteractionCell = styled.div`
-   width: 40px;
+const StyledAccordionItem = styled.div`
+   i.icon.dropdown {
+      width: 40px!important;
+   };
 `;
 
 const EditButton = styled(BeHiveButton)`
@@ -86,18 +89,15 @@ const UserTableRow = (props) => {
    }
 
    return (
-      <React.Fragment>
-         <Accordion.Title
+      <StyledAccordionItem>
+         <AccordionItemHeader
             index={index}
             active={index === activeIndex}
             onClick={onRowClick}>
-            <FlexWrapper>
-               <EMailCell>{user.email}</EMailCell>
-               <NameCell>{user.name}</NameCell>
-               <CreatedAtCell>{createdAt}</CreatedAtCell>
-               <InteractionCell><Icon name="dropdown" /></InteractionCell>
-            </FlexWrapper>
-         </Accordion.Title>
+            <EMailCell>{user.email}</EMailCell>
+            <NameCell>{user.name}</NameCell>
+            <CreatedAtCell>{createdAt}</CreatedAtCell>
+         </AccordionItemHeader>
          <StyledAccordionContent active={index === activeIndex}>
             <RemainingValueList bulleted>
                <List.Item content={`Name: ${user.name}`} />
@@ -110,7 +110,7 @@ const UserTableRow = (props) => {
                {deleteButton}
             </ButtonGroupWrapper>
          </StyledAccordionContent>
-      </React.Fragment>
+      </StyledAccordionItem>
    );
 };
 

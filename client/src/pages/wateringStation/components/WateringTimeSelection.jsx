@@ -6,19 +6,20 @@ import styled, { css } from 'styled-components';
 
 import { Form, Icon, Table, Accordion, Button } from 'semantic-ui-react';
 
-import { BeHiveYellowHoverCss, BeHiveButton } from '../../../assets/styles/UI';
-import { FlexWrapper, ButtonGroupWrapper } from '../../../assets/styles/Wrapper';
+import { BeHiveYellowHoverCss, BeHiveButton, TableAccordion } from '../../../assets/styles/UI';
+import { ButtonGroupWrapper } from '../../../assets/styles/Wrapper';
+import AccordionItemHeader from '../../../components/table/AccordionItemHeader';
 import AddWateringTimeModal from './AddWateringTimeModal';
 import checkForErrorInInput from '../../../helper/validation';
 
-const interactionCellWidth = css`width: 79px;`;
+const interactionCellWidth = css`width: 79px`;
 
 const StyledTable = styled(Table)`
    @media only screen and (min-width: 400px) {
       width:350px!important;
    }
    & th:last-child, td:last-child {
-      ${interactionCellWidth}
+      ${interactionCellWidth};
       text-align:center!important;
    }
 `;
@@ -32,35 +33,24 @@ const StyledAddHeaderCell = styled(Table.HeaderCell)`
    ${BeHiveYellowHoverCss}
 `;
 
-const StyledAccordion = styled(Accordion)`
-   & > div.title {
-      border-top:1px solid rgba(34,36,38,.1);
-   };
-   & > div:first-child {
-      border-top: none;
-   };
-   & > div:last-child {
-      padding-bottom: 1rem!important;
-   };
-`;
-
-const cellPadding = css`padding: .78571429em;`;
+const cellPadding = css`padding: .78571429em`;
 
 const TimeCell = styled.div`
-   ${cellPadding}
+   ${cellPadding};
    width: 31.25%;
    text-align: left;
 `;
 
 const DurationCell = styled.div`
-   ${cellPadding}
+   ${cellPadding};
    text-align: left;
    flex: 1 1 auto;
 `;
 
-const InteractionCell = styled.div`
-   ${cellPadding}
-   ${interactionCellWidth}
+const StyledAccordionItem = styled.div`
+   i.icon.dropdown {
+      ${interactionCellWidth}!important;
+   };
 `;
 
 const EditButton = styled(BeHiveButton)`
@@ -120,24 +110,21 @@ class WateringTimeSelection extends React.Component {
       if (Array.isArray(wateringTimes) && wateringTimes.length > 0) {
 
          const wateringTimesTableBody = wateringTimes.map((watering, index) =>
-            <React.Fragment key={index}>
-               <Accordion.Title
+            <StyledAccordionItem key={index}>
+               <AccordionItemHeader
                   index={index}
                   active={index === activeIndex}
                   onClick={this._setSelectedWateringTime}>
-                  <FlexWrapper>
-                     <TimeCell>{watering.time}</TimeCell>
-                     <DurationCell>{watering.duration}</DurationCell>
-                     <InteractionCell><Icon name="dropdown" /></InteractionCell>
-                  </FlexWrapper>
-               </Accordion.Title>
+                  <TimeCell>{watering.time}</TimeCell>
+                  <DurationCell>{watering.duration}</DurationCell>
+               </AccordionItemHeader>
                <Accordion.Content active={index === activeIndex}>
                   <ButtonGroupWrapper>
                      <EditButton content="Edit" onClick={() => this._handleWateringEdit(index)} />
                      <Button color="red" content="Delete" onClick={() => this._handleWateringDelete(index)} />
                   </ButtonGroupWrapper>
                </Accordion.Content>
-            </React.Fragment>
+            </StyledAccordionItem>
          );
 
          content = (
@@ -152,9 +139,9 @@ class WateringTimeSelection extends React.Component {
                <Table.Body>
                   <Table.Row>
                      <StyledTableCell colSpan={3}>
-                        <StyledAccordion>
+                        <TableAccordion>
                            {wateringTimesTableBody}
-                        </StyledAccordion>
+                        </TableAccordion>
                      </StyledTableCell>
                   </Table.Row>
                </Table.Body>
