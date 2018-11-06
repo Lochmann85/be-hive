@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { propType } from 'graphql-anywhere';
 import styled, { css } from 'styled-components';
 
-import standardColors from '../../../assets/colors/standard.json';
+import colors from '../../../assets/colors';
 
 import { Card, Table, Icon, Message } from 'semantic-ui-react';
 
@@ -13,9 +13,9 @@ import browserHistory from '../../../storeHandler/routerHistory';
 const StyledCard = styled(Card)`
    ${(props) => {
       if (props.active) {
-         return `box-shadow: 0 0 0 1px ${standardColors.lightgrey},
-                             2px 4px 2px 0 ${standardColors.be_hive_yellow},
-                             0 1px 3px 0 ${standardColors.lightgrey} !important;`;
+         return `box-shadow: 0 0 0 1px ${colors.lightgrey},
+                             2px 4px 2px 0 ${colors.beHiveYellow},
+                             0 1px 3px 0 ${colors.lightgrey} !important;`;
       }
       else {
          return `opacity: 0.7;!important`;

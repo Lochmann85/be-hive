@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { Dropdown } from 'semantic-ui-react';
 
-import standardColors from '../../../assets/colors/standard.json';
+import colors from '../../../assets/colors';
 import Info from './Info';
 import LoginModal from './LoginModal';
 import ViewerInfo from './ViewerInfo';
@@ -14,7 +14,7 @@ import ViewerInfo from './ViewerInfo';
 const StyledDropdownHeader = styled(Dropdown.Header)`
    margin: 0!important;
    padding:1rem 1.14285714rem!important;
-   background-color: ${standardColors.be_hive_yellow};
+   background-color: ${colors.beHiveYellow};
    opacity: 0.7!important;
 `;
 

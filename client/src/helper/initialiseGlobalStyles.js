@@ -6,10 +6,10 @@ import 'rc-time-picker/assets/index.css';
 
 import { injectGlobal } from 'styled-components';
 
-import standardColors from '../assets/colors/standard';
+import colors from '../assets/colors';
 
 injectGlobal`
-   #root { background: ${standardColors.white}; };
+   #root { background: ${colors.white}; };
    .rc-time-picker-panel-clear-btn {display:none!important;};
    .rc-time-picker-panel-select {
       overflow-y: scroll;

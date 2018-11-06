@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 import { Icon, Button, Grid, Accordion } from 'semantic-ui-react';
 
-import standardColors from '../colors/standard.json';
+import colors from '../colors';
 
 const FilterHeader = styled.div`
    font-weight: 700;
@@ -16,8 +16,8 @@ const BeHiveIcon = styled(Icon)`
 `;
 
 const BeHiveYellowHoverCss = css`
-   background: ${standardColors.be_hive_yellow}!important;
-   color: ${standardColors.black}!important;
+   background: ${colors.beHiveYellow}!important;
+   color: ${colors.black}!important;
    opacity: 0.7!important;
    &:hover {
       opacity: 1!important;

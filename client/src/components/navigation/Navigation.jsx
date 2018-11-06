@@ -8,7 +8,7 @@ import { propType } from 'graphql-anywhere';
 import { Menu, Image } from 'semantic-ui-react';
 
 import logo from '../../assets/images/be-hive-logo.svg';
-import standardColors from '../../assets/colors/standard.json';
+import colors from '../../assets/colors';
 
 import ControlCenterMenu from './components/ControlCenterMenu';
 import NavigationMenuGroup from './NavigationMenuGroup';
@@ -24,7 +24,7 @@ const StyledMenu = styled(Menu)`
 const HeaderText = styled.span`
    margin-left:0.7rem;
    font-size:1.5rem;
-   color:${standardColors.be_hive_logo_grey};
+   color:${colors.beHiveLogoGrey};
    vertical-align:middle;
    @media only screen and (max-width: 767px) {
       display: none;
@@ -34,7 +34,7 @@ const HeaderText = styled.span`
 const MobileHeaderText = styled.span`
    margin-left:0.7rem;
    font-size:1.5rem;
-   color:${standardColors.be_hive_logo_grey};
+   color:${colors.beHiveLogoGrey};
    vertical-align:middle;
    @media only screen and (min-width: 768px) {
       display: none;
