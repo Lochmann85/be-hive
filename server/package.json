@@ -1,6 +1,6 @@
 {
    "name": "be-hive-server",
-   "version": "0.0.1",
+   "version": "1.0.0",
    "description": "alfredos bee hive app",
    "author": "Georg Lochmann <georg.lochmann@gmail.com>",
    "license": "CC-BY-1.0",
