@@ -1,3 +1,5 @@
+import { wateringStations } from './wateringStationsTable';
+
 import findAllWateringStationsTemplate from './findAllWateringStations';
 import findWateringStationTemplate from './findWateringStation';
 import updateWateringStationTemplate from './updateWateringStation';
@@ -6,16 +8,13 @@ import updateWateringStationTemplate from './updateWateringStation';
  * @public
  * @function create
  * @description watering station db service factory
- * @param {object} models - the database models
  * @returns {Promise} of database watering station service
  */
-const create = (
-   models,
-) => {
+const create = () => {
    const wateringStationDbServices = Object.freeze({
-      findAllWateringStations: findAllWateringStationsTemplate(models.wateringStation),
-      findWateringStation: findWateringStationTemplate(models.wateringStation),
-      updateWateringStation: updateWateringStationTemplate(models.wateringStation),
+      findAllWateringStations: findAllWateringStationsTemplate(wateringStations),
+      findWateringStation: findWateringStationTemplate(wateringStations),
+      updateWateringStation: updateWateringStationTemplate(wateringStations),
    });
 
    return Object.freeze({

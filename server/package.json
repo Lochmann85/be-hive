@@ -16,7 +16,6 @@
       "debug": "node --inspect build/service.js"
    },
    "dependencies": {
-      "bcrypt": "^3.0.0",
       "body-parser": "^1.18.2",
       "express": "^4.16.3",
       "graphql": "^0.13.2",
@@ -24,8 +23,6 @@
       "graphql-tools": "^2.24.0",
       "heroku-ssl-redirect": "0.0.4",
       "jsonwebtoken": "^8.2.2",
-      "mongoose": "^5.1.2",
-      "mongoose-unique-validator": "^2.0.1",
       "timezonecomplete": "^5.6.0",
       "validator": "^10.2.0"
    },

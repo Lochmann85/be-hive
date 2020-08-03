@@ -14,7 +14,6 @@ const loadConfig = (
    const config = Object.assign({}, environment);
    config.isInProductionMode = config.NODE_ENV === "production";
    config.PORT = config.PORT || 3001;
-   config.MONGODB_URI = config.MONGODB_URI || "mongodb://be-hive:storage@127.0.0.1:27017/behiveDb";
    config.GRAPHQL_JWT_SECRET = config.GRAPHQL_JWT_SECRET || "graphQL_test_secret";
 
    return Object.freeze(config);

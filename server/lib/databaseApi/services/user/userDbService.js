@@ -1,3 +1,5 @@
+import { users } from './usersTable';
+
 import createUserTemplate from './createUser';
 import updateUserTemplate from './updateUser';
 import deleteUserTemplate from './deleteUser';
@@ -10,22 +12,19 @@ import authenticateUserTemplate from './authenticateUser';
  * @public
  * @function create
  * @description user db service factory
- * @param {object} models - the database models
  * @returns {Promise} of database user service
  */
-const create = (
-   models,
-) => {
-   const findUser = findUserTemplate(models.user);
+const create = () => {
+   const findUser = findUserTemplate(users);
 
    const userDbServices = Object.freeze({
-      findAllUsers: findAllUsersTemplate(models.user),
+      findAllUsers: findAllUsersTemplate(users),
       findUser,
-      createUser: createUserTemplate(models.user),
-      updateUser: updateUserTemplate(models.user),
-      deleteUser: deleteUserTemplate(models.user),
-      changeUserPassword: changeUserPasswordTemplate(models.user, findUser),
-      authenticateUser: authenticateUserTemplate(models.user),
+      createUser: createUserTemplate(users),
+      updateUser: updateUserTemplate(users),
+      deleteUser: deleteUserTemplate(users),
+      changeUserPassword: changeUserPasswordTemplate(users, findUser),
+      authenticateUser: authenticateUserTemplate(users),
    });
 
    return Object.freeze({
