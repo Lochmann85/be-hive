@@ -4,7 +4,6 @@ import { propType } from 'graphql-anywhere';
 import gql from 'graphql-tag';
 
 import UserOverview from './UserOverview';
-import CreateUser from './CreateUser';
 import UpdateUser from './UpdateUser';
 import { defaultNumberOfVisibleTableEntries } from '../../components/table/numberOfTableEntries';
 
@@ -29,13 +28,11 @@ class UserRoutes extends React.Component {
       path: routesPath,
       menuItems: [
          UserOverview.menuItem(routesPath),
-         CreateUser.menuItem(routesPath),
       ],
    };
 
    static relatedPaths = {
       userOverview: UserOverview.path(routesPath),
-      createUser: CreateUser.path(routesPath),
       updateUser: UpdateUser.path(routesPath),
    };
 
@@ -83,9 +80,6 @@ class UserRoutes extends React.Component {
                   onToggleSidebar={this._handleToggleSidebar}
                   relatedPaths={UserRoutes.relatedPaths}
                   viewer={viewer} />
-            )} />
-            <Route exact path={CreateUser.path(routesPath)} render={() => (
-               <CreateUser relatedPaths={UserRoutes.relatedPaths} />
             )} />
             <Route exact path={UpdateUser.path(routesPath) + UpdateUser.wildcard} render={(routerProps) => (
                <UpdateUser relatedPaths={UserRoutes.relatedPaths} {...routerProps} viewer={viewer} />

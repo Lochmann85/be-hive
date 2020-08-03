@@ -9,7 +9,7 @@ const findUser = (users) => (userId) => {
    const user = users.find(user => user.id === userId);
 
    if (user) {
-      return user;
+      return Promise.resolve(user);
    }
    else {
       return Promise.reject(new Error("User could not be found."));

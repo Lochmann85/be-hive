@@ -6,7 +6,7 @@
  * @returns {Promise} of all users
  */
 const findAllUsers = (users) => () => {
-   return users;
+   return Promise.resolve(users);
 };
 
 export default findAllUsers;

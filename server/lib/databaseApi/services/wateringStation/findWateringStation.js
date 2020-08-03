@@ -9,7 +9,7 @@ const findWateringStation = (wateringStations) => (wateringStationId) => {
    const wateringStation = wateringStations.find(wateringStation => wateringStation.id === wateringStationId);
 
    if (wateringStation) {
-      return wateringStation;
+      return Promise.resolve(wateringStation);
    }
    else {
       return Promise.reject(new Error("Watering station could not be found."));

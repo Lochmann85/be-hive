@@ -68,7 +68,7 @@ WateringStationOverview.fragments = {
 WateringStationOverview.path = (routePath) => `${routePath}/view`;
 
 WateringStationOverview.menuItem = (routePath) => ({
-   label: "Overview",
+   label: "View",
    path: WateringStationOverview.path(routePath)
 });
 

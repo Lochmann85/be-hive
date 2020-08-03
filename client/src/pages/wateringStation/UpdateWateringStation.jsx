@@ -8,10 +8,6 @@ import { Message } from 'semantic-ui-react';
 import BaseContentLayout from '../../components/layout/BaseContentLayout';
 import WateringStationForm from './components/WateringStationForm';
 import findWateringStationQueryTemplate from './graphql/queries/findWateringStation';
-import updateWateringStationMutationTemplate from './graphql/mutations/updateWateringStation';
-import { convertOnlyValidationError } from '../../components/errorHandling/convertValidationError';
-import browserHistory from '../../storeHandler/routerHistory';
-import WateringStationOverview from './WateringStationOverview';
 
 class UpdateWateringStation extends React.Component {
 
@@ -42,9 +38,7 @@ class UpdateWateringStation extends React.Component {
          title = `Update watering station: ${findWateringStation.name}`;
          updateWateringStationContent = <WateringStationForm
             wateringStation={findWateringStation}
-            onSubmit={this._onSubmit}
-            errors={this.state.errors}
-            submitButtonTitle="Update" />;
+            errors={this.state.errors} />;
       }
       else {
          title = "";
@@ -57,24 +51,6 @@ class UpdateWateringStation extends React.Component {
          </BaseContentLayout>
       );
    }
-
-   _onSubmit = (wateringStationData) => {
-      const {
-         updateWateringStation,
-         findWateringStationQuery,
-         relatedPaths,
-      } = this.props;
-
-      updateWateringStation(findWateringStationQuery.findWateringStation.id, wateringStationData)
-         .then(response => {
-            if (response.data.updateWateringStation) {
-               browserHistory.push(relatedPaths.wateringStationOverview);
-            }
-         })
-         .catch(error => convertOnlyValidationError(error, this._onShowError));
-   };
-
-   _onShowError = (errors) => this.setState({ errors });
 };
 
 const wateringStationFragment = {
@@ -89,9 +65,7 @@ const wateringStationFragment = {
 };
 
 const findWateringStationQuery = findWateringStationQueryTemplate(wateringStationFragment);
-const updateWateringStationMutation = updateWateringStationMutationTemplate(WateringStationOverview.fragments.wateringStations);
 
 export default compose(
    graphql(findWateringStationQuery.document, findWateringStationQuery.config),
-   graphql(updateWateringStationMutation.document, updateWateringStationMutation.config),
 )(UpdateWateringStation);

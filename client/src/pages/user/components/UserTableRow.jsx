@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { propType } from 'graphql-anywhere';
-import moment from 'moment';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { List, Button } from 'semantic-ui-react';
+import { List } from 'semantic-ui-react';
 
 import { BeHiveButton } from '../../../assets/styles/UI';
 import AccordionItemHeader from '../../../components/table/AccordionItemHeader';
@@ -28,16 +27,6 @@ const EMailCell = styled.div`
 
 const NameCell = styled.div`
    ${cellPadding};
-   width: 31.25%;
-   text-align: left;
-   @media only screen and (max-width: 991px) {
-      display: none;
-   };
-`;
-
-const CreatedAtCell = styled.div`
-   ${cellPadding};
-   text-align: left;
    flex: 1 1 auto;
    @media only screen and (max-width: 991px) {
       display: none;
@@ -67,17 +56,7 @@ const UserTableRow = (props) => {
       activeIndex,
       onRowClick,
       relatedPaths,
-      onDeleteClick,
-      viewer,
    } = props;
-
-   let createdAt = new Date(user.createdAt);
-   createdAt = moment(createdAt).format("DD.MM.YYYY - HH:mm");
-
-   let deleteButton;
-   if (user.isDeletable && user.id !== viewer.id) {
-      deleteButton = <Button color="red" content="Delete" onClick={() => onDeleteClick(user.id)} />;
-   }
 
    return (
       <StyledAccordionItem>
@@ -87,7 +66,6 @@ const UserTableRow = (props) => {
             onClick={onRowClick}>
             <EMailCell>{user.email}</EMailCell>
             <NameCell>{user.name}</NameCell>
-            <CreatedAtCell>{createdAt}</CreatedAtCell>
          </AccordionItemHeader>
          <AccordionItemContent
             index={index}
@@ -97,12 +75,10 @@ const UserTableRow = (props) => {
                   <Link to={`${relatedPaths.updateUser}/${user.id}`} >
                      <BeHiveButton content="Edit" />
                   </Link>
-                  {deleteButton}
                </React.Fragment>
             } >
             <RemainingValueList bulleted>
                <List.Item content={`Name: ${user.name}`} />
-               <List.Item content={`Created at: ${createdAt}`} />
             </RemainingValueList>
          </AccordionItemContent>
       </StyledAccordionItem >
@@ -111,8 +87,7 @@ const UserTableRow = (props) => {
 
 UserTableRow.header = [
    { width: 6, label: "E-Mail" },
-   { width: 5, label: "Name" },
-   { width: 5, label: "Created at" }
+   { width: 10, label: "Name" },
 ];
 
 const userFragment = {
@@ -122,8 +97,6 @@ const userFragment = {
       id
       email
       name
-      isDeletable
-      createdAt
    }`
 };
 
@@ -137,7 +110,6 @@ const viewerFragment = {
 
 
 UserTableRow.propTypes = {
-   onDeleteClick: PropTypes.func.isRequired,
    user: propType(userFragment.document).isRequired,
    viewer: propType(viewerFragment.document),
    relatedPaths: PropTypes.shape({

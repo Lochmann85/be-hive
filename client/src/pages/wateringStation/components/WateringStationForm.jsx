@@ -1,11 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { propType } from 'graphql-anywhere';
 import gql from 'graphql-tag';
 
 import { Message, Form, Button } from 'semantic-ui-react';
 
-import { BeHiveButton } from '../../../assets/styles/UI';
 import { ButtonGroupWrapper } from '../../../assets/styles/Wrapper';
 import WateringTimeSelection from './WateringTimeSelection';
 import browserHistory from '../../../storeHandler/routerHistory';
@@ -31,9 +29,7 @@ class WateringStationForm extends React.Component {
    }
 
    static propTypes = {
-      onSubmit: PropTypes.func.isRequired,
       wateringStation: propType(wateringStationFragment.document),
-      submitButtonTitle: PropTypes.string.isRequired,
    }
 
    constructor(props) {
@@ -52,10 +48,6 @@ class WateringStationForm extends React.Component {
       const nameHasError = checkForErrorInInput("name", errors);
       const descriptionHasError = checkForErrorInInput("description", errors);
 
-      const submitButton = <BeHiveButton
-         type="submit"
-         content={this.props.submitButtonTitle}
-         onClick={this._onSubmit} />;
       const cancelButton = <Button
          as={"a"}
          content="Cancel"
@@ -69,17 +61,20 @@ class WateringStationForm extends React.Component {
                name="name"
                onChange={this._handleChange}
                defaultValue={this.state.name}
+               readOnly={true}
                error={nameHasError} />
             <Form.Input
                label="Description"
                name="description"
                onChange={this._handleChange}
                defaultValue={this.state.description}
+               readOnly={true}
                error={descriptionHasError} />
             <Form.Checkbox
                label="Is watering station active"
                name="isActive"
                onChange={this._handleCheckboxChange}
+               readOnly={true}
                checked={this.state.isActive} />
             <WateringTimeSelection
                wateringStation={this.state}
@@ -90,7 +85,6 @@ class WateringStationForm extends React.Component {
             </Message>
             <ButtonGroupWrapper>
                {cancelButton}
-               {submitButton}
             </ButtonGroupWrapper>
          </Form>
       );
@@ -99,22 +93,6 @@ class WateringStationForm extends React.Component {
    _handleCheckboxChange = () => this.setState({ isActive: !this.state.isActive });
 
    _handleChange = (event, { name, value }) => this.setState({ [name]: value });
-
-   _onSubmit = (event) => {
-      event.preventDefault();
-
-      const wateringStationData = {
-         name: this.state.name,
-         description: this.state.description,
-         isActive: this.state.isActive,
-         wateringTimes: this.state.wateringTimes.map(watering => ({
-            duration: watering.duration,
-            time: watering.time
-         })),
-      };
-
-      this.props.onSubmit(wateringStationData);
-   };
 };
 
 export default WateringStationForm;

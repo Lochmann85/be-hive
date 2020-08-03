@@ -29,8 +29,7 @@ const UserOverview = (props) => {
          title={
             <HeadingWithAddButton
                title="Table of all users"
-               linkUrl={relatedPaths.createUser}
-               showAddButton={true} />
+               showAddButton={false} />
          }
          collapsedSidebarContent={<Button icon="search" onClick={onToggleSidebar} />}
          shownSidebarContent={<MainUserFilter
@@ -67,7 +66,6 @@ UserOverview.propTypes = {
    sidebarIsShown: PropTypes.bool.isRequired,
    onToggleSidebar: PropTypes.func.isRequired,
    relatedPaths: PropTypes.shape({
-      createUser: PropTypes.string.isRequired,
       updateUser: PropTypes.string.isRequired,
    }).isRequired,
    viewer: propType(viewerFragment.document),

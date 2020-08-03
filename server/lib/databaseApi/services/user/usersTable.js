@@ -1,9 +1,7 @@
 const comparePassword = function (password) {
-   const userPassword = this.password;
-
    return new Promise((resolve, reject) => {
-      if (password === userPassword) {
-         resolve();
+      if (password === this.password) {
+         resolve(this);
       }
       else {
          reject({

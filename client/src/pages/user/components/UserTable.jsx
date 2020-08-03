@@ -11,9 +11,6 @@ import BasePagedTable from '../../../components/table/BasePagedTable';
 import BaseLayoutLoader from '../../../components/layout/BaseLayoutLoader';
 import UserTableRow from './UserTableRow';
 import findAllUsersQuery from '../graphql/queries/findAllUsers';
-import deleteUserMutationTemplate from '../graphql/mutations/deleteUser';
-import DeleteConfirmation from '../../../components/modal/DeleteConfirmation';
-import { convertOnlyValidationError } from '../../../components/errorHandling/convertValidationError';
 
 const StyledTableHeader = styled(Table.Header)`
    @media only screen and (max-width: 991px) {   
@@ -84,15 +81,9 @@ class UserTable extends React.Component {
          viewer,
       } = this.props;
 
-      let users = [],
-         deleteMessage = "";
+      let users = [];
       if (findAllUsersQuery && findAllUsersQuery.findAllUsers) {
          users = findAllUsersQuery.findAllUsers;
-
-         const selectedUser = users.find(user => user.id === this.state.selectedUserId);
-         if (selectedUser) {
-            deleteMessage = `The user with name "${selectedUser.name}" will be deleted.`;
-         }
       }
 
       if (!viewer) {
@@ -112,12 +103,6 @@ class UserTable extends React.Component {
                query={this.props.findAllUsersQuery}
                numberOfColumns={UserTableRow.header.length}
             />
-            <DeleteConfirmation
-               open={this.state.openDeleteConfirmation}
-               description={deleteMessage}
-               errors={this.state.errors}
-               onDeleteConfirmation={this._onDeleteConfirmation}
-               onCloseClick={this._onCloseClick} />
          </React.Fragment>
       );
    }
@@ -132,7 +117,6 @@ class UserTable extends React.Component {
             key={index}
             user={user}
             relatedPaths={this.props.relatedPaths}
-            onDeleteClick={this._onDeleteClick}
             index={index}
             activeIndex={activeIndex}
             onRowClick={this._setSelectedRow}
@@ -156,29 +140,6 @@ class UserTable extends React.Component {
       );
    }
 
-   _onDeleteClick = (userId) => this.setState({
-      openDeleteConfirmation: true,
-      selectedUserId: userId,
-   });
-
-   _onCloseClick = () => this.setState({
-      openDeleteConfirmation: false,
-      errors: [],
-      selectedUserId: "",
-   });
-
-   _onDeleteConfirmation = () => {
-      this.props.deleteUser(this.state.selectedUserId)
-         .then(response => {
-            if (response.data.deleteUser) {
-               this._handleAfterDelete();
-            }
-         })
-         .catch(error => convertOnlyValidationError(error, this._onShowError));
-   };
-
-   _onShowError = (errors) => this.setState({ errors });
-
    _setSelectedRow = (event, row) => {
       const { index } = row;
       const { activeIndex } = this.state;
@@ -200,9 +161,7 @@ class UserTable extends React.Component {
 };
 
 const queryDefinition = findAllUsersQuery(userFragment);
-const deleteUserMutation = deleteUserMutationTemplate(userFragment);
 
 export default compose(
    graphql(queryDefinition.document, queryDefinition.config),
-   graphql(deleteUserMutation.document, deleteUserMutation.config),
 )(UserTable);

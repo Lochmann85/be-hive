@@ -6,7 +6,7 @@
  * @returns {Promise} of all watering stations
  */
 const findAllWateringStations = (wateringStations) => () => {
-   return wateringStations;
+   return Promise.resolve(wateringStations);
 };
 
 export default findAllWateringStations;

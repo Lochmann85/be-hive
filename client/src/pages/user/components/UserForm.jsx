@@ -1,12 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { propType } from 'graphql-anywhere';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
 
 import { Message, Form, Button } from 'semantic-ui-react';
 
-import { BeHiveButton } from '../../../assets/styles/UI';
 import {
    FlexWrapper,
    ButtonGroupWrapper
@@ -14,7 +12,6 @@ import {
 
 import browserHistory from '../../../storeHandler/routerHistory';
 import checkForErrorInInput from '../../../helper/validation';
-import PasswordChanger from './PasswordChanger';
 
 const ButtonWithOffset = styled(Button)`
    margin-right: 1rem!important;
@@ -39,15 +36,6 @@ const ButtonWrapperMobile = styled(FlexWrapper)`
    align-items: flex-start;
 `;
 
-const NewPasswordButton = styled(ButtonWithOffset)`
-   @media only screen and (min-width:461px) {
-      margin-left: 2rem!important;
-   };
-   @media only screen and (max-width:460px) {
-      margin-bottom: 2rem!important;
-   };
-`;
-
 const CancelButton = styled(ButtonWithOffset)`
    @media only screen and (max-width:460px) {
       margin-right: 1rem!important;
@@ -61,9 +49,7 @@ const userFragment = {
       id
       email
       name
-      ...${PasswordChanger.fragments.user.name}
-   }
-   ${PasswordChanger.fragments.user.document}`
+   }`
 };
 
 class UserForm extends React.Component {
@@ -73,9 +59,7 @@ class UserForm extends React.Component {
    }
 
    static propTypes = {
-      onSubmit: PropTypes.func.isRequired,
       user: propType(userFragment.document),
-      submitButtonTitle: PropTypes.string.isRequired,
    }
 
    constructor(props) {
@@ -85,7 +69,6 @@ class UserForm extends React.Component {
          email: props.user ? props.user.email : "",
          name: props.user ? props.user.name : "",
          password: "",
-         openPasswordChangeModal: false,
       };
    }
 
@@ -96,9 +79,7 @@ class UserForm extends React.Component {
       const passwordHasError = checkForErrorInInput("password", errors);
 
       let email = "",
-         passwordInput = null,
-         changePasswordButton = null,
-         changePasswordModal = null;
+         passwordInput = null;
 
       if (!this.props.user) {
          passwordInput = (
@@ -109,33 +90,14 @@ class UserForm extends React.Component {
                type="password"
                onChange={this._handleChange}
                autoComplete="new-password"
-               error={passwordHasError} />
+               error={passwordHasError}
+               readOnly={true} />
          );
       }
       else {
          email = this.props.user.email;
-
-         changePasswordButton = (
-            <NewPasswordButton
-               content="New password"
-               as={"a"}
-               onClick={this._onPasswordChangeClick} />
-         );
-
-         changePasswordModal = (
-            <PasswordChanger
-               user={this.props.user}
-               header="Change password"
-               description={`Change the password.`}
-               onCloseClick={this._onCloseClick}
-               open={this.state.openPasswordChangeModal} />
-         );
       }
 
-      const submitButton = <BeHiveButton
-         type="submit"
-         content={this.props.submitButtonTitle}
-         onClick={this._onSubmit} />;
       const cancelButton = <CancelButton
          as={"a"}
          content="Cancel"
@@ -150,6 +112,7 @@ class UserForm extends React.Component {
                onChange={this._handleChange}
                defaultValue={email}
                autoComplete="username"
+               readOnly={true}
                error={emailHasError} />
             <Form.Input
                required
@@ -157,6 +120,7 @@ class UserForm extends React.Component {
                name="name"
                onChange={this._handleChange}
                defaultValue={this.state.name}
+               readOnly={true}
                error={nameHasError} />
             {passwordInput}
             <Message error visible hidden={errors.length === 0}>
@@ -164,50 +128,17 @@ class UserForm extends React.Component {
             </Message>
             <ButtonWrapperPc>
                {cancelButton}
-               {submitButton}
-               {changePasswordButton}
             </ButtonWrapperPc>
             <ButtonWrapperMobile>
-               {changePasswordButton}
                <FlexWrapper>
                   {cancelButton}
-                  {submitButton}
                </FlexWrapper>
             </ButtonWrapperMobile>
-            {changePasswordModal}
          </Form>
       );
    };
 
    _handleChange = (event, { name, value }) => this.setState({ [name]: value });
-
-   _onSubmit = (event) => {
-      event.preventDefault();
-
-      const {
-         email,
-      } = this.state;
-
-      const userData = {
-         name: this.state.name,
-      };
-
-      if (this.props.user) {
-         if (this.props.user.email !== email) {
-            userData.email = email;
-         }
-      }
-      else {
-         userData.email = email;
-         userData.password = this.state.password;
-      }
-
-      this.props.onSubmit(userData);
-   };
-
-   _onPasswordChangeClick = () => this.setState({ openPasswordChangeModal: true })
-
-   _onCloseClick = () => this.setState({ openPasswordChangeModal: false })
 };
 
 export default UserForm;
