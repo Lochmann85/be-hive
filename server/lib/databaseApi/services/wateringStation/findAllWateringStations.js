@@ -2,11 +2,11 @@
  * @public
  * @function findAllWateringStations
  * @description find all watering stations db interaction
- * @param {object} wateringStationModel - the watering station database model
+ * @param {object} wateringStations - the watering stations table
  * @returns {Promise} of all watering stations
  */
-const findAllWateringStations = (wateringStationModel) => () => {
-   return wateringStationModel.find().sort({ index: 1 });
+const findAllWateringStations = (wateringStations) => () => {
+   return wateringStations;
 };
 
 export default findAllWateringStations;

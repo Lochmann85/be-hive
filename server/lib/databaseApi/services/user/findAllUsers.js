@@ -2,11 +2,11 @@
  * @public
  * @function findAllUsers
  * @description find all users db interaction
- * @param {object} userModel - the user database model
+ * @param {object} users - the users table
  * @returns {Promise} of all users
  */
-const findAllUsers = (userModel) => () => {
-   return userModel.find();
+const findAllUsers = (users) => () => {
+   return users;
 };
 
 export default findAllUsers;

@@ -1,9 +1,5 @@
 import findAllUsersTemplate from './findAllUsers';
 import findUserTemplate from './findUser';
-import createUserTemplate from './createUser';
-import updateUserTemplate from './updateUser';
-import deleteUserTemplate from './deleteUser';
-import changeUserPasswordTemplate from './changeUserPassword';
 import loginTemplate from './login';
 import checkViewerTemplate from './checkViewer';
 
@@ -12,24 +8,11 @@ type User {
    id: ID!
    email: String!
    name: String!
-   isDeletable: Boolean!
-   createdAt: String!
-   updatedAt: String!
 }
 type Viewer {
    id: ID!
    name: String!
    token: String!
-}
-input UserData {
-   email: String
-   name: String
-   password: String
-}
-input PasswordChangeData {
-   password: String
-   new: String
-   confirm: String
 }
 input Credentials {
    email: String
@@ -50,18 +33,10 @@ const queriesResolver = (userDbService) => ({
 });
 
 const mutations = `
-   createUser(userData: UserData): User!
-   updateUser(userId: ID, userData:  UserData): User!
-   deleteUser(userId: ID): User!
-   changeUserPassword(userId: ID, passwordChangeData: PasswordChangeData): Boolean!
    login(credentials: Credentials): Viewer!
 `;
 
 const mutationsResolver = (userDbService) => ({
-   createUser: createUserTemplate(userDbService),
-   updateUser: updateUserTemplate(userDbService),
-   deleteUser: deleteUserTemplate(userDbService),
-   changeUserPassword: changeUserPasswordTemplate(userDbService),
    login: loginTemplate(userDbService),
 });
 

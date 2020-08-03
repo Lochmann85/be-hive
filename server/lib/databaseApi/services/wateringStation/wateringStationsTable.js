@@ -1,4 +1,5 @@
 const wateringStations = [{
+   id: "1",
    name: "Haus",
    description: "Beregner beim Haus",
    index: 1,
